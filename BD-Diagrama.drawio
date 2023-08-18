@@ -1,0 +1,34 @@
+<mxfile host="Electron" modified="2023-08-18T19:56:14.953Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="sRuRFVPcNSaJJtvrhdP-" version="21.6.8" type="device">
+  <diagram name="Página-1" id="KL7hros_8gFtWswWTued">
+    <mxGraphModel dx="1816" dy="581" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="4Juu3MWesEWuTdo3Fc_6-1" value="Usuarios" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-770" y="40" width="150" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="4Juu3MWesEWuTdo3Fc_6-2" value="+ id_usuario: int Auto increment master key" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="4Juu3MWesEWuTdo3Fc_6-1">
+          <mxGeometry y="26" width="150" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="4Juu3MWesEWuTdo3Fc_6-3" value="+ mail: varchar(50)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="4Juu3MWesEWuTdo3Fc_6-1">
+          <mxGeometry y="60" width="150" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="4Juu3MWesEWuTdo3Fc_6-4" value="+ : type" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="4Juu3MWesEWuTdo3Fc_6-1">
+          <mxGeometry y="86" width="150" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="4Juu3MWesEWuTdo3Fc_6-9" value="Classname" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-590" y="40" width="140" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="4Juu3MWesEWuTdo3Fc_6-10" value="+ field: type" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="4Juu3MWesEWuTdo3Fc_6-9">
+          <mxGeometry y="26" width="140" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="4Juu3MWesEWuTdo3Fc_6-11" value="+ field: type" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="4Juu3MWesEWuTdo3Fc_6-9">
+          <mxGeometry y="52" width="140" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="4Juu3MWesEWuTdo3Fc_6-12" value="+ field: type" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="4Juu3MWesEWuTdo3Fc_6-9">
+          <mxGeometry y="78" width="140" height="26" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
