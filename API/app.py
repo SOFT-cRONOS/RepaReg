@@ -9,6 +9,9 @@ app.template_folder = 'app/templates'
 # @app.route('/')
 # def index():
 #     return render_template('index.html')
+@app.route('/')
+def index():
+    return jsonify({"message": "API desarrollada con Flask"})
 
 # @app.route('/login')
 # def login():

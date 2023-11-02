@@ -130,3 +130,12 @@ body {
   border-color: transparent;
   box-shadow: 0 0 0 3px var(--sombra-color-primario);
 }
+
+/* user info */
+.dropdown-menu[data-bs-popper] { 
+  /* sobreescribe prop boostrap */
+  top: 100%;
+  right: 0;
+  left: auto;
+  margin-top: .125rem;
+}
