@@ -9,3 +9,37 @@
     --color-link-light:#cac9e3;
     --color-link-dark:#3c3a78;
   }
+
+
+/* Usuarios */
+.btn-edit {
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+
+  background-color: #FF5733; /* Color de fondo del botón */
+  color: white; /* Color del texto del botón */
+  padding: 10px 20px; /* Espaciado interno (padding) para el botón */
+  border: none; /* Borde del botón */
+  border-radius: 5px; /* Bordes redondeados */
+  text-align: center; /* Alinear el texto en el centro del botón */
+  text-decoration: none; /* Quitar subrayado de enlace */
+  display: inline-block; /* Mostrar como bloque en línea */
+  font-size: 16px; /* Tamaño de fuente del texto */
+  cursor: pointer; /* Cambiar el cursor al pasar el ratón sobre el botón */
+}

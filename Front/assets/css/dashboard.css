@@ -4,7 +4,7 @@
   --sombra-color-fondo: rgba(119, 102, 157, .1);
   --color-secundario: #948fc4;
   --color-terciario: #77669d;
-  --color-texto-light:#948fc4;
+  --color-texto-light:white;
   --color-texto-dark:#414149;
   --color-link-light:#cac9e3;
   --color-link-dark:#3c3a78;
@@ -117,11 +117,12 @@ body {
 .navbar .form-control {
   padding: .75rem 1rem;
   border-width: 0;
-  border-radius: 0;
+  border-radius: 10px;
+  margin: 0 1.3rem 0 1.3rem;
 }
 
 .form-control-dark {
-  color: #fff;
+  color: var(--color-texto-light);
   background-color: var(--sombra-color-fondo);
   border-color: var(--sombra-color-fondo);
 }
@@ -132,10 +133,57 @@ body {
 }
 
 /* user info */
+.drop-user {
+  margin-right: 1.3rem;
+}
+
+.drop-user a {
+  color: var(--color-link-light)
+}
+
+.drop-user li a {
+  color: var(--color-link-dark)
+}
+
 .dropdown-menu[data-bs-popper] { 
   /* sobreescribe prop boostrap */
   top: 100%;
   right: 0;
   left: auto;
   margin-top: .125rem;
+}
+
+.dropdown-item:hover {
+  color: var(--color-texto-dark);
+  background-color: var(--color-link-light);
+}
+
+
+/* Tarjetas informes rapidos */
+
+.tarjeta-panel {
+  border-radius: 10px;
+  background-color: var(--color-primario);
+  color: var(--color-texto-light);
+  box-shadow: 0 .5rem 1rem var(--sombra-color-primario);
+  margin: 0px 5px 0px 5px;
+  width: 31%;
+  padding: 1.2rem;
+  display: flex;
+  align-content: space-between;
+  align-items: center;
+  justify-content: center 
+}
+
+.tarjeta-panel p {
+  margin: 0 1.3rem 0 1.3rem;
+}
+
+.tarjeta-panel svg {
+  width: 2rem;
+  height: auto;
+}
+
+.tarjeta-panel span {
+  margin: 0;
 }
