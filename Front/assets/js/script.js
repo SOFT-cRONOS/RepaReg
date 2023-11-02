@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   <td>${cliente.name}</td>
                   <td>${cliente.email}</td>
                   <td>
-                  <a href="https://api.escuelajs.co/api/v1/users?id=${cliente.id}" class="btn-edit"> <i class="fas fa-edit"></i>Editar</a>
+                  <a href="https://api.escuelajs.co/api/v1/users?id=${cliente.id}" class="btn btn-edit"> <i class="fas fa-edit"></i>Editar</a>
                   <a href="https://api.escuelajs.co/api/v1/users?id=${cliente.id}" class="btn btn-baja">Baja</a>
                   </td>
               `;

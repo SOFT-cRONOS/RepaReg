@@ -140,7 +140,7 @@
         <div class="btn-group me-2">
           <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
             Nuevo</button>
-          <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
+          <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#nofunctional">Exportar</button>
         </div>
         <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" id="dropdMenu-users" data-bs-toggle="dropdown" aria-expanded="false">
           <span data-feather="filter"></span>
@@ -164,7 +164,7 @@
 
               <div class="col">
                 <h4 class="mb-3">Creando un nuevo usuario</h4>
-                <form class="needs-validation" novalidate>
+                <form id="new-user" class="needs-validation" novalidate>
                   <!-- datos personales -->
                   <div class="row">
                     <div class="col mb-4">
@@ -179,6 +179,16 @@
 
                     <div class="col mb-4">
                       <label for="exampleFormControlInput1" class="form-label">DNI</label>
+                      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="00000000">
+                    </div>
+
+                    <div class="col mb-4">
+                      <label for="exampleFormControlInput1" class="form-label">Cuil</label>
+                      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="00000000">
+                    </div>
+
+                    <div class="col mb-4">
+                      <label for="exampleFormControlInput1" class="form-label">Cuit</label>
                       <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="00000000">
                     </div>
                   </div>
@@ -198,9 +208,46 @@
                       <label for="exampleFormControlInput1" class="form-label">Direccion</label>
                       <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="#### 0000">
                     </div>
+
+                   
                   </div>
 
-                  <button class="w-100 btn btn-primary btn-lg" type="submit">Guardar</button>
+                   <!-- Datos de cuenta -->
+
+                   <div class="row">
+
+                    <div class="col mb-4">
+                      <label for="exampleFormControlInput1" class="form-label">Rol</label>
+                      <select class="form-select " aria-label=".form-select-lg example">
+                        <option selected>Cliente</option>
+                        <option value="1">Tecnico</option>
+                        <option value="2">Admin</option>
+                      </select>
+                    </div>
+
+                    <div class="col mb-4">
+                      <label for="exampleFormControlInput1" class="form-label">Imagen</label>
+                      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Link">
+                    </div>
+
+                    <div class="col mb-4">
+                      <label for="exampleFormControlInput1" class="form-label">Nick</label>
+                      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="xxxxx">
+                    </div>
+                    
+                    <div class="col mb-4">
+                      <label for="exampleFormControlInput1" class="form-label">Password</label>
+                      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="0000-0000">
+                    </div>
+                  </div>
+                  
+                  <!-- botones -->
+                  <div class="row btn-ok-cancel">
+                  <button class="w-20 btn  btn-primary btn-lg btn-ok" type="submit">Guardar</button>
+                  <button class="w-20 btn btn-primary btn-lg btn-cancel" type="submit">Cancelar</button>
+                  </div>
+
+
                 </form>
               </div>
               
@@ -239,13 +286,31 @@
 </div>
 
 
+<!-- Modal funcion no disponible -->
+<div class="modal fade" id="nofunctional" tabindex="-1" aria-labelledby="nofunctionalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nofunctionalLabel">Ups!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Lo sentimos, esta funcion aun no esta disponible.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
     <script src="lib/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
 
 
-      <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
-      <script src="assets/js/dashboard.js"></script>
-      <script src="assets/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+    <script src="assets/js/dashboard.js"></script>
+    <script src="assets/js/script.js"></script>
       
   </body>
 </html>
