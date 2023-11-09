@@ -135,6 +135,7 @@
                 <h1 class="h2">Taller</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
                   <div class="btn-group me-2">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#newrepa">Nueva Reparacion</button>
                     <button type="button" class="btn btn-sm btn-outline-secondary">Pendientes</button>
                     <button type="button" class="btn btn-sm btn-outline-secondary">Reparando</button>
                     <button type="button" class="btn btn-sm btn-outline-secondary">Terminados</button>
@@ -188,6 +189,26 @@
   </div>
 </div>
 
+
+
+<!-- Modal Nueva repa -->
+<div class="modal fade" id="newrepa" tabindex="-1" aria-labelledby="newrepaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newrepa">Ups!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Aca es el ingreso de una nueva reparacion.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- FIn Modal Nueva repa -->
 
     <script src="lib/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
 
