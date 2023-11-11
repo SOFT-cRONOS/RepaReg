@@ -1,3 +1,4 @@
+DROP DATABASE RepaRegBD;
 -- CREATE USER 'admin'@'localhost' IDENTIFIED BY 'Cronos71@';
 CREATE DATABASE RepaRegBD;
 GRANT ALL PRIVILEGES ON RepaRegBD.* TO 'admin'@'localhost';
@@ -23,12 +24,14 @@ CREATE TABLE usuario (
   mail VARCHAR(50)
 );
 
+
 --  Tabla roles de usuario
 CREATE TABLE roles (
     id_rol INT AUTO_INCREMENT PRIMARY KEY,
     rol VARCHAR(50),
     detalle VARCHAR(150)
 );
+
 
 --  Tabla permisos de roles
 CREATE TABLE permiso (
@@ -45,6 +48,8 @@ CREATE TABLE usuarios_roles (
     FOREIGN KEY (id_rol) REFERENCES roles(id_rol)
 );
 
+
+
 --  Tabla asociar roles con permisos
 CREATE TABLE rol_permiso (
     id_rol INT,
@@ -53,10 +58,37 @@ CREATE TABLE rol_permiso (
     FOREIGN KEY (id_permiso) REFERENCES permiso(id_permiso)
 );
 
+-- Insert datos prueba
+INSERT INTO usuario
+(`nick`, `cuit`, `cuil`, `nombre`, `apellido`, `pass`, `imagen`, `direccion`, `telefono`, `mail`) 
+VALUES 
+('tester', '24373764406', '24373764406', 'persona', 'testeo', '1234', 'https://cdn-icons-png.flaticon.com/512/1503/1503151.png', 'colon 104', '123', 'tester@gmail.com');
+
+INSERT INTO roles 
+(rol, detalle) 
+VALUES
+('TECNICO', 'Empleado tecnico reparador');
+
+INSERT INTO permiso
+(permiso, detalle)
+VALUES
+('crear', 'puede crear ventas, reparacions pero no eliminar ni dar de baja'),
+('editar', ''),
+('eliminar',''),
+('ver',''),
+('eliminar','');
+
+INSERT INTO usuarios_roles
+(id_usuario, id_rol) VALUES
+(1, 1); -- El usuario 1 es tecnico
+
+INSERT INTO rol_permiso
+(id_rol, id_permiso) VALUES
+(1, 1),
+(1, 2),
+(1, 4);
+
 -- creacion de indices
--- CREATE INDEX idx_usuario ON usuario (id_usuario);
--- CREATE INDEX idx_rol ON roles (id_rol);
--- CREATE INDEX idx_permiso ON permisos (permiso);
 
 -- ## Fin seccion usuarios ##
 
@@ -64,37 +96,12 @@ CREATE TABLE rol_permiso (
 -- ## seccion Taller ##
 -- #########################
 
-CREATE TABLE estado (
-    id_estado INT AUTO_INCREMENT PRIMARY KEY,
-    estado VARCHAR(50),
+CREATE TABLE estado (  -- Estado del producto (nuevo, refaccionado)
+    id_estado INT AUTO_INCREMENT PRIMARY KEY, 
+    nombre_estado VARCHAR(50),
     detalle VARCHAR(150)
 );
 
-CREATE TABLE transaccion (
-    id_transaccion INT AUTO_INCREMENT PRIMARY KEY,
-    tipo_trans VARCHAR(10),
-    id_estado INT,
-    fecha_init DATE,
-    fecha_fin DATE,
-    id_responsable INT,
-    id_cliente INT,
-    id_item INT,
-    informe VARCHAR(200),
-    detalle VARCHAR(200)
-);
-
-ALTER TABLE transaccion
-ADD FOREIGN KEY (id_estado) REFERENCES estado(id_estado),
-ADD FOREIGN KEY (id_cliente) REFERENCES usuario(id_usuario),
-ADD FOREIGN KEY (id_Responsable) REFERENCES usuario(id_usuario),
-ADD FOREIGN KEY (id_item) REFERENCES item(id_item);
-
-CREATE TABLE detalle_transaccion (
-    id_transaccion INT,
-    id_rep INT,
-    cantidad INT, 
-    precio_unit DECIMAL
-);
 
 CREATE TABLE marca (
     id_marca INT AUTO_INCREMENT PRIMARY KEY,
@@ -114,27 +121,94 @@ CREATE TABLE ubicacion (
     detalle VARCHAR(150)
 );
 
+CREATE TABLE tipo_item ( -- SI ENTRA UNA NOTEBOOK, TELE, AUTO, MOTO
+    id_tipoitem INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_tipitem VARCHAR(10),
+    detalle_tipitem VARCHAR(150)
+);
+
+CREATE TABLE categoria ( -- categoria de item, si es un producto, serivico, repuesto
+    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_cat VARCHAR(10),
+    detalle_cat VARCHAR(150)
+);
+
+CREATE TABLE proveedor (
+    id_prov INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_prov VARCHAR(50),
+    detalle VARCHAR(150)
+);
+
+-- INsert datos prueba
+
+INSERT INTO estado 
+(nombre_estado, detalle) VALUES
+('Nuevo', 'Producto nuevo de fabrica'),
+('Refaccionado', 'Reparado 100% funcional');
+
+INSERT INTO marca 
+(nombre_marca, detalle) VALUES
+('Asus', ''),
+('B&D',''),
+('HP',''),
+('Fiat','');
+
+INSERT INTO unidadmedida
+(nombre_um, detalle) VALUES
+('ml', 'mililitros'),
+('unidad', 'de a uno'),
+('l', 'litros'),
+('gs', 'gramos');
+
+INSERT INTO ubicacion 
+(nombre_ubic, detalle) VALUES
+('E1A','ESTANTE 1 BANDEJA A'),
+('C3A','CAJONERA 3 CAJON A'),
+('3923','MUEBLE 3 ORDEN 923');
+
+INSERT INTO tipo_item
+(nombre_tipitem, detalle_tipitem) VALUES
+('PC', 'pc de escritorio'),
+('notebook', 'notebook portatil'),
+('Moto', 'motovehiculo');
+
+INSERT INTO categoria 
+(nombre_cat, detalle_cat) VALUES
+('insumo','perifericos, tintas, aceite'),
+('repuesto',''),
+('servicio','');
+
+
+INSERT INTO proveedor
+(nombre_prov, detalle) VALUES
+('gadnic','importador chino'),
+('Rombo avellaneda', 'venta repuestos punta alta');
 
 
 -- tabla de items que entran en reparacion
 CREATE TABLE item (
     id_item INT AUTO_INCREMENT PRIMARY KEY,
     nombre_item VARCHAR(25),
+    color VARCHAR(20),
+    id_usuario INT,  
     id_categoria INT,
-    id_usuario INT,    
     id_ubicacion INT,
-    id_pieza INT, 
-    id_um INT,
     id_marca INT,
-    estado INT
+    car_extra1 varchar(20), -- caracteristica extra
+    car_extra2 varchar(20), -- caracteristica extra
+    id_tipoitem INT,
+    FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario),
+    FOREIGN KEY (id_categoria) REFERENCES categoria (id_categoria),
+    FOREIGN KEY (id_ubicacion) REFERENCES ubicacion (id_ubic),
+    FOREIGN KEY (id_marca) REFERENCES marca (id_marca),
+    FOREIGN KEY (id_tipoitem) REFERENCES tipo_item (id_tipoitem)
 );
 
-
 -- tabla de repuestos
-CREATE TABLE articulo (
-    id_articulo INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE producto (
+    id_producto INT AUTO_INCREMENT PRIMARY KEY,
     nombre_artiuculo VARCHAR(20), 
-    id_categoria INT,
+    id_categoria INT, -- SERVICIO, INSUMO, REPUESTO
     id_usuario INT,
     cantidad INT,
     id_ubic INT,
@@ -143,10 +217,37 @@ CREATE TABLE articulo (
     margen_ganancia DECIMAL,
     precio_venta DECIMAL,
     id_marca INT,
-    condicion VARCHAR(50)
+    condicion VARCHAR(50),
+    FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria),
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
+    FOREIGN KEY (id_ubic) REFERENCES ubicacion(id_ubic),
+    FOREIGN KEY (id_um) REFERENCES unidadmedida(id_um),
+    FOREIGN KEY (id_marca) REFERENCES marca(id_marca)
 );
 
+CREATE TABLE transaccion (
+    id_transaccion INT AUTO_INCREMENT PRIMARY KEY,
+    tipo_trans VARCHAR(10),
+    estado BOOLEAN,
+    fecha_init DATE,
+    fecha_fin DATE,
+    id_responsable INT,
+    id_item INT,
+    informe VARCHAR(200),
+    detalle VARCHAR(200)
+);
 
+ALTER TABLE transaccion
+ADD FOREIGN KEY (id_responsable) REFERENCES usuario(id_usuario),
+ADD FOREIGN KEY (id_item) REFERENCES item(id_item);
+
+CREATE TABLE detalle_transaccion (
+    id_transaccion INT,
+    id_producto INT,
+    cantidad INT, 
+    precio_unit DECIMAL,
+    FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
+);
 -- ## Fin seccion Taller ##
 
 -- #########################
@@ -183,10 +284,17 @@ CREATE TABLE detalle_factura (
 );
 
 CREATE TABLE tipo_pago (
-    id_tipopago INT,
+    id_tipopago INT AUTO_INCREMENT PRIMARY KEY,
     tipopago VARCHAR(5),
     detalle VARCHAR(100)
 );
+
+CREATE INDEX id_tipopago_index ON tipo_pago (id_tipopago);
+
+INSERT INTO tipo_pago (tipopago, detalle) VALUES
+    ('MP', 'Mercado Pago cuenta 2032'),
+    ('E', 'Efectivo');
+
 
 CREATE TABLE detalle_pago (
     id_factura INT,
