@@ -62,11 +62,13 @@ CREATE TABLE rol_permiso (
 INSERT INTO usuario
 (`nick`, `cuit`, `cuil`, `nombre`, `apellido`, `pass`, `imagen`, `direccion`, `telefono`, `mail`) 
 VALUES 
-('tester', '24373764406', '24373764406', 'persona', 'testeo', '1234', 'https://cdn-icons-png.flaticon.com/512/1503/1503151.png', 'colon 104', '123', 'tester@gmail.com');
+('tester', '24373764406', '24373764406', 'persona', 'testeo', '1234', 'https://cdn-icons-png.flaticon.com/512/1503/1503151.png', 'colon 104', '123', 'tester@gmail.com'),
+('tester2', '24373765406', '24373864406', 'persona', 'testeo', '1234', 'https://cdn-icons-png.flaticon.com/512/1503/1503151.png', 'colon 104', '123', 'tester@gmail.com');
 
 INSERT INTO roles 
 (rol, detalle) 
 VALUES
+('CLIENTE', 'CLiente de la empresa'),
 ('TECNICO', 'Empleado tecnico reparador');
 
 INSERT INTO permiso
@@ -80,13 +82,15 @@ VALUES
 
 INSERT INTO usuarios_roles
 (id_usuario, id_rol) VALUES
-(1, 1); -- El usuario 1 es tecnico
+(2, 1); -- El usuario 2 es cliente
+(1, 2); -- El usuario 1 es tecnico
 
 INSERT INTO rol_permiso
 (id_rol, id_permiso) VALUES
-(1, 1),
-(1, 2),
-(1, 4);
+(2, 1),--tecnico puede crear
+(2, 2),--tecnico puede editar
+(2, 4),--tecnico puede ver
+(1, 4);--CLIENTE puede ver
 
 -- creacion de indices
 
@@ -127,10 +131,16 @@ CREATE TABLE tipo_item ( -- SI ENTRA UNA NOTEBOOK, TELE, AUTO, MOTO
     detalle_tipitem VARCHAR(150)
 );
 
-CREATE TABLE categoria ( -- categoria de item, si es un producto, serivico, repuesto
+CREATE TABLE categoria ( -- categoria de producto, si es un producto, serivico, repuesto
     id_categoria INT AUTO_INCREMENT PRIMARY KEY,
     nombre_cat VARCHAR(10),
     detalle_cat VARCHAR(150)
+);
+
+CREATE TABLE categoria_item(
+    id_catitem INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_catitem VARCHAR(10),
+    detalle_catitem VARCHAR(150)
 );
 
 CREATE TABLE proveedor (
@@ -178,7 +188,6 @@ INSERT INTO categoria
 ('repuesto',''),
 ('servicio','');
 
-
 INSERT INTO proveedor
 (nombre_prov, detalle) VALUES
 ('gadnic','importador chino'),
@@ -191,7 +200,7 @@ CREATE TABLE item (
     nombre_item VARCHAR(25),
     color VARCHAR(20),
     id_usuario INT,  
-    id_categoria INT,
+    --id_categoria INT este no va, reemplaza id_tipoitem
     id_ubicacion INT,
     id_marca INT,
     car_extra1 varchar(20), -- caracteristica extra
@@ -201,8 +210,12 @@ CREATE TABLE item (
     FOREIGN KEY (id_categoria) REFERENCES categoria (id_categoria),
     FOREIGN KEY (id_ubicacion) REFERENCES ubicacion (id_ubic),
     FOREIGN KEY (id_marca) REFERENCES marca (id_marca),
-    FOREIGN KEY (id_tipoitem) REFERENCES tipo_item (id_tipoitem)
+    FOREIGN KEY (id_tipoitem) REFERENCES tipo_item (id_tipoitem) -- auto, moto, notebook, pc, (corregir en grafico)
 );
+
+INSERT INTO item
+(nombre_item, color, id_usuario, id_ubicacion, id_marca, car_extra1, car_extra2, id_tipoitem) VALUES
+('NOTEBOOK ', 'Azul', 2, 1, 1, '15 pulgadas','', 2); -- la notebook es del cliente, usuario 2.
 
 -- tabla de repuestos
 CREATE TABLE producto (
@@ -225,10 +238,22 @@ CREATE TABLE producto (
     FOREIGN KEY (id_marca) REFERENCES marca(id_marca)
 );
 
-CREATE TABLE transaccion (
+INSERT INTO producto 
+(nombre_articulo, id_categoria, id_usuario, cantidad, id_ubic, id_um, precio_compra, margen_ganancia, precio_venta, id_marca, condicion) VALUES
+('MEMORIA RAM', 1, 1, 2, 2, 2, 12000, 6000, 18000, 3, 'Nuevo');
+INSERT INTO producto 
+(nombre_articulo, id_categoria, id_usuario, id_um, precio_compra, margen_ganancia, precio_venta) VALUES
+('Activar windows', 3, 1, 2,5000, 50, 10000 );
+
+-- consulta para descontar  o sumar stock
+DECLARE @descuento INT;
+SET @descuento = 1;
+UPDATE producto SET cantidad = cantidad + @descuento;
+
+CREATE TABLE transaccion ( -- movimnientos de ingreso item a reparar
     id_transaccion INT AUTO_INCREMENT PRIMARY KEY,
-    tipo_trans VARCHAR(10),
-    estado BOOLEAN,
+    tipo_trans VARCHAR(10), -- reparacion o venta
+    estado BOOLEAN, -- 0 pendiente, 1 terminado
     fecha_init DATE,
     fecha_fin DATE,
     id_responsable INT,
@@ -237,17 +262,30 @@ CREATE TABLE transaccion (
     detalle VARCHAR(200)
 );
 
+INSERT INTO transaccion
+(tipo_trans, estado, fecha_init, id_responsable, id_item, informe, detalle) VALUES
+('reparacion',0, '13/11/2023', 1, 1, 'falta activar windows', 'no tiene cargador'),
+('reparacion', 1, '10/11/2023', 1, 1, 'Ampliar memoria ram', 'se le coloca una memoira ram extra');
+
+
 ALTER TABLE transaccion
 ADD FOREIGN KEY (id_responsable) REFERENCES usuario(id_usuario),
 ADD FOREIGN KEY (id_item) REFERENCES item(id_item);
 
 CREATE TABLE detalle_transaccion (
     id_transaccion INT,
-    id_producto INT,
+    id_producto INT, -- Si se agrega algun repuesto o servicio
     cantidad INT, 
     precio_unit DECIMAL,
     FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
 );
+
+-- al generar un detalle transaccion se debe descontar stock si es un repuesto.
+INSERT INTO detalle_transaccion 
+(id_transaccion, id_producto, cantidad, precio_unit) VALUES
+(1, 2, 1, 10000),
+(2,1,1, 18000);
+
 -- ## Fin seccion Taller ##
 
 -- #########################
@@ -272,6 +310,8 @@ CREATE TABLE factura (
     FOREIGN KEY (id_transaccion) REFERENCES transaccion(id_transaccion)
 );
 
+
+
 CREATE TABLE detalle_factura (
     id_factura INT,
     id_rep INT, -- si se cobra una reparacion
@@ -282,6 +322,10 @@ CREATE TABLE detalle_factura (
     descuento_unit INT,
     FOREIGN KEY (id_factura) REFERENCES factura(id_factura)
 );
+
+-- al generar una factura se debe pasar el estado de la transaccion de reparado a terminado
+-- tomar el valor de la reparacion y cargarlo en el detalle.
+
 
 CREATE TABLE tipo_pago (
     id_tipopago INT AUTO_INCREMENT PRIMARY KEY,
@@ -308,3 +352,35 @@ CREATE TABLE detalle_pago (
 
 
 -- ## Fin seccion Facturacion ##
+
+-- ## Consultas para el dashboard ##
+
+    -- Pedir trabajos en pendiente
+    SELECT * FROM transaccion 
+    WHERE estado = 0 
+    AND tipo_trans = 'reparacion';
+
+    -- Consultar los trabajos terminados en la ultima semanna (en el front contar los registros)
+    SELECT * FROM transaccion 
+    WHERE estado = 1 
+    AND tipo_trans = 'reparacion'
+    AND fecha_fin BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY) AND NOW(); 
+    --now() la fecha de hoy, Date_sub saca las fechas en 7 ATRAS. between da verdadero si esta en ese rango
+    -- para el grafico convertir las cantidades y agrupar por fechas (ver)
+
+    -- Consultar total de ventas en el dia
+    SELECT * FROM factura
+    WHERE fecha = NOW();
+
+    -- Consultar ultimos ingresos para grafico
+    SELECT total FROM factura
+    ORDER BY fecha;
+    -- en el front convertir los totales en un array json para el grafico
+
+    -- Suma de las 'ventas' y 'reparaciones' (no esta testeado)
+    SELECT SUM(total) AS total_sum FROM factura 
+    INNER JOIN transaccion ON factura.id_transaccion = transaccion.id_transaccion 
+    WHERE transaccion.tipo_trans IN ('reparacion', 'venta'); -- trae los registros de factura solo cuando la transaccion es reparacion o venta
+    -- para el grafico de torta (separar en dos valores ej: reparacion 140000, venta 100000)
+
+-- ## Updates para botones ##
