@@ -1,7 +1,9 @@
 DROP DATABASE RepaRegBD;
--- CREATE USER 'admin'@'localhost' IDENTIFIED BY 'Cronos71@';
+CREATE USER 'reparegadmin'@'localhost' IDENTIFIED BY '7cronos1';
 CREATE DATABASE RepaRegBD;
-GRANT ALL PRIVILEGES ON RepaRegBD.* TO 'admin'@'localhost';
+GRANT ALL PRIVILEGES ON RepaRegBD.* TO 'reparegadmin'@'localhost';
+
+
 
 USE RepaRegBD;
 
@@ -82,15 +84,15 @@ VALUES
 
 INSERT INTO usuarios_roles
 (id_usuario, id_rol) VALUES
-(2, 1); -- El usuario 2 es cliente
+(2, 1), -- El usuario 2 es cliente
 (1, 2); -- El usuario 1 es tecnico
 
 INSERT INTO rol_permiso
 (id_rol, id_permiso) VALUES
-(2, 1),--tecnico puede crear
-(2, 2),--tecnico puede editar
-(2, 4),--tecnico puede ver
-(1, 4);--CLIENTE puede ver
+(2, 1), -- tecnico puede crear
+(2, 2), -- tecnico puede editar
+(2, 4), -- tecnico puede ver
+(1, 4); -- CLIENTE puede ver
 
 -- creacion de indices
 
@@ -200,14 +202,14 @@ CREATE TABLE item (
     nombre_item VARCHAR(25),
     color VARCHAR(20),
     id_usuario INT,  
-    --id_categoria INT este no va, reemplaza id_tipoitem
+    -- id_categoria INT este no va, reemplaza id_tipoitem
     id_ubicacion INT,
     id_marca INT,
     car_extra1 varchar(20), -- caracteristica extra
     car_extra2 varchar(20), -- caracteristica extra
     id_tipoitem INT,
     FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario),
-    FOREIGN KEY (id_categoria) REFERENCES categoria (id_categoria),
+    -- FOREIGN KEY (id_categoria) REFERENCES categoria (id_categoria) este no va reemplaza id_tipoitem
     FOREIGN KEY (id_ubicacion) REFERENCES ubicacion (id_ubic),
     FOREIGN KEY (id_marca) REFERENCES marca (id_marca),
     FOREIGN KEY (id_tipoitem) REFERENCES tipo_item (id_tipoitem) -- auto, moto, notebook, pc, (corregir en grafico)
@@ -220,7 +222,7 @@ INSERT INTO item
 -- tabla de repuestos
 CREATE TABLE producto (
     id_producto INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_artiuculo VARCHAR(20), 
+    nombre_articulo VARCHAR(20), 
     id_categoria INT, -- SERVICIO, INSUMO, REPUESTO
     id_usuario INT,
     cantidad INT,
@@ -263,9 +265,9 @@ CREATE TABLE transaccion ( -- movimnientos de ingreso item a reparar
 );
 
 INSERT INTO transaccion
-(tipo_trans, estado, fecha_init, id_responsable, id_item, informe, detalle) VALUES
-('reparacion',0, '13/11/2023', 1, 1, 'falta activar windows', 'no tiene cargador'),
-('reparacion', 1, '10/11/2023', 1, 1, 'Ampliar memoria ram', 'se le coloca una memoira ram extra');
+(tipo_trans, estado, fecha_init, fecha_fin, id_responsable, id_item, informe, detalle) VALUES
+('reparacion',0, '2023/11/13', 1, 1, 'falta activar windows', 'no tiene cargador'),
+('reparacion', 1, '2023/11/10','2023/11/10', 1, 1, 'Ampliar memoria ram', 'se le coloca una memoira ram extra');
 
 
 ALTER TABLE transaccion
@@ -302,8 +304,8 @@ CREATE TABLE factura (
     fecha_emision DATE,
     id_transaccion INT,
     descuento DECIMAL(10, 2),
-    subtotal DECIMAL(10, 2),
-    total DECIMAL(10, 2),
+    subtotal DECIMAL(10, 2), -- no va,
+    total DECIMAL(10, 2), -- nova se autocalculan con el detalle
     id_cliente INT,
     id_responsable INT,
     estado_pago VARCHAR(10), -- parcial o pagado
@@ -314,8 +316,8 @@ CREATE TABLE factura (
 
 CREATE TABLE detalle_factura (
     id_factura INT,
-    id_rep INT, -- si se cobra una reparacion
-    id_producto INT, -- si se vende un repuesto solo
+    id_rep INT, -- si se cobra una reparacion (para ver el informe detallado)
+    id_producto INT, -- quitar, esto se ve en la transaccion
     detalle VARCHAR(40),
     cantidad INT,
     precio_unit DECIMAL(10, 2),
@@ -380,7 +382,54 @@ CREATE TABLE detalle_pago (
     -- Suma de las 'ventas' y 'reparaciones' (no esta testeado)
     SELECT SUM(total) AS total_sum FROM factura 
     INNER JOIN transaccion ON factura.id_transaccion = transaccion.id_transaccion 
-    WHERE transaccion.tipo_trans IN ('reparacion', 'venta'); -- trae los registros de factura solo cuando la transaccion es reparacion o venta
+    WHERE transaccion.tipo_trans = 'reparacion'; -- trae los registros de factura solo cuando la transaccion es reparacion o venta
+    SELECT SUM(total) AS total_sum FROM factura 
+    INNER JOIN transaccion ON factura.id_transaccion = transaccion.id_transaccion 
+    WHERE transaccion.tipo_trans = 'venta'
     -- para el grafico de torta (separar en dos valores ej: reparacion 140000, venta 100000)
 
 -- ## Updates para botones ##
+
+    -- # Menu Clientes
+        -- Ver listado clientes
+        SELECT u.*
+        FROM usuario u
+        JOIN usuarios_roles ur ON u.id_usuario = ur.id_usuario
+        JOIN roles r ON ur.id_rol = r.id_rol
+        WHERE r.rol = 'CLIENTE';
+    -- # Menu Taller 
+        -- ver reparaciones pendientes
+        SELECT *
+        FROM transaccion
+        WHERE tipo_trans = 'reparacion' AND estado = 0
+        ORDER BY fecha_init ASC;
+        -- ver reparaciones terminadas
+        SELECT *
+        FROM transaccion
+        WHERE tipo_trans = 'reparacion' AND estado = 1
+        ORDER BY fecha_init ASC;
+
+    -- Actualizar el estado de la transacción a "terminado"
+        UPDATE transaccion
+        SET estado = 1
+        WHERE id_transaccion = 1;
+
+    -- # secuencia para update de factura
+        -- Obtener la información de la transacción de reparación que se va a factura
+        SELECT *
+        FROM transaccion
+        WHERE id_transaccion = 1; -- id de transaccion al click boton "cobrar"
+
+        -- Insertar la información de la factura
+        INSERT INTO factura (n_factura, tipo, fecha, fecha_emision, id_transaccion, descuento, subtotal, total, id_cliente, id_responsable, estado_pago)
+        VALUES
+        (12345, 'A', '2023/11/13', '2023/11/13', 1, 0, 0, 0, 2, 1, 'pago');
+
+        -- Obtener el ID de la factura recién insertada
+        SET @id_factura = LAST_INSERT_ID();
+
+        -- Insertar el detalle de la factura (tomando los datos de la transaccion)
+        INSERT INTO detalle_factura (id_factura, id_rep, detalle, cantidad, precio_unit, descuento_unit)
+        VALUES
+        (@id_factura, 1, 'Cobro de reparación', 1, 5000, 0);
+
