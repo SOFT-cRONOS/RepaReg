@@ -9,6 +9,7 @@ class Transaccion():
         self._id_item = row[6]
         self._informe = row[7]
         self._detalle = row[8]
+        self._nombre_item = row[9]
 
     def to_json(self):
         return {
@@ -17,8 +18,8 @@ class Transaccion():
             "estado" : self._estado,
             "fecha_init" : self._fecha_init,
             "fecha_fin" : self._fecha_fin,
-            "id_responsable" : self._id_responsable,
-            "id_item" : self._id_item,
+            "item" : self._nombre_item,
             "informe" : self._informe,
             "detalle" : self._detalle
         }
+    

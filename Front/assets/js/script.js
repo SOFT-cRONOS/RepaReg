@@ -4,7 +4,7 @@
 
 
 // #############  
-//       Api
+//       Conector Api
 // #############
 // Función para cargar la lista de clientes desde la API
 const cargarClientes = () => {
@@ -13,7 +13,7 @@ const cargarClientes = () => {
   const tbody = document.getElementById('datos-tabla-clientes');
 
 
-    fetch('https://api.escuelajs.co/api/v1/users')
+    fetch('http://127.0.0.1:4500/client')
     .then(response => response.json())
     .then((data) => {
         // Vaciar todas las filas del <tbody>
@@ -23,13 +23,13 @@ const cargarClientes = () => {
         data.forEach((cliente) => {
             const fila = document.createElement('tr');
             fila.innerHTML = `
-                <td>${cliente.id}</td>
-                <td><img src=${cliente.avatar} width="50px"></td>
-                <td>${cliente.name}</td>
-                <td>${cliente.email}</td>
+                <td>${cliente.id_usuario}</td>
+                <td><img src=${cliente.imagen} width="50px"></td>
+                <td>${cliente.nombre}</td>
+                <td>${cliente.mail}</td>
                 <td>
-                <a href="https://api.escuelajs.co/api/v1/users?id=${cliente.id}" class="btn btn-edit"><span data-feather="home"></span>Editar</a>
-                <a href="https://api.escuelajs.co/api/v1/users?id=${cliente.id}" class="btn btn-baja">Baja</a>
+                <a href="https://api.escuelajs.co/api/v1/users?id=${cliente.id_usuario}" class="btn btn-edit"><span data-feather="home"></span>Editar</a>
+                <a href="https://api.escuelajs.co/api/v1/users?id=${cliente.id_usuario}" class="btn btn-baja">Baja</a>
                 </td>
             `;
             tbody.appendChild(fila);
