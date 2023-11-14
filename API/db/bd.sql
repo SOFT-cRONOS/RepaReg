@@ -248,7 +248,7 @@ INSERT INTO producto
 ('Activar windows', 3, 1, 2,5000, 50, 10000 );
 
 -- consulta para descontar  o sumar stock
-DECLARE @descuento INT;
+
 SET @descuento = 1;
 UPDATE producto SET cantidad = cantidad + @descuento;
 
@@ -266,7 +266,7 @@ CREATE TABLE transaccion ( -- movimnientos de ingreso item a reparar
 
 INSERT INTO transaccion
 (tipo_trans, estado, fecha_init, fecha_fin, id_responsable, id_item, informe, detalle) VALUES
-('reparacion',0, '2023/11/13', 1, 1, 'falta activar windows', 'no tiene cargador'),
+('reparacion',0, '2023/11/13',NULL, 1, 1, 'falta activar windows', 'no tiene cargador'),
 ('reparacion', 1, '2023/11/10','2023/11/10', 1, 1, 'Ampliar memoria ram', 'se le coloca una memoira ram extra');
 
 
