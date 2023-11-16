@@ -102,7 +102,11 @@
             <h1 class="h2">Productos</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
               <div class="btn-group me-2">
-                <button type="button" class="btn btn-sm btn-outline-secondary">
+                <button
+                  id="btn-nuevo-producto"
+                  type="button"
+                  class="btn btn-sm btn-outline-secondary"
+                >
                   <span data-feather="plus"></span>Nuevo
                 </button>
                 <button type="button" class="btn btn-sm btn-outline-secondary">
@@ -179,35 +183,45 @@
       </div>
     </div>
 
-    <!-- Modal Nueva repa -->
-    <div
-      class="modal fade"
-      id="newrepa"
-      tabindex="-1"
-      aria-labelledby="newrepaLabel"
-      aria-hidden="true"
-    >
+    <!-- Modal nuevo producto -->
+    <div class="modal fade" id="modal-productos" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="newrepa">Ups!</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            <h5 class="modal-title" id="modal-productos">Nuevo producto</h5>
           </div>
+
           <div class="modal-body">
-            Lo sentimos, esta funcion aun no esta disponible.
+            <form>
+              <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" />
+              </div>
+              <div class="mb-3">
+                <label for="precio" class="form-label">Precio</label>
+                <input type="number" class="form-control" id="precio" />
+              </div>
+              <div class="mb-3">
+                <label for="stock" class="form-label">Stock</label>
+                <input type="number" class="form-control" id="stock" />
+              </div>
+            </form>
           </div>
+
           <div class="modal-footer">
             <button
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
             >
-              Ok
+              Cancelar
+            </button>
+            <button
+              id="btn-guardar-producto"
+              type="button"
+              class="btn btn-primary"
+            >
+              Guardar
             </button>
           </div>
         </div>
