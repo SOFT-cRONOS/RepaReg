@@ -4,7 +4,7 @@ const MODOS_MODAL = {
   edicion: "edicion",
 };
 
-const modoModal = MODOS_MODAL.nuevo;
+let modoModal = MODOS_MODAL.nuevo;
 
 const modalProductos = new bootstrap.Modal("#modal-productos");
 
@@ -13,6 +13,9 @@ const btnEditarProducto = document.getElementById("btn-editar-producto");
 const btnNuevoProducto = document.getElementById("btn-nuevo-producto");
 const btnGuardarProducto = document.getElementById("btn-guardar-producto");
 const btnBuscarProducto = document.getElementById("btn-buscar-producto");
+const btnCerrarModalProducto = document.getElementById(
+  "btn-cerrar-modal-producto"
+);
 
 const inputNombre = document.getElementById("nombre");
 const inputPrecio = document.getElementById("precio");
@@ -113,6 +116,8 @@ const mostrarProductosEnTabla = (productos) => {
   for (const botonEliminar of botonesEliminar) {
     botonEliminar.addEventListener("click", eliminarProducto);
   }
+
+  feather.replace();
 };
 
 const mostrarModalDetalleProducto = (event) => {
@@ -127,7 +132,19 @@ const mostrarModalDetalleProducto = (event) => {
 const eliminarProducto = (event) => {
   const idProducto = event.target.getAttribute("data-id-producto");
 
-  alert("Eliminar producto " + idProducto);
+  Swal.fire({
+    text: "¿Realmente desde eliminar el producto?",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonColor: "#77669d",
+    cancelButtonColor: "#b9b8c9",
+    confirmButtonText: "Aceptar",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      alert("Eliminar producto " + idProducto);
+    }
+  });
 };
 
 const mostrarModalProductos = () => {
@@ -158,6 +175,7 @@ const editarProducto = () => {
 };
 
 const cambiarEstadoModal = (nuevoModoModal) => {
+  modoModal = nuevoModoModal;
   if (nuevoModoModal === MODOS_MODAL.nuevo) {
     tituloModalProductos.innerHTML = "Nuevo Producto";
 
@@ -170,8 +188,10 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     inputStock.disabled = false;
 
     btnEditarProducto.style.display = "none";
+    btnGuardarProducto.style.display = "block";
+    btnCerrarModalProducto.innerHTML = "Cancelar";
   } else if (nuevoModoModal === MODOS_MODAL.ver) {
-    tituloModalProductos.innerHTML = "Ver producto";
+    tituloModalProductos.innerHTML = "Ver Producto";
 
     inputNombre.value = "XXXX x x x ";
     inputPrecio.value = "55555";
@@ -182,14 +202,28 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     inputStock.disabled = true;
 
     btnEditarProducto.style.display = "block";
+    btnGuardarProducto.style.display = "none";
+    btnCerrarModalProducto.innerHTML = "Cerrar";
   } else if (nuevoModoModal === MODOS_MODAL.edicion) {
-    tituloModalProductos.innerHTML = "Editar producto";
+    tituloModalProductos.innerHTML = "Editar Producto";
 
     inputNombre.disabled = false;
     inputPrecio.disabled = false;
     inputStock.disabled = false;
 
     btnEditarProducto.style.display = "none";
+    btnCerrarModalProducto.innerHTML = "Cancelar";
+    btnGuardarProducto.style.display = "block";
+  }
+};
+
+const handleCerrarModal = () => {
+  console.log({ modoModal });
+  if (modoModal === MODOS_MODAL.nuevo || modoModal === MODOS_MODAL.ver) {
+    modalProductos.hide();
+  } else {
+    //Esta en modo edicion
+    cambiarEstadoModal(MODOS_MODAL.ver);
   }
 };
 
@@ -197,8 +231,8 @@ btnNuevoProducto.addEventListener("click", mostrarModalProductos);
 btnGuardarProducto.addEventListener("click", guardarProducto);
 btnBuscarProducto.addEventListener("click", buscarProducto);
 
-console.log({ btnEditarProducto });
-
 btnEditarProducto.addEventListener("click", editarProducto);
+
+btnCerrarModalProducto.addEventListener("click", handleCerrarModal);
 
 obtenerProductos();

@@ -92,11 +92,11 @@
           <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
           >
-            <h1 class="h2">Productos</h1>
+            <h1 class="h2">Clientes</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
               <div class="btn-group me-2">
                 <button
-                  id="btn-nuevo-producto"
+                  id="btn-nuevo-cliente"
                   type="button"
                   class="btn btn-sm btn-outline-secondary"
                 >
@@ -124,7 +124,7 @@
               />
 
               <button
-                id="btn-buscar-producto"
+                id="btn-buscar-cliente"
                 type="button"
                 class="btn btn-sm btn-outline-secondary"
               >
@@ -136,9 +136,9 @@
               <thead>
                 <tr>
                   <th scope="col">Nombre</th>
-                  <th scope="col">Precio</th>
-                  <th scope="col">Stock</th>
-                  <th scope="col">Fecha Ingreso</th>
+                  <th scope="col">DNI</th>
+                  <th scope="col">Teléfono</th>
+                  <th scope="col">Avatar</th>
                   <th scope="col">Acciones</th>
                 </tr>
               </thead>
@@ -153,13 +153,13 @@
       </div>
     </div>
 
-    <!-- Modal editor producto -->
-    <div class="modal fade" id="modal-productos" tabindex="-1">
+    <!-- Modal editor clientes -->
+    <div class="modal fade" id="modal-clientes" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="titulo-modal-productos">
-              Nuevo producto
+            <h5 class="modal-title" id="titulo-modal-clientes">
+              Nuevo Cliente
             </h5>
           </div>
 
@@ -169,14 +169,6 @@
                 <label for="nombre" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="nombre" />
               </div>
-              <div class="mb-3">
-                <label for="precio" class="form-label">Precio</label>
-                <input type="number" class="form-control" id="precio" />
-              </div>
-              <div class="mb-3">
-                <label for="stock" class="form-label">Stock</label>
-                <input type="number" class="form-control" id="stock" />
-              </div>
             </form>
           </div>
 
@@ -185,7 +177,7 @@
               <button
                 type="button"
                 class="btn btn-primary"
-                id="btn-editar-producto"
+                id="btn-editar-cliente"
               >
                 Editar
               </button>
@@ -194,12 +186,12 @@
               <button
                 type="button"
                 class="btn btn-secondary"
-                id="btn-cerrar-modal-producto"
+                id="btn-cerrar-modal-cliente"
               >
                 Cancelar
               </button>
               <button
-                id="btn-guardar-producto"
+                id="btn-guardar-cliente"
                 type="button"
                 class="btn btn-primary"
               >
@@ -223,6 +215,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="assets/js/ui.js"></script>
-    <script src="assets/js/productos.js"></script>
+    <script src="assets/js/clientes.js"></script>
   </body>
 </html>

@@ -22,24 +22,31 @@ const showSidebar = () => {
                                   </li>
   
                                   <li class="nav-item">
-                                  <a class="nav-link" href="inventario.html">
-                                      <span data-feather="archive"></span>
+                                  <a class="nav-link" href="servicios.html">
+                                      <span data-feather="truck"></span>
                                       Servicios
                                   </a>
                                   </li>
   
                                   <li class="nav-item">
-                                  <a class="nav-link" href="usuarios.html">
+                                  <a class="nav-link" href="clientes.html">
                                       <span data-feather="users"></span>
                                       Clientes
                                   </a>
                                   </li>
   
                                   <li class="nav-item">
-                                  <a class="nav-link" href="usuarios.html">
-                                      <span data-feather="users"></span>
-                                      Ventas
-                                  </a>
+                                    <a class="nav-link" href="usuarios.html">
+                                        <span data-feather="dollar-sign"></span>
+                                        Ventas
+                                    </a>
+                                  </li>
+
+                                  <li class="nav-item">
+                                    <a class="nav-link" href="categorias.html">
+                                        <span data-feather="list"></span>
+                                        Categorias
+                                    </a>
                                   </li>
   
                                   <li class="nav-item">
