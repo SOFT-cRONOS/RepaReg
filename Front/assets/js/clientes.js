@@ -184,8 +184,10 @@ const eliminarCliente = (event) => {
     icon: "question",
     showCancelButton: true,
     //esto lo deberia configurar la clase
-    confirmButtonColor: "#77669d",
-    cancelButtonColor: "#b9b8c9",
+    //confirmButtonColor: "#77669d",
+    confirmButtonClass: "btn-primary",
+    //cancelButtonColor: "#b9b8c9",
+    cancelButtonClass: "btn-cancel",
     confirmButtonText: "Aceptar",
     cancelButtonText: "Cancelar",
   }).then((result) => {
