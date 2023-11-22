@@ -3,23 +3,23 @@ const MODOS_MODAL = {
   ver: "ver",
   edicion: "edicion",
 };
-
+let idCliente = 0;
 let modoModal = MODOS_MODAL.nuevo;
 
+//elementos del modal
 const modalClientes = new bootstrap.Modal("#modal-clientes");
-
 const btnEditarCliente = document.getElementById("btn-editar-cliente");
-
 const buscbtnNuevoCliente = document.getElementById("btn-nuevo-cliente");
 const btnGuardarCliente = document.getElementById("btn-guardar-cliente");
 const btnBuscarCliente = document.getElementById("btn-buscar-cliente");
-const btnCerrarModalCliente = document.getElementById(
-  "btn-cerrar-modal-cliente"
-);
-
-const inputNombre = document.getElementById("nombre");
-
+const btnCerrarModalCliente = document.getElementById("btn-cerrar-modal-cliente");
 const tituloModalClientes = document.getElementById("titulo-modal-clientes");
+//input del modal
+const inputNombre = document.getElementById("nombre");
+const inputApellido = document.getElementById("apellido");
+const inputDni = document.getElementById("dni"); 
+const inputtelefono = document.getElementById("telefono");
+const inputfoto = document.getElementById("foto"); 
 
 const obtenerClientes = () => {
   const clientes = [
@@ -54,10 +54,77 @@ const obtenerClientes = () => {
     },
   ];
 
-  mostrarClientesEnTabla(clientes);
+  return clientes;
+
+  //solicitud fetch
+  // config de token
+  const id = localStorage.getItem('id');
+  const token = localStorage.getItem('token')
+
+  const requestOptions = {
+  method : 'GET',
+  headers:{
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+      'user-id': id
+      }
+  }
+  // fin config de token
+  
+  
+  //link a items retorna la respuesta del back
+  return fetch(`http://localhost:5200/user/${id}/client`, requestOptions)
+  .then(
+    resp => {return resp.json()
+    })
+  .catch(error => {
+    console.error('Error al obtener los clientes:', error);
+    throw error; // devuelve error
+  }); 
 };
 
-const mostrarClientesEnTabla = (clientes) => {
+const obtenerClientesporid = (id_cliente) => {
+  const clientes =
+    {
+      id: 15,
+      nombre: "Steve Jobs",
+      apellido: "pedrito",
+      avatar: "IMG",
+      dni: "58.256.3236",
+      telefono: "11 6726-3106",
+    }
+
+  return clientes;
+
+  //solicitud fetch
+  // config de token
+  const id = localStorage.getItem('id');
+  const token = localStorage.getItem('token')
+
+  const requestOptions = {
+  method : 'GET',
+  headers:{
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+      'user-id': id
+      }
+  }
+  // fin config de token
+  
+  
+  //link a items retorna la respuesta del back
+  return fetch(`http://localhost:5200/user/${id}/client/${id_cliente}`, requestOptions)
+  .then(
+    resp => {return resp.json()
+    })
+  .catch(error => {
+    console.error('Error al obtener los clientes:', error);
+    throw error; // devuelve error
+  }); 
+};
+
+const mostrarClientesEnTabla = () => {
+  const clientes = obtenerClientes();
   const datosTabla = document.getElementById("datos-tabla");
 
   let html = "";
@@ -99,7 +166,7 @@ const mostrarClientesEnTabla = (clientes) => {
 };
 
 const mostrarModalDetalleCliente = (event) => {
-  const idCliente = event.target.getAttribute("data-id-cliente");
+  idCliente = event.target.getAttribute("data-id-cliente");
 
   console.log("Mostrar el detalle del cliente", idCliente);
 
@@ -114,6 +181,7 @@ const eliminarCliente = (event) => {
     text: "¿Realmente desde eliminar el cliente?",
     icon: "question",
     showCancelButton: true,
+    //esto lo deberia configurar la clase
     confirmButtonColor: "#77669d",
     cancelButtonColor: "#b9b8c9",
     confirmButtonText: "Aceptar",
@@ -121,7 +189,31 @@ const eliminarCliente = (event) => {
   }).then((result) => {
     if (result.isConfirmed) {
       alert("Eliminar cliente " + idCliente);
-    }
+      //solicitud fetch
+      // config de token
+      const id = localStorage.getItem('id');
+      const token = localStorage.getItem('token')
+
+      const requestOptions = {
+      method : 'PUT',
+      headers:{
+          'Content-Type': 'application/json',
+          'x-access-token': token,
+          'user-id': id
+          }
+      }
+      // fin config de token
+      
+      
+      //link a items retorna la respuesta del back
+      return fetch(`http://localhost:5200/user/${id}/client/${idCliente}`, requestOptions)
+      .then(
+        resp => {return resp.json()
+        })
+      .catch(error => {
+        console.error('Error al actualizar cliente:', error);
+        throw error; // devuelve error
+      });}
   });
 };
 
@@ -163,9 +255,17 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     btnGuardarCliente.style.display = "block";
     btnCerrarModalCliente.innerHTML = "Cancelar";
   } else if (nuevoModoModal === MODOS_MODAL.ver) {
+
+    const cliente = obtenerClientesporid(idCliente);
+
+
     tituloModalClientes.innerHTML = "Ver Cliente";
 
-    inputNombre.value = "XXXX x x x ";
+    inputNombre.value = cliente.nombre;
+    inputApellido.value = cliente.apellido;
+    inputDni.value = cliente.dni;
+    inputtelefono.value = cliente.telefono;
+    inputfoto.value = cliente.foto;
 
     inputNombre.disabled = true;
 
@@ -201,4 +301,4 @@ btnEditarCliente.addEventListener("click", editarCliente);
 
 btnCerrarModalCliente.addEventListener("click", handleCerrarModal);
 
-obtenerClientes();
+mostrarClientesEnTabla();
