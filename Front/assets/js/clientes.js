@@ -25,32 +25,40 @@ const obtenerClientes = () => {
   const clientes = [
     {
       id: 15,
-      nombre: "Steve Jobs",
-      avatar: "IMG",
-      dni: "58.256.3236",
+      nombre: "Steve",
+      apellido: "Jobs",
+      cuitCuil: "58.256.3236",
+      direccion: "Direccion de Steve",
+      email: "steve@apple.com",
       telefono: "11 6726-3106",
     },
     {
       id: 158,
-      nombre: "Bill Gates",
-      avatar: "IMG",
-      dni: "28.256.3236",
-      telefono: "11 1122-6598",
+      nombre: "Bill",
+      apellido: "Gates",
+      cuitCuil: "38.256.3236",
+      direccion: "Direccion de Bill",
+      email: "bill@ms.com",
+      telefono: "11 2326-3106",
     },
     {
       id: 358,
-      nombre: "Richard Stallman",
-      avatar: "IMG",
-      dni: "35.153.884",
-      telefono: "11 2212-2356",
+      nombre: "Richard",
+      apellido: "Stallman",
+      cuitCuil: "68.256.3236",
+      direccion: "Direccion de Richard",
+      email: "richard@linux.com",
+      telefono: "11 1326-2306",
     },
     ,
     {
       id: 918,
-      nombre: "Elon Musk",
-      avatar: "IMG",
-      dni: "45.252.112",
-      telefono: "11 3344-5566",
+      nombre: "Elon",
+      apellido: "Musk",
+      cuitCuil: "15.256.3236",
+      direccion: "Direccion de Elon",
+      email: "elon@tesla.com",
+      telefono: "11 3344-2306",
     },
   ];
 
@@ -66,9 +74,11 @@ const mostrarClientesEnTabla = (clientes) => {
   clientes.forEach((cliente) => {
     html += `<tr>
               <td>${cliente.nombre}</td>
-              <td>${cliente.dni}</td>
+              <td>${cliente.apellido}</td>
+              <td>${cliente.cuitCuil}</td>
+              <td>${cliente.direccion}</td>
+              <td>${cliente.email}</td>
               <td>${cliente.telefono}</td>
-              <td>${cliente.avatar}</td>
 
               <td>
                 <button data-id-cliente="${cliente.id}" class="btn btn-ver" >

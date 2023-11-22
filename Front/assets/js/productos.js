@@ -18,8 +18,11 @@ const btnCerrarModalProducto = document.getElementById(
 );
 
 const inputNombre = document.getElementById("nombre");
-const inputPrecio = document.getElementById("precio");
+const inputPrecioCompra = document.getElementById("precio-compra");
+const inputPrecioVenta = document.getElementById("precio-venta");
 const inputStock = document.getElementById("stock");
+const selectCategoria = document.getElementById("categoria");
+const selectMarca = document.getElementById("marca");
 
 const tituloModalProductos = document.getElementById("titulo-modal-productos");
 
@@ -28,51 +31,65 @@ const obtenerProductos = () => {
     {
       id: 15,
       nombre: "Monitor Samsung",
-      precio: 2530000,
+      precioCompra: 2530000,
+      precioVenta: 2930000,
       stock: 5,
-      fechaIngreso: "20/11/2023",
+      marca: "Samsung",
+      categoria: "Computación",
     },
     {
       id: 235,
       nombre: "Notebook Lenovo",
-      precio: 8565000,
+      precioCompra: 8565000,
+      precioVenta: 9565000,
       stock: 2,
-      fechaIngreso: "15/10/2023",
+      marca: "Lenovo",
+      categoria: "Computación",
     },
     {
       id: 38,
       nombre: "Webcam LG",
-      precio: 57300,
-      stock: 1,
-      fechaIngreso: "10/11/2023",
+      precioCompra: 5565000,
+      precioVenta: 6565000,
+      stock: 20,
+      marca: "LG",
+      categoria: "Computación",
     },
     {
       id: 49,
       nombre: "Mouse Logitech",
-      precio: 59630,
-      stock: 3,
-      fechaIngreso: "13/11/2023",
+      precioCompra: 4565000,
+      precioVenta: 8565000,
+      stock: 29,
+      marca: "Logitech",
+      categoria: "Computación",
     },
     {
       id: 545,
       nombre: "Teclado Microsoft",
-      precio: 123124,
-      stock: 20,
-      fechaIngreso: "08/11/2023",
+      precioCompra: 965000,
+      precioVenta: 1065000,
+      stock: 35,
+      marca: "Microsoft",
+      categoria: "Computación",
     },
     {
       id: 621,
       nombre: "Mouse Genius",
-      precio: 15600,
-      stock: 15,
-      fechaIngreso: "12/08/2023",
+      precioCompra: 865000,
+      precioVenta: 965000,
+      stock: 152,
+      marca: "Genius",
+      categoria: "Computación",
     },
     {
       id: 70,
-      nombre: "Notebook HP",
-      precio: 1560000,
-      stock: 19,
-      fechaIngreso: "05/08/2023",
+      nombre: "Audi A4",
+      precioCompra: 8650000000,
+      precioVenta: 9650000000,
+      stock: 4,
+      marca: "Audi",
+      categoria: "Vehiculos",
     },
   ];
 
@@ -88,9 +105,11 @@ const mostrarProductosEnTabla = (productos) => {
   productos.forEach((producto) => {
     html += `<tr>
               <td>${producto.nombre}</td>
-              <td>$ ${producto.precio}</td>
+              <td>${producto.categoria}</td>
+              <td>${producto.marca}</td>
+              <td>$ ${producto.precioCompra}</td>
+              <td>$ ${producto.precioVenta}</td>
               <td>${producto.stock}</td>
-              <td>${producto.fechaIngreso}</td>
 
               <td>
                 <button data-id-producto="${producto.id}" class="btn btn-ver" >
@@ -180,12 +199,18 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     tituloModalProductos.innerHTML = "Nuevo Producto";
 
     inputNombre.value = "";
-    inputPrecio.value = "";
+    inputPrecioCompra.value = "";
+    inputPrecioVenta.value = "";
     inputStock.value = "";
+    selectCategoria.value = "-1";
+    selectMarca.value = "-1";
 
     inputNombre.disabled = false;
-    inputPrecio.disabled = false;
+    inputPrecioCompra.disabled = false;
+    inputPrecioVenta.disabled = false;
     inputStock.disabled = false;
+    selectCategoria.disabled = false;
+    selectMarca.disabled = false;
 
     btnEditarProducto.style.display = "none";
     btnGuardarProducto.style.display = "block";
@@ -194,12 +219,18 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     tituloModalProductos.innerHTML = "Ver Producto";
 
     inputNombre.value = "XXXX x x x ";
-    inputPrecio.value = "55555";
+    inputPrecioCompra.value = "55555";
+    inputPrecioVenta.value = "6666";
     inputStock.value = "99999";
+    selectCategoria.value = 2;
+    selectMarca.value = 18;
 
     inputNombre.disabled = true;
-    inputPrecio.disabled = true;
+    inputPrecioCompra.disabled = true;
+    inputPrecioVenta.disabled = true;
     inputStock.disabled = true;
+    selectCategoria.disabled = true;
+    selectMarca.disabled = true;
 
     btnEditarProducto.style.display = "block";
     btnGuardarProducto.style.display = "none";
@@ -208,8 +239,11 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     tituloModalProductos.innerHTML = "Editar Producto";
 
     inputNombre.disabled = false;
-    inputPrecio.disabled = false;
+    inputPrecioCompra.disabled = false;
+    inputPrecioVenta.disabled = false;
     inputStock.disabled = false;
+    selectCategoria.disabled = false;
+    selectMarca.disabled = false;
 
     btnEditarProducto.style.display = "none";
     btnCerrarModalProducto.innerHTML = "Cancelar";
