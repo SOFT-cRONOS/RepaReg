@@ -19,6 +19,7 @@ const btnCerrarModalServicio = document.getElementById(
 
 const inputNombre = document.getElementById("nombre");
 const inputPrecio = document.getElementById("precio");
+const inputDescripcion = document.getElementById("descripcion");
 
 const tituloModalServicios = document.getElementById("titulo-modal-servicios");
 
@@ -28,36 +29,43 @@ const obtenerServicios = () => {
       id: 15,
       nombre: "Servicio 1",
       precio: 25300,
+      descripcion: "Descripcion del servicio 1",
     },
     {
       id: 2,
       nombre: "Servicio 2",
       precio: 35632,
+      descripcion: "Descripcion del servicio 2",
     },
     {
       id: 43,
       nombre: "Servicio 3",
       precio: 157300,
+      descripcion: "Descripcion del servicio 3",
     },
     {
       id: 149,
       nombre: "Servicio 4",
       precio: 69586,
+      descripcion: "Descripcion del servicio 4",
     },
     {
       id: 1545,
       nombre: "Servicio 5",
       precio: 123122,
+      descripcion: "Descripcion del servicio 5",
     },
     {
       id: 221,
       nombre: "Servicio 6",
       precio: 475600,
+      descripcion: "Descripcion del servicio 6",
     },
     {
       id: 700,
       nombre: "Servicio 7",
       precio: 1560,
+      descripcion: "Descripcion del servicio 7",
     },
   ];
 
@@ -74,6 +82,7 @@ const mostrarServiciosEnTabla = (servicios) => {
     html += `<tr>
               <td>${servicio.nombre}</td>
               <td>$ ${servicio.precio}</td>
+              <td>${servicio.descripcion}</td>
 
               <td>
                 <button data-id-servicio="${servicio.id}" class="btn btn-ver" >
@@ -163,9 +172,11 @@ const cambiarEstadoModal = (nuevoModoModal) => {
 
     inputNombre.value = "";
     inputPrecio.value = "";
+    inputDescripcion.value = "";
 
     inputNombre.disabled = false;
     inputPrecio.disabled = false;
+    inputDescripcion.disabled = false;
 
     btnEditarServicio.style.display = "none";
     btnGuardarServicio.style.display = "block";
@@ -175,9 +186,11 @@ const cambiarEstadoModal = (nuevoModoModal) => {
 
     inputNombre.value = "XXXX x x x ";
     inputPrecio.value = "55555";
+    inputDescripcion.value = "Descripcion del servicio XXXXXXXXX";
 
     inputNombre.disabled = true;
     inputPrecio.disabled = true;
+    inputDescripcion.disabled = true;
 
     btnEditarServicio.style.display = "block";
     btnGuardarServicio.style.display = "none";
@@ -187,6 +200,7 @@ const cambiarEstadoModal = (nuevoModoModal) => {
 
     inputNombre.disabled = false;
     inputPrecio.disabled = false;
+    inputDescripcion.disabled = false;
 
     btnEditarServicio.style.display = "none";
     btnCerrarModalServicio.innerHTML = "Cancelar";

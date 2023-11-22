@@ -133,7 +133,10 @@ const mostrarClientesEnTabla = () => {
   clientes.forEach((cliente) => {
     html += `<tr>
               <td>${cliente.nombre}</td>
-              <td>${cliente.dni}</td>
+              <td>${cliente.apellido}</td>
+              <td>${cliente.cuitCuil}</td>
+              <td>${cliente.direccion}</td>
+              <td>${cliente.email}</td>
               <td>${cliente.telefono}</td>
               <td><img src="${cliente.foto}" width="50px"></td>
               <td>
