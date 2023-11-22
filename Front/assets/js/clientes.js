@@ -26,21 +26,21 @@ const obtenerClientes = () => {
     {
       id: 15,
       nombre: "Steve Jobs",
-      avatar: "IMG",
+      foto: "https://cdn-icons-png.flaticon.com/512/4792/4792929.png",
       dni: "58.256.3236",
       telefono: "11 6726-3106",
     },
     {
       id: 158,
       nombre: "Bill Gates",
-      avatar: "IMG",
+      foto: "IMG",
       dni: "28.256.3236",
       telefono: "11 1122-6598",
     },
     {
       id: 358,
       nombre: "Richard Stallman",
-      avatar: "IMG",
+      foto: "IMG",
       dni: "35.153.884",
       telefono: "11 2212-2356",
     },
@@ -48,7 +48,7 @@ const obtenerClientes = () => {
     {
       id: 918,
       nombre: "Elon Musk",
-      avatar: "IMG",
+      foto: "IMG",
       dni: "45.252.112",
       telefono: "11 3344-5566",
     },
@@ -89,7 +89,7 @@ const obtenerClientesporid = (id_cliente) => {
       id: 15,
       nombre: "Steve Jobs",
       apellido: "pedrito",
-      avatar: "IMG",
+      foto: "https://cdn-icons-png.flaticon.com/512/4792/4792929.png",
       dni: "58.256.3236",
       telefono: "11 6726-3106",
     }
@@ -135,8 +135,7 @@ const mostrarClientesEnTabla = () => {
               <td>${cliente.nombre}</td>
               <td>${cliente.dni}</td>
               <td>${cliente.telefono}</td>
-              <td>${cliente.avatar}</td>
-
+              <td><img src="${cliente.foto}" width="50px"></td>
               <td>
                 <button data-id-cliente="${cliente.id}" class="btn btn-ver" >
                   <span data-feather="eye"></span>Ver
@@ -246,11 +245,8 @@ const cambiarEstadoModal = (nuevoModoModal) => {
   modoModal = nuevoModoModal;
   if (nuevoModoModal === MODOS_MODAL.nuevo) {
     tituloModalClientes.innerHTML = "Nuevo Cliente";
-
-    inputNombre.value = "";
-
-    inputNombre.disabled = false;
-
+    input_state("clear");
+    input_state("enabled");
     btnEditarCliente.style.display = "none";
     btnGuardarCliente.style.display = "block";
     btnCerrarModalCliente.innerHTML = "Cancelar";
@@ -260,14 +256,12 @@ const cambiarEstadoModal = (nuevoModoModal) => {
 
 
     tituloModalClientes.innerHTML = "Ver Cliente";
-
+    input_state("disabled");
     inputNombre.value = cliente.nombre;
     inputApellido.value = cliente.apellido;
     inputDni.value = cliente.dni;
     inputtelefono.value = cliente.telefono;
     inputfoto.value = cliente.foto;
-
-    inputNombre.disabled = true;
 
     btnEditarCliente.style.display = "block";
     btnGuardarCliente.style.display = "none";
@@ -275,13 +269,39 @@ const cambiarEstadoModal = (nuevoModoModal) => {
   } else if (nuevoModoModal === MODOS_MODAL.edicion) {
     tituloModalClientes.innerHTML = "Editar Cliente";
 
-    inputNombre.disabled = false;
+    input_state("enabled");
 
     btnEditarCliente.style.display = "none";
     btnCerrarModalCliente.innerHTML = "Cancelar";
     btnGuardarCliente.style.display = "block";
   }
 };
+
+//controla los estados de los input
+//enabled, disabled, clear
+const input_state = (estado) => {
+  if (estado == "disabled") {
+    inputNombre.disabled = true;
+    inputApellido.disabled = true;
+    inputDni.disabled = true;
+    inputtelefono.disabled = true;
+    inputfoto.disabled = true;
+  }
+  if (estado == "enabled") {
+    inputNombre.disabled = false;
+    inputApellido.disabled = false;
+    inputDni.disabled = false;
+    inputtelefono.disabled = false;
+    inputfoto.disabled = false;
+  }
+  if (estado == "clear") {
+    inputNombre.value = "";
+    inputApellido.value = "";
+    inputDni.value = "";
+    inputtelefono.value = "";
+    inputfoto.value = "";
+  }
+}
 
 const handleCerrarModal = () => {
   console.log({ modoModal });
