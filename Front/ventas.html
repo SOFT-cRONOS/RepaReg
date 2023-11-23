@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta
+      name="author"
+      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Hugo 0.84.0" />
+    <title>BASE</title>
+
+    <link
+      rel="canonical"
+      href="https://getbootstrap.com/docs/5.0/examples/dashboard/"
+    />
+
+    <!-- Bootstrap core CSS -->
+    <link
+      href="lib/bootstrap-5.0.2-dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom styles for this template -->
+    <link href="assets/css/dashboard.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header
+      class="navbar navbar-dark sticky-top style-dark flex-md-nowrap p-0 shadow"
+    >
+      <!-- marca logo empresa -->
+      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">
+        <img
+          class="mb-2"
+          src="assets/img/logotipo_color.png"
+          alt=""
+          width="150"
+      /></a>
+      <button
+        class="navbar-toggler position-absolute d-md-none collapsed"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#sidebarMenu"
+        aria-controls="sidebarMenu"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- drop usuario -->
+      <div class="flex-shrink-0 dropdown drop-user">
+        <a
+          href="#"
+          class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            src="https://github.com/mdo.png"
+            alt="mdo"
+            width="32"
+            height="32"
+            class="rounded-circle"
+          />
+        </a>
+        <ul class="dropdown-menu text-small shadow">
+          <li><a class="dropdown-item" href="#">Pedro Juan</a></li>
+          <li><a class="dropdown-item" href="#">Perfil</a></li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><hr class="dropdown-divider" /></li>
+          <li><a class="dropdown-item" href="#">Salir</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Navbar -->
+        <nav
+          id="sidebarMenu"
+          class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
+        >
+          <!-- Aca van los items de la sidebar -->
+        </nav>
+        <!-- Fin navbar -->
+        <!-- Main -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <!-- contenido -->
+          <!-- Barra superior -->
+          <div
+            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+          >
+            <h1 class="h2">Punto de Venta</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <div class="btn-group me-2">
+                <button id="btn-modal-addproducto" type="button" class="btn btn-sm btn-outline-secondary">
+                  <span data-feather="plus"></span>Agregar producto
+                </button>
+                <button id="btn-quitlastproduct" type="button" class="btn btn-sm btn-outline-secondary">
+                  <span data-feather="plus"></span>Quitar ultimo producto
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Fin Barra superior -->
+
+          <div class="table-responsive">
+            <!-- barra busqueda -->
+            <div class="table-search">
+              <input
+                class="form-control form-control-dark w-100 table-input-search"
+                type="text"
+                placeholder="Buscar"
+                id="caja-busqueda"
+              />
+
+              <button
+                id="btn-buscar-producto"
+                type="button"
+                class="btn btn-sm btn-outline-secondary"
+              >
+                <span data-feather="search"></span>Buscar
+              </button>
+            </div>
+
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">n°</th>
+                  <th scope="col">codigo</th>
+                  <th scope="col">Artiuclo</th>
+                  <th scope="col">Precio</th>
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">Subtotal</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="datos-tabla-detalleventa">
+                <!-- contenido de tabla -->
+              </tbody>
+            </table>
+          </div>
+          <div class= "row justify-content-between">
+             <div class="col">
+              <button id="btn-fin-sell" type="button" class="btn btn-primary">
+                <span data-feather="check"></span>Finalizar
+              </button>
+              <button id="btn-cancel-sell" type="button" class="btn btn-cancel">
+                <span data-feather="x"></span>Cancelar
+              </button>
+             </div>
+          </div>
+          <!-- Fin contenido -->
+        </main>
+        <!-- fin main -->
+      </div>
+    </div>
+
+    <!-- Modal editor producto -->
+    <div class="modal fade" id="modal-addproducto" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="titulo-modal-addproducto">
+              Productos
+            </h5>
+          </div>
+
+          <div class="modal-body">
+            <form>
+              <table class="table table-striped table-sm table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">n°</th>
+                    <th scope="col">codigo</th>
+                    <th scope="col">Artiuclo</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Cantidad</th>
+                  </tr>
+                </thead>
+                <tbody id="datos-tabla-addproducto">
+                  <!-- contenido de tabla -->
+                </tbody>
+              </table>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <div class="modal-actions-container">
+              <button
+              id="btn-okaddproduc"
+              type="button"
+              class="btn btn-primary"
+              >
+                OK
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="btn-canceladdproduc"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Nueva repa -->
+
+    <script src="lib/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+      integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="assets/js/ui.js"></script>
+    <script src="assets/js/ventas.js"></script>
+  </body>
+</html>
