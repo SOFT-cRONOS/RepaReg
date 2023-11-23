@@ -110,7 +110,7 @@ const getProductbyId = (id_producto) => {
     }); 
   };
 
-const loadtablleproduct = () => {
+const loadtableproduct = () => {
     const datosTabla = document.getElementById("datos-tabla-addproducto");
     const productos = getProduct();
     let html = "";
@@ -127,23 +127,20 @@ const loadtablleproduct = () => {
     });
   
     datosTabla.innerHTML = html;
-  
-    const botonesVer = document.getElementsByClassName("btn-ver");
-    const botonesEliminar = document.getElementsByClassName("btn-eliminar");
-  
-    for (const botonVer of botonesVer) {
-      botonVer.addEventListener("click", mostrarModalDetalleProducto);
-    }
-  
-    for (const botonEliminar of botonesEliminar) {
-      botonEliminar.addEventListener("click", eliminarProducto);
-    }
-  
-    feather.replace();
+}
+
+const getDatasell = () => {
+  //carga los datos de la venta seleccionada en ventana
 }
 
 const showmodaladdproduct = () => {
+    loadtableproduct();  
     modaladdproducto.show();
+}
+
+const showmodallastsell = () => {
+  //loadtableproduct();  
+  modallastsell.show();
 }
 
 const addproduct_to_sell = () => {
@@ -173,21 +170,94 @@ const closemodaladdproduct = () => {
     modaladdproducto.hide();
 }
 
+const closemodallastsell = () => {
+  modallastsell.hide();
+}
 //cerrar la venta
 const finishSell = () => {
-    //aca deveria ejecutar fectch para guardar venta
-}
-const btnokaddproduc = document.getElementById("btn-okaddproduc");
-btnokaddproduc.addEventListener("click", addproduct_to_sell);
+    //Lee cliente y guarda venta
+    
+    //Lee la tabla y lo carga en un json
+    const tabla = document.querySelector('#tabla-detalle');
+    const filas = tabla.querySelectorAll('tbody tr');
 
+    // Crear un array para almacenar los datos
+    const datos = [];
+
+    // Iterar sobre las filas, extrae datos y los manda a guardar
+    filas.forEach((fila) => {
+      const celdas = fila.querySelectorAll('td');
+
+      // Crear un objeto con los datos y agregarlo al array
+      const filaDatos = {
+        numero: celdas[0].textContent,
+        articulo: celdas[1].textContent,
+        precio: celdas[2].textContent,
+        cantidad: celdas[3].textContent,
+        subtotal: celdas[4].textContent
+      };
+
+      //datos.push(filaDatos);
+      // Convertir a formato JSON
+      const filaDatosJson = JSON.stringify(filaDatos);
+      console.log(filaDatosJson);
+
+      //manda cada renglon al fetch
+      saveSelldetail(filaDatosJson);
+
+    });
+} 
+
+const saveSelldetail = (Datos) => {
+    //aca deveria ejecutar fectch para guardar venta
+    const requestOptions = {
+      method : 'POST',
+      headers:{
+          'Content-Type': 'application/json',
+          'x-access-token': token,
+          'user-id': id
+          },
+      body: Datos,
+    }
+  fetch(`http://127.0.0.1:4500/client/${id}/save`, requestOptions)
+  .then(
+  resp => {
+      return resp.json()
+  })
+  .then(resp => {
+      console.log(resp)
+  })
+}
+
+//boton finalizar venta
+const btnfinsell = document.getElementById("btn-fin-sell");
+btnfinsell.addEventListener("click", finishSell)
+//boton cancelar venta
 const btncanceladdproduc = document.getElementById("btn-canceladdproduc");
 btncanceladdproduc.addEventListener("click", closemodaladdproduct);
 
+//botones y modal de ultimas ventas
+const modallastsell = new bootstrap.Modal("#modal-lastsells");
+
+const btnseesell = document.getElementById("btn-seesell");
+btnseesell.addEventListener("click", getDatasell)
+const btnexitlastsell = document.getElementById("btn-exitlastsell")
+btnexitlastsell.addEventListener("click", closemodallastsell)
+
+
+//botones y modal de agregar producto a venta
+const btnokaddproduc = document.getElementById("btn-okaddproduc");
+btnokaddproduc.addEventListener("click", addproduct_to_sell);
+
+//botones barra superior
 const btnaddproducto = document.getElementById("btn-modal-addproducto");
 btnaddproducto.addEventListener("click", showmodaladdproduct);
 const modaladdproducto = new bootstrap.Modal("#modal-addproducto");
+const btnlastsells = document.getElementById("btn-modal-lastsells");
+btnlastsells.addEventListener("click", showmodallastsell);
 
-const tablaselldetail = document.getElementById('datos-tabla-detalleventa')
+//tabla productos 
+const tablaselldetail = document.getElementById('datos-tabla-detalleventa');
 const tablaproduct = document.getElementById('datos-tabla-addproducto');
 
 tablaproduct.addEventListener('click', function (e) {
@@ -210,4 +280,3 @@ tablaproduct.addEventListener('click', function (e) {
   });
 
 
-  loadtablleproduct();  

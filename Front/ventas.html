@@ -101,47 +101,77 @@
                 <button id="btn-quitlastproduct" type="button" class="btn btn-sm btn-outline-secondary">
                   <span data-feather="plus"></span>Quitar ultimo producto
                 </button>
+                <button id="btn-modal-lastsells" type="button" class="btn btn-sm btn-outline-secondary">
+                  <span data-feather="plus"></span>Ultimas ventas
+                </button>
               </div>
             </div>
           </div>
           <!-- Fin Barra superior -->
 
-          <div class="table-responsive">
-            <!-- barra busqueda -->
-            <div class="table-search">
-              <input
-                class="form-control form-control-dark w-100 table-input-search"
-                type="text"
-                placeholder="Buscar"
-                id="caja-busqueda"
-              />
 
-              <button
-                id="btn-buscar-producto"
-                type="button"
-                class="btn btn-sm btn-outline-secondary"
-              >
-                <span data-feather="search"></span>Buscar
-              </button>
+          <!-- factura -->
+          <div id= "body-sell">
+            <div class="row" id="body-sell">
+              <div class="col-4">
+                <!-- Desplegable select cliente -->
+                <div class="form-outline">
+                  <label class="form-label" for="select-client">Cliente</label>
+                  <select id="select-client" class="form-select" aria-label="Cliente">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>             
+                </div>
+                <!-- Desplegable select metodo pago -->
+                <div class="form-outline">
+                  <label class="form-label" for="select-client">Forma de pago</label>
+                  <select id="select-client" class="form-select" aria-label="Cliente">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>             
+                </div>
+              </div>
+              <div class="col">
+                <div class="row mt-4">
+                  <div class="col-4">
+                    <p><strong>Cliente:</strong> <span id="cliente">Juan Pérez</span></p>
+                    <p><strong>Direccion:</strong> <span id="direccion">Juan Pérez 220</span></p>
+                    <p><strong>Telefono:</strong> <span id="telefono">4124124</span></p>
+                  </div>
+                  <div class="col-6 text-start">
+                    <p><strong>Número de factura:</strong> <span id="nfactura">564654</span></p>
+                    <p><strong>Fecha:</strong> <span id="fecha">18 de noviembre de 2023</span></p>
+                    <!-- más detalles -->
+                  </div>
+                </div>
+              </div>
             </div>
-
-            <table class="table table-striped table-sm">
-              <thead>
-                <tr>
-                  <th scope="col">n°</th>
-                  <th scope="col">codigo</th>
-                  <th scope="col">Artiuclo</th>
-                  <th scope="col">Precio</th>
-                  <th scope="col">Cantidad</th>
-                  <th scope="col">Subtotal</th>
-                  <th scope="col">Acciones</th>
-                </tr>
-              </thead>
-              <tbody id="datos-tabla-detalleventa">
-                <!-- contenido de tabla -->
-              </tbody>
-            </table>
+            <br>
+            <!-- Fin Encabezado factura -->
+            <!-- tabla de detalle de venta  -->
+            <div class="table-responsive">
+              <table id="tabla-detalle" class="table table-striped table-sm tabla-d">
+                <thead>
+                  <tr>
+                    <th scope="col">n°</th>
+                    <th scope="col">Artiuclo</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Subtotal</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="datos-tabla-detalleventa">
+                  <!-- contenido de tabla -->
+                </tbody>
+              </table>
+            </div>
           </div>
+          <!-- botones contro de venta  -->
           <div class= "row justify-content-between">
              <div class="col">
               <button id="btn-fin-sell" type="button" class="btn btn-primary">
@@ -150,15 +180,19 @@
               <button id="btn-cancel-sell" type="button" class="btn btn-cancel">
                 <span data-feather="x"></span>Cancelar
               </button>
+              <button id="btn-generarPDF" type="button" class="btn btn-ver">
+                <span data-feather="printer"></span>PDF
+              </button>
              </div>
           </div>
+          
           <!-- Fin contenido -->
         </main>
         <!-- fin main -->
       </div>
     </div>
 
-    <!-- Modal editor producto -->
+    <!-- Modal agregar producto a venta -->
     <div class="modal fade" id="modal-addproducto" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -174,7 +208,6 @@
                 <thead>
                   <tr>
                     <th scope="col">n°</th>
-                    <th scope="col">codigo</th>
                     <th scope="col">Artiuclo</th>
                     <th scope="col">Precio</th>
                     <th scope="col">Cantidad</th>
@@ -209,6 +242,57 @@
       </div>
     </div>
     <!-- Modal Nueva repa -->
+    
+    <!-- Modal Ultimas ventas -->
+    <div class="modal fade" id="modal-lastsells" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="titulo-modal-lastsells">
+              Ultimas ventas
+            </h5>
+          </div>
+
+          <div class="modal-body">
+            <form>
+              <table class="table table-striped table-sm table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">n°</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">total</th>
+                  </tr>
+                </thead>
+                <tbody id="datos-tabla-lastsells">
+                  <!-- contenido de tabla -->
+                </tbody>
+              </table>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <div class="modal-actions-container">
+              <button
+              id="btn-seesell"
+              type="button"
+              class="btn btn-primary"
+              >
+                Ver
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="btn-exitlastsell"
+              >
+                Salir
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Nueva repa -->
+    
 
     <script src="lib/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
 
@@ -222,5 +306,6 @@
 
     <script src="assets/js/ui.js"></script>
     <script src="assets/js/ventas.js"></script>
+
   </body>
 </html>
