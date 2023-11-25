@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify, after_this_request
-
+from flask_cors import CORS
 #bd
 from db.BDconfig import mysql
 
@@ -8,6 +8,9 @@ from routes.routeSell import sellHandle
 
 app = Flask(__name__)
 
+
+CORS(app) # habilita las consultas externas ej navegador
+app.config['CORS_HEADERS'] = 'Content-Type'# habilita las consultas externas ej navegador
 
 
 # Configura el directorios por defecto

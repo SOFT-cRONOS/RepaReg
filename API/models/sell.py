@@ -1,6 +1,6 @@
 #bd
 from db.BDconfig import *
-
+import json
 class Sell():
     def __init__(self, row):
         self.id_factura = row[0]
@@ -50,17 +50,55 @@ class Sell():
 
     #create
     def newSell(data):
-        n_factura = data[1]
-        tipo = data[2]
-        fecha = data[3]
-        fecha_emision = data[4]
-        id_transaccion = data[5]
-        descuento = data[6]
-        subtotal = data[7]
-        id_cliente = data[8]
-        id_responsable = data[9]
-        estado_pago = data[10]
-        return data
+        #leo el encabezado de factura
+        n_factura = data["n_factura"]
+        tipo  = data["tipo"]
+        fecha = data["fecha"]
+        fecha_emision = data["fecha_emision"]
+        id_transaccion = data["id_transaccion"]
+        descuento = data["descuento"] #se tiene q calcular aca
+        subtotal = data["subtotal"] #se tiene q calcular aca
+        total = 2000 #se tiene q calcular aca
+        id_cliente = data["id_cliente"]
+        id_responsable = data["id_responsable"]
+        estado_pago = data["estado_pago"]
+        detalle = json.loads(data["detalle"])
+       
+        try:
+            cur = mysql.cursor()
+            cur.execute('''
+                INSERT INTO `factura` 
+                (`n_factura`, `tipo`, `fecha`, `fecha_emision`, `descuento`, `subtotal`, `total`, `id_cliente`, `id_responsable`, `estado_pago`) 
+                VALUES 
+                (%s, %s, '2023-11-24', '2023-11-24', %s, %s, %s, %s, %s, %s)
+            ''', (n_factura, tipo, descuento, subtotal, total, id_cliente, id_responsable, estado_pago))
+
+            # Obtener el último id_factura insertado
+            cur.execute('SELECT LAST_INSERT_ID()')
+            ultimo_id_factura = cur.fetchone()[0]
+
+            # recorrer el detalle
+            for fila in detalle:
+                id_producto = fila['numero']
+                articulo = fila['articulo']
+                precio = fila['precio'] #se tiene q calcular aca
+                cantidad = fila['cantidad'] 
+                subtotal = fila['subtotal'] #se tiene q calcular aca
+                cur.execute('''
+                            INSERT INTO detalle_factura
+                            (id_factura, id_producto, detalle, cantidad, precio_unit, descuento_unit) VALUES
+                            (%s, %s, %s, %s, %s, %s)
+                            ''',
+                            (ultimo_id_factura, id_producto, "detalle test", cantidad, 250, 0))
+                
+            mysql.commit()
+
+            return {"mensaje": "Venta registrada correctamente"}
+
+        except Exception as e:
+            # Si hay un error durante el commit, deshacer los cambios y devolver un mensaje de error
+            mysql.rollback()
+            return {"error": f"Error durante la venta: {str(e)}"}
 
     #geters
     def getAll():

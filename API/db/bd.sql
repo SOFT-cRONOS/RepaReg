@@ -327,7 +327,9 @@ INSERT INTO `factura`
 ('1', '000001', 'c', '2023-11-24', '2023-11-24', NULL, '0', '1200', '1200', '2', '1', 'pagado') 
 -- al generar una factura se debe pasar el estado de la transaccion de reparado a terminado
 -- tomar el valor de la reparacion y cargarlo en el detalle.
-
+INSET INTO detalle_factura
+(id_factura, id_producto, detalle, cantidad, precio_unit, descuento_unit) VALUES
+('1', '1', 'test1', 1, 200, 0);
 
 CREATE TABLE tipo_pago (
     id_tipopago INT AUTO_INCREMENT PRIMARY KEY,
@@ -351,7 +353,6 @@ CREATE TABLE detalle_pago (
     FOREIGN KEY (id_factura) REFERENCES factura(id_factura),
     FOREIGN KEY (id_tipopago) REFERENCES tipo_pago(id_tipopago)
 );
-
 
 -- ## Fin seccion Facturacion ##
 

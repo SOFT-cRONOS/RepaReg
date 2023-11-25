@@ -19,17 +19,7 @@ def sells(id):
     elif request.method == 'POST':
         data = []
         #lee el post
-        #data[0] = request.get_json()["code"]
-        data[1] = request.get_json()["n_factura"]
-        data[2]  = request.get_json()["tipo"]
-        data[3] = request.get_json()["fecha"]
-        data[4] = request.get_json()["fecha_emision"]
-        data[5] = request.get_json()["id_transaccion"]
-        data[6] = request.get_json()["descuento"]
-        data[7] = request.get_json()["subtotal"]
-        data[8] = request.get_json()["id_cliente"]
-        data[9] = request.get_json()["id_responsable"]
-        data[10] = request.get_json()["estado_pago"]
+        data = request.get_json()
         try:
             newventa = Sell.newSell(data)
             return jsonify(newventa)

@@ -2,6 +2,9 @@
 //import { obtenerClientes, obtenerClientesporid } from '/clientes.js';
 
 let GidProducto = 0;
+let Gid_cliente = 0;
+let GmodCash = "";
+
 const obtenerClientes = () => {
   const clientes = [
     {
@@ -212,7 +215,7 @@ const getProductbyId = (id_producto) => {
       console.error('Error al obtener el producto:', error);
       throw error; // devuelve error
     }); 
-  };
+};
 
 const loadtableproduct = () => {
     const datosTabla = document.getElementById("datos-tabla-addproducto");
@@ -267,7 +270,7 @@ const getSells = () => {
       "tipo": "c"
     }
   ]
-  return tester  
+  //return tester  
   //solicitud fetch
   // config de token
   //const id = localStorage.getItem('id');
@@ -275,12 +278,12 @@ const getSells = () => {
   //const token = localStorage.getItem('token')
 
   const requestOptions = {
-  method : 'GET'
-  // headers:{
-  //     'Content-Type': 'application/json',
-  //     'x-access-token': token,
-  //     'user-id': id
-  //     }
+  method : 'GET',
+  headers:{
+       'Content-Type': 'application/json'
+       //'x-access-token': token,
+       //'user-id': id
+       }
   }
   // fin config de token
   
@@ -297,18 +300,20 @@ const getSells = () => {
 
 const loadtableslastsell = () => {
   const datosTabla = document.getElementById("datos-tabla-lastsells");
-  const lastsells = getSells();
-  let html = "";
+  getSells()
+  .then(resp => {
+    let html = "";
 
-  //Dibujar la tabla de productos
-  lastsells.forEach((lastsell) => {
-    html += `<tr>
-              <td>${lastsell.n_factura}</td>
-              <td>${lastsell.fecha_emision}</td>
-              <td>${lastsell.subtotal}</td>
-            </tr>`;
-  });
-  datosTabla.innerHTML = html;
+    //Dibujar la tabla de productos
+    resp.forEach((row) => {
+      html += `<tr>
+                <td>${row.n_factura}</td>
+                <td>${row.fecha_emision}</td>
+                <td>${row.subtotal}</td>
+              </tr>`;
+    });
+    datosTabla.innerHTML = html;
+  })
 }
 
 const showmodallastsell = () => {
@@ -350,7 +355,7 @@ const closemodallastsell = () => {
 const finishSell = () => {
     //Lee cliente y guarda venta
     
-    //Lee la tabla y lo carga en un json
+    //Lee la tabla detalle 
     const tabla = document.querySelector('#tabla-detalle');
     const filas = tabla.querySelectorAll('tbody tr');
 
@@ -370,29 +375,46 @@ const finishSell = () => {
         subtotal: celdas[4].textContent
       };
 
-      //datos.push(filaDatos);
+      //agrega la filla al array
+      datos.push(filaDatos);
       // Convertir a formato JSON
-      const filaDatosJson = JSON.stringify(filaDatos);
-      console.log(filaDatosJson);
-
-      //manda cada renglon al fetch
-      saveSelldetail(filaDatosJson);
-
     });
+    //convierte la tabla detalle a json
+    const sellDetails = JSON.stringify(datos);
+    
+
+    //Lee el encabezado de factura:
+    const datosFactura = JSON.stringify({
+      n_factura: "24124",
+      tipo: "c",
+      fecha: new Date(),
+      fecha_emision: new Date(),
+      id_transaccion: null,
+      descuento: 0,
+      subtotal: 2000,
+      id_cliente: Gid_cliente,
+      id_responsable: 1,
+      estado_pago: "pagado",
+      detalle: sellDetails
+    })
+    //console.log(datosFactura);
+    saveSell(datosFactura);
+
 } 
 
-const saveSelldetail = (Datos) => {
+const saveSell = (Datos) => {
     //aca deveria ejecutar fectch para guardar venta
+    const id = 1;
     const requestOptions = {
       method : 'POST',
       headers:{
           'Content-Type': 'application/json',
-          'x-access-token': token,
+          //'x-access-token': token,
           'user-id': id
           },
       body: Datos,
     }
-  fetch(`http://127.0.0.1:4500/client/${id}/save`, requestOptions)
+  fetch(`http://127.0.0.1:5000/sell/${id}`, requestOptions)
   .then(
   resp => {
       return resp.json()
@@ -417,16 +439,18 @@ const phoneSpan = document.getElementById('datatelefono');
 //Drop select tipo pago
 const dropModcash = document.getElementById("select-modpago");
 dropModcash.addEventListener("click", function () {
-  const modCash = this.options[this.selectedIndex].value;
-  console.log(modCash)
+  GmodCash = this.options[this.selectedIndex].value;
+  console.log(GmodCash)
 })
 
 //select cliente desplegable
+
 const dropClient = document.getElementById("select-client");
 dropClient.addEventListener("change", function () {
   //Obtiene datos del cliente
-  const id_cliente = this.options[this.selectedIndex].value;
-  const client = obtenerClientesporid(id_cliente);
+  Gid_cliente = this.options[this.selectedIndex].value;
+  console.log(Gid_cliente);
+  const client = obtenerClientesporid(Gid_cliente);
   // Actualizar el contenido del span con el valor seleccionado del select
   clientSpan.innerText = client.nombre;
   dirSpan.innerText = client.direccion;
