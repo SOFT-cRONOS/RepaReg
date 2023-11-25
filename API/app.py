@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify, after_this_request
 
+
 app = Flask(__name__)
 
 # Configura el directorios por defecto
@@ -22,6 +23,7 @@ def index():
 #     return render_template('items/new_item.html')
 
 
+
 @app.route('/hello', methods=['GET'])
 def hello():
     @after_this_request
@@ -29,7 +31,7 @@ def hello():
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
-    jsonResp = {'jack': 4098, 'sape': 4139}
+    jsonResp = {'jack2': 4098, 'sape': 4139}
     print(jsonResp)
     return jsonify(jsonResp)
 

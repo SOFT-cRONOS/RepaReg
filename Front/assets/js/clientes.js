@@ -1,144 +1,57 @@
+let idClienteSeleccionado = null;
+
+const URL_BASE = 'http://localhost:5200';
+
 const MODOS_MODAL = {
-  nuevo: "nuevo",
-  ver: "ver",
-  edicion: "edicion",
+  nuevo: 'nuevo',
+  ver: 'ver',
+  edicion: 'edicion',
 };
 let idCliente = 0;
 let modoModal = MODOS_MODAL.nuevo;
 
 //elementos del modal
-const modalClientes = new bootstrap.Modal("#modal-clientes");
-const btnEditarCliente = document.getElementById("btn-editar-cliente");
-const buscbtnNuevoCliente = document.getElementById("btn-nuevo-cliente");
-const btnGuardarCliente = document.getElementById("btn-guardar-cliente");
-const btnBuscarCliente = document.getElementById("btn-buscar-cliente");
-const btnCerrarModalCliente = document.getElementById("btn-cerrar-modal-cliente");
-const tituloModalClientes = document.getElementById("titulo-modal-clientes");
+const modalClientes = new bootstrap.Modal('#modal-clientes');
+const btnEditarCliente = document.getElementById('btn-editar-cliente');
+const buscbtnNuevoCliente = document.getElementById('btn-nuevo-cliente');
+const btnGuardarCliente = document.getElementById('btn-guardar-cliente');
+const btnBuscarCliente = document.getElementById('btn-buscar-cliente');
+const btnCerrarModalCliente = document.getElementById(
+  'btn-cerrar-modal-cliente'
+);
+const tituloModalClientes = document.getElementById('titulo-modal-clientes');
 //input del modal
-const inputNombre = document.getElementById("nombre");
-const inputApellido = document.getElementById("apellido");
-const inputDni = document.getElementById("dni"); 
-const inputtelefono = document.getElementById("telefono");
-const inputfoto = document.getElementById("foto"); 
+const inputNombre = document.getElementById('nombre');
+const inputApellido = document.getElementById('apellido');
+const inputCuitCuil = document.getElementById('cuit-cuil');
+const inputTelefono = document.getElementById('telefono');
+const inputDireccion = document.getElementById('direccion');
+const inputEmail = document.getElementById('email');
 
-const obtenerClientes = () => {
-  const clientes = [
-    {
-      id: 15,
-      nombre: "Steve Jobs",
-      foto: "https://cdn-icons-png.flaticon.com/512/4792/4792929.png",
-      dni: "58.256.3236",
-      telefono: "11 6726-3106",
-    },
-    {
-      id: 158,
-      nombre: "Bill Gates",
-      foto: "IMG",
-      dni: "28.256.3236",
-      telefono: "11 1122-6598",
-    },
-    {
-      id: 358,
-      nombre: "Richard Stallman",
-      foto: "IMG",
-      dni: "35.153.884",
-      telefono: "11 2212-2356",
-    },
-    ,
-    {
-      id: 918,
-      nombre: "Elon Musk",
-      foto: "IMG",
-      dni: "45.252.112",
-      telefono: "11 3344-5566",
-    },
-  ];
+const obtenerClientes = async () => {
+  const url = `${URL_BASE}/clientes`;
 
-  return clientes;
+  const response = await fetch(url);
+  const data = await response.json();
 
-  //solicitud fetch
-  // config de token
-  const id = localStorage.getItem('id');
-  const token = localStorage.getItem('token')
-
-  const requestOptions = {
-  method : 'GET',
-  headers:{
-      'Content-Type': 'application/json',
-      'x-access-token': token,
-      'user-id': id
-      }
-  }
-  // fin config de token
-  
-  
-  //link a items retorna la respuesta del back
-  return fetch(`http://localhost:5200/user/${id}/client`, requestOptions)
-  .then(
-    resp => {return resp.json()
-    })
-  .catch(error => {
-    console.error('Error al obtener los clientes:', error);
-    throw error; // devuelve error
-  }); 
+  return data;
 };
 
-const obtenerClientesporid = (id_cliente) => {
-  const clientes =
-    {
-      id: 15,
-      nombre: "Steve Jobs",
-      apellido: "pedrito",
-      foto: "https://cdn-icons-png.flaticon.com/512/4792/4792929.png",
-      dni: "58.256.3236",
-      telefono: "11 6726-3106",
-    }
+const mostrarClientesEnTabla = async () => {
+  const clientes = await obtenerClientes();
+  const datosTabla = document.getElementById('datos-tabla');
 
-  return clientes;
-
-  //solicitud fetch
-  // config de token
-  const id = localStorage.getItem('id');
-  const token = localStorage.getItem('token')
-
-  const requestOptions = {
-  method : 'GET',
-  headers:{
-      'Content-Type': 'application/json',
-      'x-access-token': token,
-      'user-id': id
-      }
-  }
-  // fin config de token
-  
-  
-  //link a items retorna la respuesta del back
-  return fetch(`http://localhost:5200/user/${id}/client/${id_cliente}`, requestOptions)
-  .then(
-    resp => {return resp.json()
-    })
-  .catch(error => {
-    console.error('Error al obtener los clientes:', error);
-    throw error; // devuelve error
-  }); 
-};
-
-const mostrarClientesEnTabla = () => {
-  const clientes = obtenerClientes();
-  const datosTabla = document.getElementById("datos-tabla");
-
-  let html = "";
+  let html = '';
 
   //Dibujar la tabla de clientes
   clientes.forEach((cliente) => {
     html += `<tr>
               <td>${cliente.nombre}</td>
               <td>${cliente.apellido}</td>
-              <td>${cliente.cuitCuil}</td>
+              <td>${cliente.cuit_cuil}</td>
               <td>${cliente.direccion}</td>
               <td>${cliente.email}</td>
               <td>${cliente.telefono}</td>
-              <td><img src="${cliente.foto}" width="50px"></td>
               <td>
                 <button data-id-cliente="${cliente.id}" class="btn btn-ver" >
                   <span data-feather="eye"></span>Ver
@@ -153,71 +66,69 @@ const mostrarClientesEnTabla = () => {
 
   datosTabla.innerHTML = html;
 
-  const botonesVer = document.getElementsByClassName("btn-ver");
-  const botonesEliminar = document.getElementsByClassName("btn-eliminar");
+  const botonesVer = document.getElementsByClassName('btn-ver');
+  const botonesEliminar = document.getElementsByClassName('btn-eliminar');
 
   for (const botonVer of botonesVer) {
-    botonVer.addEventListener("click", mostrarModalDetalleCliente);
+    botonVer.addEventListener('click', mostrarModalDetalleCliente);
   }
 
   for (const botonEliminar of botonesEliminar) {
-    botonEliminar.addEventListener("click", eliminarCliente);
+    botonEliminar.addEventListener('click', eliminarCliente);
   }
 
   feather.replace();
 };
 
-const mostrarModalDetalleCliente = (event) => {
-  idCliente = event.target.getAttribute("data-id-cliente");
+const mostrarModalDetalleCliente = async (event) => {
+  idCliente = event.target.getAttribute('data-id-cliente');
 
-  console.log("Mostrar el detalle del cliente", idCliente);
+  console.log(event.target);
+
+  idClienteSeleccionado = idCliente;
+
+  const url = `${URL_BASE}/clientes/${idCliente}`;
+
+  const response = await fetch(url);
+  const { nombre, apellido, cuit_cuil, direccion, email, telefono } =
+    await response.json();
+
+  inputNombre.value = nombre;
+  inputApellido.value = apellido;
+  inputCuitCuil.value = cuit_cuil;
+  inputDireccion.value = direccion;
+  inputEmail.value = email;
+  inputTelefono.value = telefono;
 
   cambiarEstadoModal(MODOS_MODAL.ver);
   modalClientes.show();
 };
 
 const eliminarCliente = (event) => {
-  const idCliente = event.target.getAttribute("data-id-cliente");
+  const idCliente = event.target.getAttribute('data-id-cliente');
 
   Swal.fire({
-    text: "¿Realmente desde eliminar el cliente?",
-    icon: "question",
+    text: '¿Realmente desde eliminar el cliente?',
+    icon: 'question',
     showCancelButton: true,
-    //esto lo deberia configurar la clase
-    //confirmButtonColor: "#77669d",
-    confirmButtonClass: "btn-primary",
-    //cancelButtonColor: "#b9b8c9",
-    cancelButtonClass: "btn-cancel",
-    confirmButtonText: "Aceptar",
-    cancelButtonText: "Cancelar",
-  }).then((result) => {
+    confirmButtonClass: 'btn-primary',
+    cancelButtonClass: 'btn-cancel',
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar',
+  }).then(async (result) => {
     if (result.isConfirmed) {
-      alert("Eliminar cliente " + idCliente);
-      //solicitud fetch
-      // config de token
-      const id = localStorage.getItem('id');
-      const token = localStorage.getItem('token')
+      const url = `${URL_BASE}/clientes/${idCliente}`;
 
-      const requestOptions = {
-      method : 'PUT',
-      headers:{
-          'Content-Type': 'application/json',
-          'x-access-token': token,
-          'user-id': id
-          }
-      }
-      // fin config de token
-      
-      
-      //link a items retorna la respuesta del back
-      return fetch(`http://localhost:5200/user/${id}/client/${idCliente}`, requestOptions)
-      .then(
-        resp => {return resp.json()
-        })
-      .catch(error => {
-        console.error('Error al actualizar cliente:', error);
-        throw error; // devuelve error
-      });}
+      const response = await fetch(url, {
+        method: 'DELETE',
+
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      await response.json();
+
+      mostrarClientesEnTabla();
+    }
   });
 };
 
@@ -226,20 +137,43 @@ const mostrarModalClientes = () => {
   modalClientes.show();
 };
 
-const guardarCliente = () => {
-  const nombre = document.getElementById("nombre").value;
+const guardarCliente = async () => {
+  const nombre = document.getElementById('nombre').value;
+  const apellido = document.getElementById('apellido').value;
+  const cuit_cuil = document.getElementById('cuit-cuil').value;
+  const direccion = document.getElementById('direccion').value;
+  const email = document.getElementById('email').value;
+  const telefono = document.getElementById('telefono').value;
 
-  console.log(nombre);
+  let url = `${URL_BASE}/clientes`;
+  let method = 'POST';
+
+  if (modoModal === MODOS_MODAL.edicion) {
+    url += `/${idClienteSeleccionado}`;
+    method = 'PUT';
+  }
+
+  const data = { nombre, apellido, direccion, cuit_cuil, email, telefono };
+
+  const response = await fetch(url, {
+    method,
+    body: JSON.stringify(data),
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  await response.json();
+
+  mostrarClientesEnTabla();
 
   modalClientes.hide();
 };
 
 const buscarCliente = () => {
-  const cajaBusqueda = document.getElementById("caja-busqueda");
+  const cajaBusqueda = document.getElementById('caja-busqueda');
 
   const textoBuscado = cajaBusqueda.value;
 
-  console.log("Buscar el cliente...", textoBuscado);
+  console.log('Buscar el cliente...', textoBuscado);
 };
 
 const editarCliente = () => {
@@ -249,64 +183,55 @@ const editarCliente = () => {
 const cambiarEstadoModal = (nuevoModoModal) => {
   modoModal = nuevoModoModal;
   if (nuevoModoModal === MODOS_MODAL.nuevo) {
-    tituloModalClientes.innerHTML = "Nuevo Cliente";
-    input_state("clear");
-    input_state("enabled");
-    btnEditarCliente.style.display = "none";
-    btnGuardarCliente.style.display = "block";
-    btnCerrarModalCliente.innerHTML = "Cancelar";
-  } else if (nuevoModoModal === MODOS_MODAL.ver) {
+    idCliente = null;
 
-    const cliente = obtenerClientesporid(idCliente);
+    tituloModalClientes.innerHTML = 'Nuevo Cliente';
 
+    inputNombre.value = '';
+    inputApellido.value = '';
+    inputCuitCuil.value = '';
+    inputDireccion.value = '';
+    inputEmail.value = '';
+    inputTelefono.value = '';
 
-    tituloModalClientes.innerHTML = "Ver Cliente";
-    input_state("disabled");
-    inputNombre.value = cliente.nombre;
-    inputApellido.value = cliente.apellido;
-    inputDni.value = cliente.dni;
-    inputtelefono.value = cliente.telefono;
-    inputfoto.value = cliente.foto;
-
-    btnEditarCliente.style.display = "block";
-    btnGuardarCliente.style.display = "none";
-    btnCerrarModalCliente.innerHTML = "Cerrar";
-  } else if (nuevoModoModal === MODOS_MODAL.edicion) {
-    tituloModalClientes.innerHTML = "Editar Cliente";
-
-    input_state("enabled");
-
-    btnEditarCliente.style.display = "none";
-    btnCerrarModalCliente.innerHTML = "Cancelar";
-    btnGuardarCliente.style.display = "block";
-  }
-};
-
-//controla los estados de los input
-//enabled, disabled, clear
-const input_state = (estado) => {
-  if (estado == "disabled") {
-    inputNombre.disabled = true;
-    inputApellido.disabled = true;
-    inputDni.disabled = true;
-    inputtelefono.disabled = true;
-    inputfoto.disabled = true;
-  }
-  if (estado == "enabled") {
     inputNombre.disabled = false;
     inputApellido.disabled = false;
-    inputDni.disabled = false;
-    inputtelefono.disabled = false;
-    inputfoto.disabled = false;
+    inputCuitCuil.disabled = false;
+    inputDireccion.disabled = false;
+    inputEmail.disabled = false;
+    inputTelefono.disabled = false;
+
+    btnEditarCliente.style.display = 'none';
+    btnGuardarCliente.style.display = 'block';
+    btnCerrarModalCliente.innerHTML = 'Cancelar';
+  } else if (nuevoModoModal === MODOS_MODAL.ver) {
+    tituloModalClientes.innerHTML = 'Ver Cliente';
+
+    inputNombre.disabled = true;
+    inputApellido.disabled = true;
+    inputCuitCuil.disabled = true;
+    inputDireccion.disabled = true;
+    inputEmail.disabled = true;
+    inputTelefono.disabled = true;
+
+    btnEditarCliente.style.display = 'block';
+    btnGuardarCliente.style.display = 'none';
+    btnCerrarModalCliente.innerHTML = 'Cerrar';
+  } else if (nuevoModoModal === MODOS_MODAL.edicion) {
+    tituloModalClientes.innerHTML = 'Editar Cliente';
+
+    inputNombre.disabled = false;
+    inputApellido.disabled = false;
+    inputCuitCuil.disabled = false;
+    inputDireccion.disabled = false;
+    inputEmail.disabled = false;
+    inputTelefono.disabled = false;
+
+    btnEditarCliente.style.display = 'none';
+    btnCerrarModalCliente.innerHTML = 'Cancelar';
+    btnGuardarCliente.style.display = 'block';
   }
-  if (estado == "clear") {
-    inputNombre.value = "";
-    inputApellido.value = "";
-    inputDni.value = "";
-    inputtelefono.value = "";
-    inputfoto.value = "";
-  }
-}
+};
 
 const handleCerrarModal = () => {
   console.log({ modoModal });
@@ -318,12 +243,12 @@ const handleCerrarModal = () => {
   }
 };
 
-buscbtnNuevoCliente.addEventListener("click", mostrarModalClientes);
-btnGuardarCliente.addEventListener("click", guardarCliente);
-btnBuscarCliente.addEventListener("click", buscarCliente);
+buscbtnNuevoCliente.addEventListener('click', mostrarModalClientes);
+btnGuardarCliente.addEventListener('click', guardarCliente);
+btnBuscarCliente.addEventListener('click', buscarCliente);
 
-btnEditarCliente.addEventListener("click", editarCliente);
+btnEditarCliente.addEventListener('click', editarCliente);
 
-btnCerrarModalCliente.addEventListener("click", handleCerrarModal);
+btnCerrarModalCliente.addEventListener('click', handleCerrarModal);
 
 mostrarClientesEnTabla();

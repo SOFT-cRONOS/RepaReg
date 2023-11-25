@@ -157,7 +157,7 @@ Iconos personalizados
   fill: aqua;
   width: 16px; /* Establece el ancho deseado */
   height: 16px; /* Establece la altura deseada */
-  background-image: url("../img/iconos/eye.svg"); /* Ruta al archivo SVG */
+  background-image: url('../img/iconos/eye.svg'); /* Ruta al archivo SVG */
   background-size: cover;
   display: inline-block;
   margin-right: 5px; /* Añade un margen a la derecha si es necesario */
@@ -214,4 +214,8 @@ Iconos personalizados
 
 .modal-actions-container button {
   margin-left: 10px;
+}
+
+td {
+  vertical-align: middle;
 }
