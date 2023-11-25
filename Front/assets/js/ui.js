@@ -36,7 +36,7 @@ const showSidebar = () => {
                                   </li>
   
                                   <li class="nav-item">
-                                    <a class="nav-link" href="usuarios.html">
+                                    <a class="nav-link" href="ventas.html">
                                         <span data-feather="dollar-sign"></span>
                                         Ventas
                                     </a>
