@@ -28,10 +28,15 @@ const inputDescripcion = document.getElementById('descripcion');
 const tituloModalServicios = document.getElementById('titulo-modal-servicios');
 
 const obtenerServicios = async () => {
+<<<<<<< HEAD
   const authToken = getAuthToken();
 
   const url = `${URL_BASE}/servicios?authToken=${authToken}`;
 
+=======
+  const url = `${URL_BASE}/servicios`;
+
+>>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
   const response = await fetch(url);
   const data = await response.json();
 
@@ -83,9 +88,13 @@ const mostrarModalDetalleServicio = async (event) => {
 
   idServicioSeleccionado = idServicio;
 
+<<<<<<< HEAD
   const authToken = getAuthToken();
 
   const url = `${URL_BASE}/servicios/${idServicio}?authToken=${authToken}`;
+=======
+  const url = `${URL_BASE}/servicios/${idServicio}`;
+>>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
 
   const response = await fetch(url);
   const { nombre, precio, descripcion } = await response.json();
@@ -111,9 +120,13 @@ const eliminarServicio = (event) => {
     cancelButtonText: 'Cancelar',
   }).then(async (result) => {
     if (result.isConfirmed) {
+<<<<<<< HEAD
       const authToken = getAuthToken();
 
       const url = `${URL_BASE}/servicios/${idServicio}?authToken=${authToken}`;
+=======
+      const url = `${URL_BASE}/servicios/${idServicio}`;
+>>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
 
       const response = await fetch(url, {
         method: 'DELETE',
@@ -138,8 +151,11 @@ const guardarServicio = async () => {
   const precio = document.getElementById('precio').value;
   const descripcion = document.getElementById('descripcion').value;
 
+<<<<<<< HEAD
   const authToken = getAuthToken();
 
+=======
+>>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
   let url = `${URL_BASE}/servicios`;
   let method = 'POST';
 
@@ -148,8 +164,11 @@ const guardarServicio = async () => {
     method = 'PUT';
   }
 
+<<<<<<< HEAD
   url += `?authToken=${authToken}`;
 
+=======
+>>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
   const data = { nombre, precio, descripcion };
 
   const response = await fetch(url, {

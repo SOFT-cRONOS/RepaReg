@@ -1,6 +1,10 @@
 from API import app
 from API.models.servicio import Servicio
+<<<<<<< HEAD
 from flask import jsonify, request, session
+=======
+from flask import jsonify, request
+>>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
 from API.utils import token_required, client_resource, user_resources
 from API.db.db import mysql
 
@@ -9,7 +13,11 @@ from API.db.db import mysql
 def obtener_servicios():
 
     cur = mysql.connection.cursor()
+<<<<<<< HEAD
     cur.execute('SELECT * FROM servicio WHERE id_usuario = %s', (session['id'],) )
+=======
+    cur.execute('SELECT * FROM servicio')
+>>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
     data = cur.fetchall()
 
     serviciosList = []

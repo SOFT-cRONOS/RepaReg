@@ -29,6 +29,7 @@ const inputDireccion = document.getElementById('direccion');
 const inputEmail = document.getElementById('email');
 
 const obtenerClientes = async () => {
+<<<<<<< HEAD
   const authToken = getAuthToken();
 
   const url = `${URL_BASE}/clientes?authToken=${authToken}`;
@@ -36,6 +37,13 @@ const obtenerClientes = async () => {
   const response = await fetch(url);
   const data = await response.json();
 
+=======
+  const url = `${URL_BASE}/clientes`;
+
+  const response = await fetch(url);
+  const data = await response.json();
+
+>>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
   return data;
 };
 
@@ -89,9 +97,13 @@ const mostrarModalDetalleCliente = async (event) => {
 
   idClienteSeleccionado = idCliente;
 
+<<<<<<< HEAD
   const authToken = getAuthToken();
 
   const url = `${URL_BASE}/clientes/${idCliente}?authToken=${authToken}`;
+=======
+  const url = `${URL_BASE}/clientes/${idCliente}`;
+>>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
 
   const response = await fetch(url);
   const { nombre, apellido, cuit_cuil, direccion, email, telefono } =
@@ -121,8 +133,12 @@ const eliminarCliente = (event) => {
     cancelButtonText: 'Cancelar',
   }).then(async (result) => {
     if (result.isConfirmed) {
+<<<<<<< HEAD
       const authToken = getAuthToken();
       const url = `${URL_BASE}/clientes/${idCliente}?authToken=${authToken}`;
+=======
+      const url = `${URL_BASE}/clientes/${idCliente}`;
+>>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
 
       const response = await fetch(url, {
         method: 'DELETE',
@@ -158,10 +174,13 @@ const guardarCliente = async () => {
     method = 'PUT';
   }
 
+<<<<<<< HEAD
   const authToken = getAuthToken();
 
   url += `?authToken=${authToken}`;
 
+=======
+>>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
   const data = { nombre, apellido, direccion, cuit_cuil, email, telefono };
 
   const response = await fetch(url, {

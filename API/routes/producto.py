@@ -38,7 +38,6 @@ def obtener_producto_by_id(id_producto):
 @app.route('/productos', methods = ['POST'])
 #@token_required
 def crear_producto():
-
     data = request.get_json()
 
     try:

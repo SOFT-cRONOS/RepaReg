@@ -17,6 +17,7 @@
   background-color: var(--color-secundario);
   border-color: var(--color-secundario);
 }
+
 .btn-primary:hover {
   color: var(--color-link-light);
   background-color: var(--color-primario);
@@ -128,6 +129,12 @@
 .btn-eliminar {
   color: var(--color-primario);
 }
+
+/* Estilos para tablas */
+.row-selected {
+  background-color: var(--color-secundario);
+}
+
 
 /* medida */
 .w-20 {

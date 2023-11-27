@@ -31,10 +31,15 @@ const selectMarca = document.getElementById('marca');
 const tituloModalProductos = document.getElementById('titulo-modal-productos');
 
 const obtenerProductos = async () => {
+<<<<<<< HEAD
   const authToken = getAuthToken();
 
   const url = `${URL_BASE}/productos?authToken=${authToken}`;
 
+=======
+  const url = `${URL_BASE}/productos`;
+
+>>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
   const response = await fetch(url);
   const data = await response.json();
 
@@ -89,9 +94,13 @@ const mostrarModalDetalleProducto = async (event) => {
 
   idProductoSeleccionado = idProducto;
 
+<<<<<<< HEAD
   const authToken = getAuthToken();
 
   const url = `${URL_BASE}/productos/${idProducto}?authToken=${authToken}`;
+=======
+  const url = `${URL_BASE}/productos/${idProducto}`;
+>>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
 
   const response = await fetch(url);
   const { nombre, precio_compra, precio_venta, stock, id_categoria, id_marca } =
@@ -121,9 +130,13 @@ const eliminarProducto = (event) => {
     cancelButtonText: 'Cancelar',
   }).then(async (result) => {
     if (result.isConfirmed) {
+<<<<<<< HEAD
       const authToken = getAuthToken();
 
       const url = `${URL_BASE}/productos/${idProducto}?authToken=${authToken}`;
+=======
+      const url = `${URL_BASE}/productos/${idProducto}`;
+>>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
 
       const response = await fetch(url, {
         method: 'DELETE',
@@ -159,10 +172,13 @@ const guardarProducto = async () => {
     method = 'PUT';
   }
 
+<<<<<<< HEAD
   const authToken = getAuthToken();
 
   url += `?authToken=${authToken}`;
 
+=======
+>>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
   const data = {
     nombre,
     id_categoria,
