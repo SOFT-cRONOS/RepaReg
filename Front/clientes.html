@@ -70,7 +70,7 @@
           <li><a class="dropdown-item" href="#">Perfil</a></li>
           <li><a class="dropdown-item" href="#">Settings</a></li>
           <li><hr class="dropdown-divider" /></li>
-          <li><a class="dropdown-item" href="#">Salir</a></li>
+          <li><a id="logout-link" class="dropdown-item" href="#">Salir</a></li>
         </ul>
       </div>
     </header>
@@ -172,35 +172,7 @@
                   <!-- Nombre input -->
                   <div class="form-outline">
                     <label class="form-label" for="nombre">Nombre</label>
-                    <input type="text" id="nombre" class="form-control" />                    
-                  </div>
-                </div>
-                <div class="col">
-                  <!-- Apellido input -->
-                  <div class="form-outline">
-                    <label class="form-label" for="apellido">Apellido</label>
-                    <input type="text" id="apellido" class="form-control" />                    
-                  </div>
-                </div>
-                <div class="col">
-                  <!-- DNI input -->
-                  <div class="form-outline">
-                    <label class="form-label" for="dni">DNI</label>
-                    <input type="text" id="dni" class="form-control" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <div class="form-outline">
-                    <label class="form-label" for="telefono">Telefono</label>
-                    <input type="text" id="telefono" class="form-control"/>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-outline">
-                    <label class="form-label" for="foto">Foto</label>
-                    <input type="text" id="foto" class="form-control"/>
+                    <input type="text" id="nombre" class="form-control" />
                   </div>
                 </div>
               </div>
@@ -274,6 +246,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script src="assets/js/common.js"></script>
     <script src="assets/js/ui.js"></script>
     <script src="assets/js/clientes.js"></script>
   </body>

@@ -1,5 +1,5 @@
 const showSidebar = () => {
-  const sidebar = document.getElementById("sidebarMenu");
+  const sidebar = document.getElementById('sidebarMenu');
 
   sidebar.innerHTML = `<div class="position-sticky pt-3">
                               <ul class="nav flex-column">
@@ -36,7 +36,7 @@ const showSidebar = () => {
                                   </li>
   
                                   <li class="nav-item">
-                                    <a class="nav-link" href="usuarios.html">
+                                    <a class="nav-link" href="ventas.html">
                                         <span data-feather="dollar-sign"></span>
                                         Ventas
                                     </a>
@@ -62,3 +62,10 @@ const showSidebar = () => {
 showSidebar();
 
 feather.replace();
+
+const logout = () => {
+  localStorage.removeItem('authToken');
+  window.location.href = 'login.html';
+};
+
+document.getElementById('logout-link').addEventListener('click', logout);
