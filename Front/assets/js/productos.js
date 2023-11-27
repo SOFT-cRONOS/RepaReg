@@ -1,45 +1,40 @@
 let idProductoSeleccionado = null;
 
-const URL_BASE = 'http://localhost:5200';
+const URL_BASE = "http://localhost:5200";
 
 const MODOS_MODAL = {
-  nuevo: 'nuevo',
-  ver: 'ver',
-  edicion: 'edicion',
+  nuevo: "nuevo",
+  ver: "ver",
+  edicion: "edicion",
 };
 
 let modoModal = MODOS_MODAL.nuevo;
 
-const modalProductos = new bootstrap.Modal('#modal-productos');
+const modalProductos = new bootstrap.Modal("#modal-productos");
 
-const btnEditarProducto = document.getElementById('btn-editar-producto');
+const btnEditarProducto = document.getElementById("btn-editar-producto");
 
-const btnNuevoProducto = document.getElementById('btn-nuevo-producto');
-const btnGuardarProducto = document.getElementById('btn-guardar-producto');
-const btnBuscarProducto = document.getElementById('btn-buscar-producto');
+const btnNuevoProducto = document.getElementById("btn-nuevo-producto");
+const btnGuardarProducto = document.getElementById("btn-guardar-producto");
+const btnBuscarProducto = document.getElementById("btn-buscar-producto");
 const btnCerrarModalProducto = document.getElementById(
-  'btn-cerrar-modal-producto'
+  "btn-cerrar-modal-producto"
 );
 
-const inputNombre = document.getElementById('nombre');
-const inputPrecioCompra = document.getElementById('precio-compra');
-const inputPrecioVenta = document.getElementById('precio-venta');
-const inputStock = document.getElementById('stock');
-const selectCategoria = document.getElementById('categoria');
-const selectMarca = document.getElementById('marca');
+const inputNombre = document.getElementById("nombre");
+const inputPrecioCompra = document.getElementById("precio-compra");
+const inputPrecioVenta = document.getElementById("precio-venta");
+const inputStock = document.getElementById("stock");
+const selectCategoria = document.getElementById("categoria");
+const selectMarca = document.getElementById("marca");
 
-const tituloModalProductos = document.getElementById('titulo-modal-productos');
+const tituloModalProductos = document.getElementById("titulo-modal-productos");
 
 const obtenerProductos = async () => {
-<<<<<<< HEAD
   const authToken = getAuthToken();
 
   const url = `${URL_BASE}/productos?authToken=${authToken}`;
 
-=======
-  const url = `${URL_BASE}/productos`;
-
->>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
   const response = await fetch(url);
   const data = await response.json();
 
@@ -47,9 +42,9 @@ const obtenerProductos = async () => {
 };
 
 const mostrarProductosEnTabla = (productos) => {
-  const datosTabla = document.getElementById('datos-tabla');
+  const datosTabla = document.getElementById("datos-tabla");
 
-  let html = '';
+  let html = "";
 
   //Dibujar la tabla de productos
   productos.forEach((producto) => {
@@ -75,32 +70,28 @@ const mostrarProductosEnTabla = (productos) => {
 
   datosTabla.innerHTML = html;
 
-  const botonesVer = document.getElementsByClassName('btn-ver');
-  const botonesEliminar = document.getElementsByClassName('btn-eliminar');
+  const botonesVer = document.getElementsByClassName("btn-ver");
+  const botonesEliminar = document.getElementsByClassName("btn-eliminar");
 
   for (const botonVer of botonesVer) {
-    botonVer.addEventListener('click', mostrarModalDetalleProducto);
+    botonVer.addEventListener("click", mostrarModalDetalleProducto);
   }
 
   for (const botonEliminar of botonesEliminar) {
-    botonEliminar.addEventListener('click', eliminarProducto);
+    botonEliminar.addEventListener("click", eliminarProducto);
   }
 
   feather.replace();
 };
 
 const mostrarModalDetalleProducto = async (event) => {
-  const idProducto = event.target.getAttribute('data-id-producto');
+  const idProducto = event.target.getAttribute("data-id-producto");
 
   idProductoSeleccionado = idProducto;
 
-<<<<<<< HEAD
   const authToken = getAuthToken();
 
   const url = `${URL_BASE}/productos/${idProducto}?authToken=${authToken}`;
-=======
-  const url = `${URL_BASE}/productos/${idProducto}`;
->>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
 
   const response = await fetch(url);
   const { nombre, precio_compra, precio_venta, stock, id_categoria, id_marca } =
@@ -118,30 +109,26 @@ const mostrarModalDetalleProducto = async (event) => {
 };
 
 const eliminarProducto = (event) => {
-  const idProducto = event.target.getAttribute('data-id-producto');
+  const idProducto = event.target.getAttribute("data-id-producto");
 
   Swal.fire({
-    text: '¿Realmente desde eliminar el producto?',
-    icon: 'question',
+    text: "¿Realmente desde eliminar el producto?",
+    icon: "question",
     showCancelButton: true,
-    confirmButtonColor: '#77669d',
-    cancelButtonColor: '#b9b8c9',
-    confirmButtonText: 'Aceptar',
-    cancelButtonText: 'Cancelar',
+    confirmButtonColor: "#77669d",
+    cancelButtonColor: "#b9b8c9",
+    confirmButtonText: "Aceptar",
+    cancelButtonText: "Cancelar",
   }).then(async (result) => {
     if (result.isConfirmed) {
-<<<<<<< HEAD
       const authToken = getAuthToken();
 
       const url = `${URL_BASE}/productos/${idProducto}?authToken=${authToken}`;
-=======
-      const url = `${URL_BASE}/productos/${idProducto}`;
->>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
 
       const response = await fetch(url, {
-        method: 'DELETE',
+        method: "DELETE",
 
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       });
 
       await response.json();
@@ -157,28 +144,25 @@ const mostrarModalProductos = () => {
 };
 
 const guardarProducto = async () => {
-  const nombre = document.getElementById('nombre').value;
-  const id_categoria = document.getElementById('categoria').value;
-  const id_marca = document.getElementById('marca').value;
-  const precio_compra = document.getElementById('precio-compra').value;
-  const precio_venta = document.getElementById('precio-venta').value;
-  const stock = document.getElementById('stock').value;
+  const nombre = document.getElementById("nombre").value;
+  const id_categoria = document.getElementById("categoria").value;
+  const id_marca = document.getElementById("marca").value;
+  const precio_compra = document.getElementById("precio-compra").value;
+  const precio_venta = document.getElementById("precio-venta").value;
+  const stock = document.getElementById("stock").value;
 
   let url = `${URL_BASE}/productos`;
-  let method = 'POST';
+  let method = "POST";
 
   if (modoModal === MODOS_MODAL.edicion) {
     url += `/${idProductoSeleccionado}`;
-    method = 'PUT';
+    method = "PUT";
   }
 
-<<<<<<< HEAD
   const authToken = getAuthToken();
 
   url += `?authToken=${authToken}`;
 
-=======
->>>>>>> 8b7bb835fc903e8b3ff1f9c9f69255d05982edf8
   const data = {
     nombre,
     id_categoria,
@@ -191,7 +175,7 @@ const guardarProducto = async () => {
   const response = await fetch(url, {
     method,
     body: JSON.stringify(data),
-    headers: { 'Content-Type': 'application/json' },
+    headers: { "Content-Type": "application/json" },
   });
 
   await response.json();
@@ -202,11 +186,11 @@ const guardarProducto = async () => {
 };
 
 const buscarProducto = () => {
-  const cajaBusqueda = document.getElementById('caja-busqueda');
+  const cajaBusqueda = document.getElementById("caja-busqueda");
 
   const textoBuscado = cajaBusqueda.value;
 
-  console.log('Buscar el producto...', textoBuscado);
+  console.log("Buscar el producto...", textoBuscado);
 };
 
 const editarProducto = () => {
@@ -217,14 +201,14 @@ const cambiarEstadoModal = (nuevoModoModal) => {
   modoModal = nuevoModoModal;
   if (nuevoModoModal === MODOS_MODAL.nuevo) {
     idProductoSeleccionado = null;
-    tituloModalProductos.innerHTML = 'Nuevo Producto';
+    tituloModalProductos.innerHTML = "Nuevo Producto";
 
-    inputNombre.value = '';
-    inputPrecioCompra.value = '';
-    inputPrecioVenta.value = '';
-    inputStock.value = '';
-    selectCategoria.value = '-1';
-    selectMarca.value = '-1';
+    inputNombre.value = "";
+    inputPrecioCompra.value = "";
+    inputPrecioVenta.value = "";
+    inputStock.value = "";
+    selectCategoria.value = "-1";
+    selectMarca.value = "-1";
 
     inputNombre.disabled = false;
     inputPrecioCompra.disabled = false;
@@ -233,11 +217,11 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     selectCategoria.disabled = false;
     selectMarca.disabled = false;
 
-    btnEditarProducto.style.display = 'none';
-    btnGuardarProducto.style.display = 'block';
-    btnCerrarModalProducto.innerHTML = 'Cancelar';
+    btnEditarProducto.style.display = "none";
+    btnGuardarProducto.style.display = "block";
+    btnCerrarModalProducto.innerHTML = "Cancelar";
   } else if (nuevoModoModal === MODOS_MODAL.ver) {
-    tituloModalProductos.innerHTML = 'Ver Producto';
+    tituloModalProductos.innerHTML = "Ver Producto";
 
     inputNombre.disabled = true;
     inputPrecioCompra.disabled = true;
@@ -246,11 +230,11 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     selectCategoria.disabled = true;
     selectMarca.disabled = true;
 
-    btnEditarProducto.style.display = 'block';
-    btnGuardarProducto.style.display = 'none';
-    btnCerrarModalProducto.innerHTML = 'Cerrar';
+    btnEditarProducto.style.display = "block";
+    btnGuardarProducto.style.display = "none";
+    btnCerrarModalProducto.innerHTML = "Cerrar";
   } else if (nuevoModoModal === MODOS_MODAL.edicion) {
-    tituloModalProductos.innerHTML = 'Editar Producto';
+    tituloModalProductos.innerHTML = "Editar Producto";
 
     inputNombre.disabled = false;
     inputPrecioCompra.disabled = false;
@@ -259,9 +243,9 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     selectCategoria.disabled = false;
     selectMarca.disabled = false;
 
-    btnEditarProducto.style.display = 'none';
-    btnCerrarModalProducto.innerHTML = 'Cancelar';
-    btnGuardarProducto.style.display = 'block';
+    btnEditarProducto.style.display = "none";
+    btnCerrarModalProducto.innerHTML = "Cancelar";
+    btnGuardarProducto.style.display = "block";
   }
 };
 
@@ -275,12 +259,12 @@ const handleCerrarModal = () => {
   }
 };
 
-btnNuevoProducto.addEventListener('click', mostrarModalProductos);
-btnGuardarProducto.addEventListener('click', guardarProducto);
-btnBuscarProducto.addEventListener('click', buscarProducto);
+btnNuevoProducto.addEventListener("click", mostrarModalProductos);
+btnGuardarProducto.addEventListener("click", guardarProducto);
+btnBuscarProducto.addEventListener("click", buscarProducto);
 
-btnEditarProducto.addEventListener('click', editarProducto);
+btnEditarProducto.addEventListener("click", editarProducto);
 
-btnCerrarModalProducto.addEventListener('click', handleCerrarModal);
+btnCerrarModalProducto.addEventListener("click", handleCerrarModal);
 
 obtenerProductos();
