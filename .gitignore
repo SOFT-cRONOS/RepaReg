@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 .gitignore
 .venv
 .dq.sql
-=======
-
-env
-.venv
->>>>>>> 80deb45dbb25b696044749d7ec83bd6861dde904
+repareg
