@@ -95,7 +95,7 @@ var chartOptions = {
   maintainAspectRatio: true,
 };
 
-/* var ctxLine = document.getElementById("lineChart").getContext("2d");
+var ctxLine = document.getElementById("lineChart").getContext("2d");
 var lineChart = new Chart(ctxLine, {
   type: "line",
   data: dataLine,
@@ -113,7 +113,7 @@ var pieChart = new Chart(ctxPie, {
   type: "pie",
   data: dataPie,
   options: chartOptions,
-}); */
+});
 // Fin graficacion
 
 //  funcion animacion de numeros

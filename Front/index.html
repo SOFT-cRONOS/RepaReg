@@ -23,7 +23,7 @@
     />
     <!-- Custom styles for this template -->
     <link href="assets/css/dashboard.css" rel="stylesheet" />
-    <link hreg="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
   </head>
   <body>
     <header
@@ -105,9 +105,7 @@
 
 
           <!-- Contadores rapidos -->
-          <div
-            class="row g-4 py-5 row-cols-1 row-cols-lg-2 px-0 justify-content-center"
-          >
+          <div class="row">
             <div class="col tarjeta-panel my-2">
               <span data-feather="user"></span>
               <h2
@@ -137,30 +135,23 @@
                 data-speed="1500"
                 id="total-ventas-hoy"
               ></h2>
-              <p>Monto total ventas hoy</p>
+              <p>Total hoy</p>
             </div>
           </div>
 
-          <!--           <div class="container">
-            <div class="row">
-              <div class="col-md-4 px-4">
-                <h3>Ultimos ingresos</h3>
-                <canvas id="lineChart" width="400" height="400"></canvas>
-              </div>
-              <div class="col-md-4 px-4">
-                <h3>Reparados</h3>
-                <canvas id="barChart" width="400" height="400"></canvas>
-              </div>
-              <div class="col-md-4 px-4">
-                <h3>Referencia de ingresos</h3>
-                <canvas id="pieChart" width="400" height="400"></canvas>
-              </div>
+          <div class="row justify-content-center">
+            <div class="col-md-4">
+              <canvas id="lineChart" width="400" height="200"></canvas>
             </div>
-          </div> -->
-          <!-- Grafico lineal 1 -->
-          <!-- <div class="row row-cols-lg-2 justify-content-center">
-        <canvas class="my-4 w-100" id="myChart" width="300" ></canvas>
-      </div>   -->
+            <div class="col-md-4">
+              <canvas id="barChart" width="400" height="200"></canvas>
+            </div>
+            <div class="col-md-4">
+              <canvas id="pieChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+                  
+          
 
           <!-- Fin contenido -->
         </main>

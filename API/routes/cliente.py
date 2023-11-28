@@ -67,18 +67,3 @@ def eliminar_cliente(id_cliente):
     except Exception as e:
         return jsonify( {"message": e.args[1]} ), 400 
     
-
-
-'''@app.route('/usuarios', methods=['GET', 'POST'])
-def user_data():
-    if request.method == 'GET':
-       return jsonify("hila")
-        cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM usuario WHERE id_usuario = %s', (session['id'], ))
-        data = cur.fetchall()
-        if cur.rowcount > 0:
-            userData = User(data[0])
-            return jsonify(userData)
-        cur.close()
-    elif request.method == 'POST':
-        pass'''
