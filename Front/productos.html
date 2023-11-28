@@ -50,7 +50,7 @@
       </button>
 
       <!-- drop usuario -->
-      <div class="flex-shrink-0 dropdown drop-user">
+      <div id="user-drop" class="flex-shrink-0 dropdown drop-user">
         <a
           href="#"
           class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
@@ -58,7 +58,8 @@
           aria-expanded="false"
         >
           <img
-            src="assets/img/iconos/person-circle.svg"
+            id="user-image"
+            src=""
             alt="mdo"
             width="32"
             height="32"
@@ -66,9 +67,11 @@
           />
         </a>
         <ul class="dropdown-menu text-small shadow">
+          <li><a id="user-name" class="dropdown-item" href="#">user-name</a></li>
           <li><a id="logout-link" class="dropdown-item" href="#">Salir</a></li>
         </ul>
       </div>
+      <!-- fin drop usuario -->
     </header>
 
     <div class="container-fluid">

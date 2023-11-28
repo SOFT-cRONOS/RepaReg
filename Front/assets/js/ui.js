@@ -60,9 +60,35 @@ const showSidebar = () => {
                           </div>`;
 };
 
-showSidebar();
 
+const getUserData = async () => {
+    const authToken = getAuthToken();
+    
+    const url = `http://localhost:5200/usuarios?authToken=${authToken}`;
+    
+    const response = await fetch(url);
+    const data = await response.json();
+    
+    return data;
+    };
+
+const loadDataUser = async() => {
+    /* carga de datos cliente */
+    const user = await getUserData();
+    const image = document.getElementById('user-image');
+    image.src = user.imagen;
+    const userNameElement = document.getElementById('user-name');
+    userNameElement.innerText = user.nombre;
+}
+
+
+showSidebar();
+loadDataUser();
 feather.replace();
+
+
+
+
 
 const logout = () => {
   localStorage.removeItem('authToken');
@@ -70,3 +96,7 @@ const logout = () => {
 };
 
 document.getElementById('logout-link').addEventListener('click', logout);
+
+
+
+
