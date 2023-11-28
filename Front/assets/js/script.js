@@ -42,29 +42,89 @@ const cargarClientes = () => {
 // ##################################################################################
 //                                 GRAFICOS DASHBOARD
 // ##################################################################################
+
 // graficacion
 // Paleta de colores
 var colorPrimario = '#3c3a78'; // violeta obscuro
 var colorSecundario = '#948fc4'; // claro
 var colorTerciario = '#77669d'; // medio
 
+function lastWeeksell() {
+  const authToken = getAuthToken();
+  const url = `${URL_BASE}/reportes/1?authToken=${authToken}`;
+
+  return fetch(url)
+    .then(response => response.json())
+    .then(data => data)
+    .catch(error => console.error('Error:', error));
+}
+
+function sellsbyCat() {
+  const authToken = getAuthToken();
+  const url = `${URL_BASE}/reportes/2?authToken=${authToken}`;
+
+  return fetch(url)
+    .then(response => response.json())
+    .then(data => data)
+    .catch(error => console.error('Error:', error));
+}
+
+
 // Datos de ejemplo para los gráficos
-var dataLine = {
-  labels: ['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5', 'Día 6', 'Día 7'],
-  datasets: [
-    {
-      label: 'Ingresos en los últimos 7 días',
-      //   array de datos
-      data: [100, 150, 120, 200, 180, 250, 210],
-      fill: false,
-      borderColor: colorPrimario,
-      pointRadius: 5,
-      backgroundColor: 'transparent',
-      borderWidth: 4,
-      pointBackgroundColor: colorPrimario,
-    },
-  ],
-};
+lastWeeksell().then(ultimasventas => {
+  console.log(ultimasventas);
+  var dataLine = {
+    labels: ['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5', 'Día 6', 'Día 7'],
+    datasets: [
+      {
+        label: 'Ingresos en los últimos 7 días',
+        //   array de datos
+        data: ultimasventas,
+        fill: false,
+        borderColor: colorPrimario,
+        pointRadius: 5,
+        backgroundColor: 'transparent',
+        borderWidth: 4,
+        pointBackgroundColor: colorPrimario,
+      },
+    ],
+  };
+
+  var ctxLine = document.getElementById("lineChart").getContext("2d");
+  var lineChart = new Chart(ctxLine, {
+    type: "line",
+    data: dataLine,
+  });
+});
+
+sellsbyCat().then(ventasxcat => {
+  console.log(ventasxcat);
+  const categorias = [];
+  const cantidades = [];
+  ventasxcat.forEach(item => {
+    categorias.push(item.categoria);
+    cantidades.push(item.cantidad);
+  });
+
+  var dataPie = {
+    labels: categorias,
+    datasets: [
+      {
+        //   array de datos
+        data: cantidades,
+        backgroundColor: [colorPrimario, colorSecundario],
+      },
+    ],
+  };
+
+  var ctxPie = document.getElementById("pieChart").getContext("2d");
+  var pieChart = new Chart(ctxPie, {
+    type: "pie",
+    data: dataPie,
+    options: chartOptions,
+  });
+})
+
 
 var dataBar = {
   labels: ['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5', 'Día 6', 'Día 7'],
@@ -78,16 +138,7 @@ var dataBar = {
   ],
 };
 
-var dataPie = {
-  labels: ['Ventas', 'Reparaciones'],
-  datasets: [
-    {
-      //   array de datos
-      data: [70, 30],
-      backgroundColor: [colorPrimario, colorSecundario],
-    },
-  ],
-};
+
 
 // Configuración de los gráficos
 var chartOptions = {
@@ -95,11 +146,7 @@ var chartOptions = {
   maintainAspectRatio: true,
 };
 
-var ctxLine = document.getElementById("lineChart").getContext("2d");
-var lineChart = new Chart(ctxLine, {
-  type: "line",
-  data: dataLine,
-});
+
 
 var ctxBar = document.getElementById("barChart").getContext("2d");
 var barChart = new Chart(ctxBar, {
@@ -108,12 +155,7 @@ var barChart = new Chart(ctxBar, {
   options: chartOptions,
 });
 
-var ctxPie = document.getElementById("pieChart").getContext("2d");
-var pieChart = new Chart(ctxPie, {
-  type: "pie",
-  data: dataPie,
-  options: chartOptions,
-});
+
 // Fin graficacion
 
 //  funcion animacion de numeros
