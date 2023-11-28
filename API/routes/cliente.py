@@ -1,7 +1,6 @@
 from API import app
 from API.models.cliente import Cliente
 from flask import jsonify, request, session
-from API.utils import token_required, client_resource, user_resources
 from API.db.db import mysql
 
 # Rutas de clientes

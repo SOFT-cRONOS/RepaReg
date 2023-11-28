@@ -1,8 +1,6 @@
 from API import app
 from API.models.producto import Producto
 from flask import jsonify, request, session
-import jwt
-from API.utils import token_required, client_resource, user_resources
 from API.db.db import mysql
 
 # Rutas de productos
@@ -38,6 +36,7 @@ def obtener_producto_by_id(id_producto):
 @app.route('/productos', methods = ['POST'])
 #@token_required
 def crear_producto():
+
     data = request.get_json()
 
     try:

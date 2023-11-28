@@ -42,18 +42,19 @@ const showSidebar = () => {
                                     </a>
                                   </li>
 
-                                  <li class="nav-item">
-                                    <a class="nav-link" href="categorias.html">
-                                        <span data-feather="list"></span>
-                                        Categorias
-                                    </a>
-                                  </li>
   
                                   <li class="nav-item">
-                                  <a class="nav-link" href="reportes.html">
-                                      <span data-feather="bar-chart-2"></span>
-                                      Reportes
-                                  </a>
+                                    <a class="nav-link" href="reporte_stock.html">
+                                        <span data-feather="bar-chart-2"></span>
+                                        Reporte de Stock
+                                    </a>
+                                  </li>
+                                    
+                                  <li class="nav-item">
+                                    <a class="nav-link" href="reporte_total_compras_x_clientes.html">
+                                        <span data-feather="bar-chart-2"></span>
+                                        Reporte de total compras x cliente
+                                    </a>
                                   </li>
                               </ul>
                           </div>`;

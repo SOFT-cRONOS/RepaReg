@@ -1,12 +1,40 @@
 /* globals Chart:false, feather:false */
 
-(function () {
-  'use strict'
+const URL_BASE = 'http://localhost:5200';
 
-  feather.replace({ 'aria-hidden': 'true' })
+const obtenerDatosTablero = async () => {
+  const authToken = getAuthToken();
+
+  const url = `${URL_BASE}/tablero?authToken=${authToken}`;
+
+  const response = await fetch(url);
+  const data = await response.json();
+
+  console.log(data);
+
+  document
+    .getElementById('total-ventas-hoy')
+    .setAttribute('data-to', data.totalVentasHoy);
+
+  document
+    .getElementById('cant-ventas-hoy')
+    .setAttribute('data-to', data.cantVentasHoy);
+
+  document
+    .getElementById('cant-clientes')
+    .setAttribute('data-to', data.cantClientes);
+
+  //dibujarGraficos();
+  animar();
+};
+
+obtenerDatosTablero();
+
+function dibujarGraficos() {
+  feather.replace({ 'aria-hidden': 'true' });
 
   // Graphs
-  var ctx = document.getElementById('myChart')
+  var ctx = document.getElementById('myChart');
   // eslint-disable-next-line no-unused-vars
   var myChart = new Chart(ctx, {
     type: 'line',
@@ -18,37 +46,32 @@
         'Wednesday',
         'Thursday',
         'Friday',
-        'Saturday'
+        'Saturday',
       ],
-      datasets: [{
-        data: [
-          15339,
-          21345,
-          18483,
-          24003,
-          23489,
-          24092,
-          12034
-        ],
-        lineTension: 0,
-        backgroundColor: 'transparent',
-        borderColor: '#007bff',
-        borderWidth: 4,
-        pointBackgroundColor: '#007bff'
-      }]
+      datasets: [
+        {
+          data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+          lineTension: 0,
+          backgroundColor: 'transparent',
+          borderColor: '#007bff',
+          borderWidth: 4,
+          pointBackgroundColor: '#007bff',
+        },
+      ],
     },
     options: {
       scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: false,
+            },
+          },
+        ],
       },
       legend: {
-        display: false
-      }
-    }
-  })
-})()
-
+        display: false,
+      },
+    },
+  });
+}

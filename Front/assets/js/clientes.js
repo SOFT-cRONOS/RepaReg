@@ -1,32 +1,73 @@
 let idClienteSeleccionado = null;
 
-const URL_BASE = "http://localhost:5200";
+const URL_BASE = 'http://localhost:5200';
 
 const MODOS_MODAL = {
-  nuevo: "nuevo",
-  ver: "ver",
-  edicion: "edicion",
+  nuevo: 'nuevo',
+  ver: 'ver',
+  edicion: 'edicion',
 };
 let idCliente = 0;
 let modoModal = MODOS_MODAL.nuevo;
 
 //elementos del modal
-const modalClientes = new bootstrap.Modal("#modal-clientes");
-const btnEditarCliente = document.getElementById("btn-editar-cliente");
-const buscbtnNuevoCliente = document.getElementById("btn-nuevo-cliente");
-const btnGuardarCliente = document.getElementById("btn-guardar-cliente");
-const btnBuscarCliente = document.getElementById("btn-buscar-cliente");
+const modalClientes = new bootstrap.Modal('#modal-clientes');
+const btnEditarCliente = document.getElementById('btn-editar-cliente');
+const buscbtnNuevoCliente = document.getElementById('btn-nuevo-cliente');
+const btnGuardarCliente = document.getElementById('btn-guardar-cliente');
+
 const btnCerrarModalCliente = document.getElementById(
-  "btn-cerrar-modal-cliente"
+  'btn-cerrar-modal-cliente'
 );
-const tituloModalClientes = document.getElementById("titulo-modal-clientes");
+const tituloModalClientes = document.getElementById('titulo-modal-clientes');
 //input del modal
-const inputNombre = document.getElementById("nombre");
-const inputApellido = document.getElementById("apellido");
-const inputCuitCuil = document.getElementById("cuit-cuil");
-const inputTelefono = document.getElementById("telefono");
-const inputDireccion = document.getElementById("direccion");
-const inputEmail = document.getElementById("email");
+const inputNombre = document.getElementById('nombre');
+const inputApellido = document.getElementById('apellido');
+const inputCuitCuil = document.getElementById('cuit-cuil');
+const inputTelefono = document.getElementById('telefono');
+const inputDireccion = document.getElementById('direccion');
+const inputEmail = document.getElementById('email');
+
+function validarForm() {
+  let isValid = true;
+
+  const nombre = document.getElementById('nombre').value;
+  const apellido = document.getElementById('apellido').value;
+  const cuitCuil = document.getElementById('cuit-cuil').value;
+  const direccion = document.getElementById('direccion').value;
+  const email = document.getElementById('email').value;
+  const telefono = document.getElementById('telefono').value;
+
+  if (nombre.trim().length === 0) {
+    isValid = false;
+  }
+
+  if (apellido.trim().length === 0) {
+    isValid = false;
+  }
+
+  if (cuitCuil.trim().length == 0 || isNaN(cuitCuil) || cuitCuil <= 0) {
+    isValid = false;
+  }
+
+  if (direccion.trim().length === 0) {
+    isValid = false;
+  }
+
+  if (telefono.trim().length === 0) {
+    isValid = false;
+  }
+
+  if (email.trim().length === 0) {
+    isValid = false;
+  }
+
+  if (!isValid) {
+    alert('Error en los datos ingresados.');
+  }
+
+  return isValid;
+}
 
 const obtenerClientes = async () => {
   const authToken = getAuthToken();
@@ -41,9 +82,9 @@ const obtenerClientes = async () => {
 
 const mostrarClientesEnTabla = async () => {
   const clientes = await obtenerClientes();
-  const datosTabla = document.getElementById("datos-tabla");
+  const datosTabla = document.getElementById('datos-tabla');
 
-  let html = "";
+  let html = '';
 
   //Dibujar la tabla de clientes
   clientes.forEach((cliente) => {
@@ -68,22 +109,22 @@ const mostrarClientesEnTabla = async () => {
 
   datosTabla.innerHTML = html;
 
-  const botonesVer = document.getElementsByClassName("btn-ver");
-  const botonesEliminar = document.getElementsByClassName("btn-eliminar");
+  const botonesVer = document.getElementsByClassName('btn-ver');
+  const botonesEliminar = document.getElementsByClassName('btn-eliminar');
 
   for (const botonVer of botonesVer) {
-    botonVer.addEventListener("click", mostrarModalDetalleCliente);
+    botonVer.addEventListener('click', mostrarModalDetalleCliente);
   }
 
   for (const botonEliminar of botonesEliminar) {
-    botonEliminar.addEventListener("click", eliminarCliente);
+    botonEliminar.addEventListener('click', eliminarCliente);
   }
 
   feather.replace();
 };
 
 const mostrarModalDetalleCliente = async (event) => {
-  idCliente = event.target.getAttribute("data-id-cliente");
+  idCliente = event.target.getAttribute('data-id-cliente');
 
   console.log(event.target);
 
@@ -109,25 +150,25 @@ const mostrarModalDetalleCliente = async (event) => {
 };
 
 const eliminarCliente = (event) => {
-  const idCliente = event.target.getAttribute("data-id-cliente");
+  const idCliente = event.target.getAttribute('data-id-cliente');
 
   Swal.fire({
-    text: "¿Realmente desde eliminar el cliente?",
-    icon: "question",
+    text: '¿Realmente desde eliminar el cliente?',
+    icon: 'question',
     showCancelButton: true,
-    confirmButtonClass: "btn-primary",
-    cancelButtonClass: "btn-cancel",
-    confirmButtonText: "Aceptar",
-    cancelButtonText: "Cancelar",
+    confirmButtonClass: 'btn-primary',
+    cancelButtonClass: 'btn-cancel',
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar',
   }).then(async (result) => {
     if (result.isConfirmed) {
       const authToken = getAuthToken();
       const url = `${URL_BASE}/clientes/${idCliente}?authToken=${authToken}`;
 
       const response = await fetch(url, {
-        method: "DELETE",
+        method: 'DELETE',
 
-        headers: { "Content-Type": "application/json" },
+        headers: { 'Content-Type': 'application/json' },
       });
 
       await response.json();
@@ -143,46 +184,40 @@ const mostrarModalClientes = () => {
 };
 
 const guardarCliente = async () => {
-  const nombre = document.getElementById("nombre").value;
-  const apellido = document.getElementById("apellido").value;
-  const cuit_cuil = document.getElementById("cuit-cuil").value;
-  const direccion = document.getElementById("direccion").value;
-  const email = document.getElementById("email").value;
-  const telefono = document.getElementById("telefono").value;
+  if (validarForm()) {
+    const nombre = document.getElementById('nombre').value;
+    const apellido = document.getElementById('apellido').value;
+    const cuit_cuil = document.getElementById('cuit-cuil').value;
+    const direccion = document.getElementById('direccion').value;
+    const email = document.getElementById('email').value;
+    const telefono = document.getElementById('telefono').value;
 
-  let url = `${URL_BASE}/clientes`;
-  let method = "POST";
+    let url = `${URL_BASE}/clientes`;
+    let method = 'POST';
 
-  if (modoModal === MODOS_MODAL.edicion) {
-    url += `/${idClienteSeleccionado}`;
-    method = "PUT";
+    if (modoModal === MODOS_MODAL.edicion) {
+      url += `/${idClienteSeleccionado}`;
+      method = 'PUT';
+    }
+
+    const authToken = getAuthToken();
+
+    url += `?authToken=${authToken}`;
+
+    const data = { nombre, apellido, direccion, cuit_cuil, email, telefono };
+
+    const response = await fetch(url, {
+      method,
+      body: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    await response.json();
+
+    mostrarClientesEnTabla();
+
+    modalClientes.hide();
   }
-
-  const authToken = getAuthToken();
-
-  url += `?authToken=${authToken}`;
-
-  const data = { nombre, apellido, direccion, cuit_cuil, email, telefono };
-
-  const response = await fetch(url, {
-    method,
-    body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json" },
-  });
-
-  await response.json();
-
-  mostrarClientesEnTabla();
-
-  modalClientes.hide();
-};
-
-const buscarCliente = () => {
-  const cajaBusqueda = document.getElementById("caja-busqueda");
-
-  const textoBuscado = cajaBusqueda.value;
-
-  console.log("Buscar el cliente...", textoBuscado);
 };
 
 const editarCliente = () => {
@@ -194,14 +229,14 @@ const cambiarEstadoModal = (nuevoModoModal) => {
   if (nuevoModoModal === MODOS_MODAL.nuevo) {
     idCliente = null;
 
-    tituloModalClientes.innerHTML = "Nuevo Cliente";
+    tituloModalClientes.innerHTML = 'Nuevo Cliente';
 
-    inputNombre.value = "";
-    inputApellido.value = "";
-    inputCuitCuil.value = "";
-    inputDireccion.value = "";
-    inputEmail.value = "";
-    inputTelefono.value = "";
+    inputNombre.value = '';
+    inputApellido.value = '';
+    inputCuitCuil.value = '';
+    inputDireccion.value = '';
+    inputEmail.value = '';
+    inputTelefono.value = '';
 
     inputNombre.disabled = false;
     inputApellido.disabled = false;
@@ -210,11 +245,11 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     inputEmail.disabled = false;
     inputTelefono.disabled = false;
 
-    btnEditarCliente.style.display = "none";
-    btnGuardarCliente.style.display = "block";
-    btnCerrarModalCliente.innerHTML = "Cancelar";
+    btnEditarCliente.style.display = 'none';
+    btnGuardarCliente.style.display = 'block';
+    btnCerrarModalCliente.innerHTML = 'Cancelar';
   } else if (nuevoModoModal === MODOS_MODAL.ver) {
-    tituloModalClientes.innerHTML = "Ver Cliente";
+    tituloModalClientes.innerHTML = 'Ver Cliente';
 
     inputNombre.disabled = true;
     inputApellido.disabled = true;
@@ -223,11 +258,11 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     inputEmail.disabled = true;
     inputTelefono.disabled = true;
 
-    btnEditarCliente.style.display = "block";
-    btnGuardarCliente.style.display = "none";
-    btnCerrarModalCliente.innerHTML = "Cerrar";
+    btnEditarCliente.style.display = 'block';
+    btnGuardarCliente.style.display = 'none';
+    btnCerrarModalCliente.innerHTML = 'Cerrar';
   } else if (nuevoModoModal === MODOS_MODAL.edicion) {
-    tituloModalClientes.innerHTML = "Editar Cliente";
+    tituloModalClientes.innerHTML = 'Editar Cliente';
 
     inputNombre.disabled = false;
     inputApellido.disabled = false;
@@ -236,9 +271,9 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     inputEmail.disabled = false;
     inputTelefono.disabled = false;
 
-    btnEditarCliente.style.display = "none";
-    btnCerrarModalCliente.innerHTML = "Cancelar";
-    btnGuardarCliente.style.display = "block";
+    btnEditarCliente.style.display = 'none';
+    btnCerrarModalCliente.innerHTML = 'Cancelar';
+    btnGuardarCliente.style.display = 'block';
   }
 };
 
@@ -252,12 +287,11 @@ const handleCerrarModal = () => {
   }
 };
 
-buscbtnNuevoCliente.addEventListener("click", mostrarModalClientes);
-btnGuardarCliente.addEventListener("click", guardarCliente);
-btnBuscarCliente.addEventListener("click", buscarCliente);
+buscbtnNuevoCliente.addEventListener('click', mostrarModalClientes);
+btnGuardarCliente.addEventListener('click', guardarCliente);
 
-btnEditarCliente.addEventListener("click", editarCliente);
+btnEditarCliente.addEventListener('click', editarCliente);
 
-btnCerrarModalCliente.addEventListener("click", handleCerrarModal);
+btnCerrarModalCliente.addEventListener('click', handleCerrarModal);
 
 mostrarClientesEnTabla();

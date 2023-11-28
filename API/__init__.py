@@ -1,20 +1,5 @@
-""" from flask import Flask
-from flask_cors import CORS
 
-app = Flask(__name__)
-
-CORS(app)
-
-app.config['SECRET_KEY'] = 'app_123'
-
-print('Hola')
-
-
-import API.routes.client
-import API.routes.user
- """
-
-from flask import Flask, render_template, request, jsonify, after_this_request, session
+from flask import Flask,  request, session
 from flask_cors import CORS
 import jwt
  
@@ -55,11 +40,13 @@ def before_request():
     if ( request.endpoint != 'login'):
         session['id'] = logged_in_user['id']
 
+import API.routes.tablero
 import API.routes.producto
 import API.routes.servicio
 import API.routes.cliente
 import API.routes.usuario
 import API.routes.venta
+import API.routes.reportes
 
 app.static_folder = 'app/static'
 app.template_folder = 'app/templates'

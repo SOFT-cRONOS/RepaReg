@@ -44,22 +44,22 @@ const cargarClientes = () => {
 // ##################################################################################
 // graficacion
 // Paleta de colores
-var colorPrimario = "#3c3a78"; // violeta obscuro
-var colorSecundario = "#948fc4"; // claro
-var colorTerciario = "#77669d"; // medio
+var colorPrimario = '#3c3a78'; // violeta obscuro
+var colorSecundario = '#948fc4'; // claro
+var colorTerciario = '#77669d'; // medio
 
 // Datos de ejemplo para los gráficos
 var dataLine = {
-  labels: ["Día 1", "Día 2", "Día 3", "Día 4", "Día 5", "Día 6", "Día 7"],
+  labels: ['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5', 'Día 6', 'Día 7'],
   datasets: [
     {
-      label: "Ingresos en los últimos 7 días",
+      label: 'Ingresos en los últimos 7 días',
       //   array de datos
       data: [100, 150, 120, 200, 180, 250, 210],
       fill: false,
       borderColor: colorPrimario,
       pointRadius: 5,
-      backgroundColor: "transparent",
+      backgroundColor: 'transparent',
       borderWidth: 4,
       pointBackgroundColor: colorPrimario,
     },
@@ -67,10 +67,10 @@ var dataLine = {
 };
 
 var dataBar = {
-  labels: ["Día 1", "Día 2", "Día 3", "Día 4", "Día 5", "Día 6", "Día 7"],
+  labels: ['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5', 'Día 6', 'Día 7'],
   datasets: [
     {
-      label: "Ingresos de equipos al taller en los últimos 7 días",
+      label: 'Ingresos de equipos al taller en los últimos 7 días',
       //   array de datos
       data: [10, 15, 12, 20, 18, 25, 21],
       backgroundColor: colorTerciario,
@@ -79,7 +79,7 @@ var dataBar = {
 };
 
 var dataPie = {
-  labels: ["Ventas", "Reparaciones"],
+  labels: ['Ventas', 'Reparaciones'],
   datasets: [
     {
       //   array de datos
@@ -95,7 +95,7 @@ var chartOptions = {
   maintainAspectRatio: true,
 };
 
-var ctxLine = document.getElementById("lineChart").getContext("2d");
+/* var ctxLine = document.getElementById("lineChart").getContext("2d");
 var lineChart = new Chart(ctxLine, {
   type: "line",
   data: dataLine,
@@ -113,7 +113,7 @@ var pieChart = new Chart(ctxPie, {
   type: "pie",
   data: dataPie,
   options: chartOptions,
-});
+}); */
 // Fin graficacion
 
 //  funcion animacion de numeros
@@ -128,11 +128,11 @@ function animar() {
           {},
           $.fn.countTo.defaults,
           {
-            from: $(this).data("from"),
-            to: $(this).data("to"),
-            speed: $(this).data("speed"),
-            refreshInterval: $(this).data("refresh-interval"),
-            decimals: $(this).data("decimals"),
+            from: $(this).data('from'),
+            to: $(this).data('to'),
+            speed: $(this).data('speed'),
+            refreshInterval: $(this).data('refresh-interval'),
+            decimals: $(this).data('decimals'),
           },
           options
         );
@@ -146,9 +146,9 @@ function animar() {
           $self = $(this),
           loopCount = 0,
           value = settings.from,
-          data = $self.data("countTo") || {};
+          data = $self.data('countTo') || {};
 
-        $self.data("countTo", data);
+        $self.data('countTo', data);
 
         // if an existing interval can be found, clear it first
         if (data.interval) {
@@ -165,17 +165,17 @@ function animar() {
 
           render(value);
 
-          if (typeof settings.onUpdate == "function") {
+          if (typeof settings.onUpdate == 'function') {
             settings.onUpdate.call(self, value);
           }
 
           if (loopCount >= loops) {
             // remove the interval
-            $self.removeData("countTo");
+            $self.removeData('countTo');
             clearInterval(data.interval);
             value = settings.to;
 
-            if (typeof settings.onComplete == "function") {
+            if (typeof settings.onComplete == 'function') {
               settings.onComplete.call(self, value);
             }
           }
@@ -206,20 +206,20 @@ function animar() {
 
   jQuery(function ($) {
     // custom formatting example
-    $(".count-number").data("countToOptions", {
+    $('.count-number').data('countToOptions', {
       formatter: function (value, options) {
         return value
           .toFixed(options.decimals)
-          .replace(/\B(?=(?:\d{3})+(?!\d))/g, ",");
+          .replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
       },
     });
 
     // start all the timers
-    $(".timer").each(count);
+    $('.timer').each(count);
 
     function count(options) {
       var $this = $(this);
-      options = $.extend({}, options || {}, $this.data("countToOptions") || {});
+      options = $.extend({}, options || {}, $this.data('countToOptions') || {});
       $this.countTo(options);
     }
   });

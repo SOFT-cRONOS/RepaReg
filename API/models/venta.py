@@ -25,14 +25,38 @@ class Venta():
     def crear_venta(data):
 
         id_usuario =  session['id'] 
+        
+
+        data["id_cliente"]
+
+        print("detalle", data["detalle"])
 
         cur = mysql.connection.cursor()
+
         cur.execute('INSERT INTO venta (id_usuario, id_cliente, total) VALUES (%s, %s, %s)', (id_usuario, data["id_cliente"], data["total"]))
-        mysql.connection.commit()
+
         if cur.rowcount > 0:
             cur.execute('SELECT LAST_INSERT_ID()')
             res = cur.fetchall()
             id = res[0][0]
+
+            mysql.connection.commit()
+
+            """ Guardo el detalle """
+            for producto in data["detalle"]:   
+                print("aca", id)             
+                if ( int(producto["tipo"]) == 1 ):
+                    """ Producto """
+                    print("producto", producto["id_productoServicio"])  
+                    cur.execute('INSERT INTO detalle_venta (id_venta, id_producto, cantidad, precio_unit) VALUES (%s, %s, %s, %s)', (id, producto["id_productoServicio"], producto["cantidad"], producto["precio"]))
+                else:
+                    """ Servicio """
+                    print("servicio", producto["id_productoServicio"])  
+                    cur.execute('INSERT INTO detalle_venta (id_venta, id_servicio, cantidad, precio_unit) VALUES (%s, %s, %s, %s)', (id, producto["id_productoServicio"], producto["cantidad"], producto["precio"]))
+                
+                
+            mysql.connection.commit()
+
             return {"message": "Venta creada exitosamente", "id": id}
         
         raise DBError("Error al guardar la venta.")

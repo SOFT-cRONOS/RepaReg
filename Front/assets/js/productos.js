@@ -1,34 +1,83 @@
 let idProductoSeleccionado = null;
 
-const URL_BASE = "http://localhost:5200";
+const URL_BASE = 'http://localhost:5200';
 
 const MODOS_MODAL = {
-  nuevo: "nuevo",
-  ver: "ver",
-  edicion: "edicion",
+  nuevo: 'nuevo',
+  ver: 'ver',
+  edicion: 'edicion',
 };
 
 let modoModal = MODOS_MODAL.nuevo;
 
-const modalProductos = new bootstrap.Modal("#modal-productos");
+const modalProductos = new bootstrap.Modal('#modal-productos');
 
-const btnEditarProducto = document.getElementById("btn-editar-producto");
+const btnEditarProducto = document.getElementById('btn-editar-producto');
 
-const btnNuevoProducto = document.getElementById("btn-nuevo-producto");
-const btnGuardarProducto = document.getElementById("btn-guardar-producto");
-const btnBuscarProducto = document.getElementById("btn-buscar-producto");
+const btnNuevoProducto = document.getElementById('btn-nuevo-producto');
+const btnGuardarProducto = document.getElementById('btn-guardar-producto');
+
 const btnCerrarModalProducto = document.getElementById(
-  "btn-cerrar-modal-producto"
+  'btn-cerrar-modal-producto'
 );
 
-const inputNombre = document.getElementById("nombre");
-const inputPrecioCompra = document.getElementById("precio-compra");
-const inputPrecioVenta = document.getElementById("precio-venta");
-const inputStock = document.getElementById("stock");
-const selectCategoria = document.getElementById("categoria");
-const selectMarca = document.getElementById("marca");
+const inputNombre = document.getElementById('nombre');
+const inputPrecioCompra = document.getElementById('precio-compra');
+const inputPrecioVenta = document.getElementById('precio-venta');
+const inputStock = document.getElementById('stock');
+const selectCategoria = document.getElementById('categoria');
+const selectMarca = document.getElementById('marca');
 
-const tituloModalProductos = document.getElementById("titulo-modal-productos");
+const tituloModalProductos = document.getElementById('titulo-modal-productos');
+
+function validarForm() {
+  let isValid = true;
+
+  const nombre = document.getElementById('nombre').value;
+  const categoria = document.getElementById('categoria').value;
+  const marca = document.getElementById('marca').value;
+  const precioCompra = document.getElementById('precio-compra').value;
+  const precioVenta = document.getElementById('precio-venta').value;
+  const stock = document.getElementById('stock').value;
+
+  if (nombre.trim().length === 0) {
+    isValid = false;
+  }
+
+  if (categoria == '-1') {
+    isValid = false;
+  }
+
+  if (marca == '-1') {
+    isValid = false;
+  }
+
+  if (
+    precioCompra.trim().length == 0 ||
+    isNaN(precioCompra) ||
+    precioCompra <= 0
+  ) {
+    isValid = false;
+  }
+
+  if (
+    precioVenta.trim().length == 0 ||
+    isNaN(precioVenta) ||
+    precioVenta <= 0
+  ) {
+    isValid = false;
+  }
+
+  if (stock.trim().length == 0 || isNaN(stock) || stock <= 0) {
+    isValid = false;
+  }
+
+  if (!isValid) {
+    alert('Error en los datos ingresados.');
+  }
+
+  return isValid;
+}
 
 const obtenerProductos = async () => {
   const authToken = getAuthToken();
@@ -42,9 +91,9 @@ const obtenerProductos = async () => {
 };
 
 const mostrarProductosEnTabla = (productos) => {
-  const datosTabla = document.getElementById("datos-tabla");
+  const datosTabla = document.getElementById('datos-tabla');
 
-  let html = "";
+  let html = '';
 
   //Dibujar la tabla de productos
   productos.forEach((producto) => {
@@ -70,22 +119,22 @@ const mostrarProductosEnTabla = (productos) => {
 
   datosTabla.innerHTML = html;
 
-  const botonesVer = document.getElementsByClassName("btn-ver");
-  const botonesEliminar = document.getElementsByClassName("btn-eliminar");
+  const botonesVer = document.getElementsByClassName('btn-ver');
+  const botonesEliminar = document.getElementsByClassName('btn-eliminar');
 
   for (const botonVer of botonesVer) {
-    botonVer.addEventListener("click", mostrarModalDetalleProducto);
+    botonVer.addEventListener('click', mostrarModalDetalleProducto);
   }
 
   for (const botonEliminar of botonesEliminar) {
-    botonEliminar.addEventListener("click", eliminarProducto);
+    botonEliminar.addEventListener('click', eliminarProducto);
   }
 
   feather.replace();
 };
 
 const mostrarModalDetalleProducto = async (event) => {
-  const idProducto = event.target.getAttribute("data-id-producto");
+  const idProducto = event.target.getAttribute('data-id-producto');
 
   idProductoSeleccionado = idProducto;
 
@@ -109,16 +158,16 @@ const mostrarModalDetalleProducto = async (event) => {
 };
 
 const eliminarProducto = (event) => {
-  const idProducto = event.target.getAttribute("data-id-producto");
+  const idProducto = event.target.getAttribute('data-id-producto');
 
   Swal.fire({
-    text: "¿Realmente desde eliminar el producto?",
-    icon: "question",
+    text: '¿Realmente desde eliminar el producto?',
+    icon: 'question',
     showCancelButton: true,
-    confirmButtonColor: "#77669d",
-    cancelButtonColor: "#b9b8c9",
-    confirmButtonText: "Aceptar",
-    cancelButtonText: "Cancelar",
+    confirmButtonColor: '#77669d',
+    cancelButtonColor: '#b9b8c9',
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar',
   }).then(async (result) => {
     if (result.isConfirmed) {
       const authToken = getAuthToken();
@@ -126,9 +175,9 @@ const eliminarProducto = (event) => {
       const url = `${URL_BASE}/productos/${idProducto}?authToken=${authToken}`;
 
       const response = await fetch(url, {
-        method: "DELETE",
+        method: 'DELETE',
 
-        headers: { "Content-Type": "application/json" },
+        headers: { 'Content-Type': 'application/json' },
       });
 
       await response.json();
@@ -144,53 +193,47 @@ const mostrarModalProductos = () => {
 };
 
 const guardarProducto = async () => {
-  const nombre = document.getElementById("nombre").value;
-  const id_categoria = document.getElementById("categoria").value;
-  const id_marca = document.getElementById("marca").value;
-  const precio_compra = document.getElementById("precio-compra").value;
-  const precio_venta = document.getElementById("precio-venta").value;
-  const stock = document.getElementById("stock").value;
+  if (validarForm()) {
+    const nombre = document.getElementById('nombre').value;
+    const id_categoria = document.getElementById('categoria').value;
+    const id_marca = document.getElementById('marca').value;
+    const precio_compra = document.getElementById('precio-compra').value;
+    const precio_venta = document.getElementById('precio-venta').value;
+    const stock = document.getElementById('stock').value;
 
-  let url = `${URL_BASE}/productos`;
-  let method = "POST";
+    let url = `${URL_BASE}/productos`;
+    let method = 'POST';
 
-  if (modoModal === MODOS_MODAL.edicion) {
-    url += `/${idProductoSeleccionado}`;
-    method = "PUT";
+    if (modoModal === MODOS_MODAL.edicion) {
+      url += `/${idProductoSeleccionado}`;
+      method = 'PUT';
+    }
+
+    const authToken = getAuthToken();
+
+    url += `?authToken=${authToken}`;
+
+    const data = {
+      nombre,
+      id_categoria,
+      id_marca,
+      precio_compra,
+      precio_venta,
+      stock,
+    };
+
+    const response = await fetch(url, {
+      method,
+      body: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    await response.json();
+
+    await obtenerProductos();
+
+    modalProductos.hide();
   }
-
-  const authToken = getAuthToken();
-
-  url += `?authToken=${authToken}`;
-
-  const data = {
-    nombre,
-    id_categoria,
-    id_marca,
-    precio_compra,
-    precio_venta,
-    stock,
-  };
-
-  const response = await fetch(url, {
-    method,
-    body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json" },
-  });
-
-  await response.json();
-
-  await obtenerProductos();
-
-  modalProductos.hide();
-};
-
-const buscarProducto = () => {
-  const cajaBusqueda = document.getElementById("caja-busqueda");
-
-  const textoBuscado = cajaBusqueda.value;
-
-  console.log("Buscar el producto...", textoBuscado);
 };
 
 const editarProducto = () => {
@@ -201,14 +244,14 @@ const cambiarEstadoModal = (nuevoModoModal) => {
   modoModal = nuevoModoModal;
   if (nuevoModoModal === MODOS_MODAL.nuevo) {
     idProductoSeleccionado = null;
-    tituloModalProductos.innerHTML = "Nuevo Producto";
+    tituloModalProductos.innerHTML = 'Nuevo Producto';
 
-    inputNombre.value = "";
-    inputPrecioCompra.value = "";
-    inputPrecioVenta.value = "";
-    inputStock.value = "";
-    selectCategoria.value = "-1";
-    selectMarca.value = "-1";
+    inputNombre.value = '';
+    inputPrecioCompra.value = '';
+    inputPrecioVenta.value = '';
+    inputStock.value = '';
+    selectCategoria.value = '-1';
+    selectMarca.value = '-1';
 
     inputNombre.disabled = false;
     inputPrecioCompra.disabled = false;
@@ -217,11 +260,11 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     selectCategoria.disabled = false;
     selectMarca.disabled = false;
 
-    btnEditarProducto.style.display = "none";
-    btnGuardarProducto.style.display = "block";
-    btnCerrarModalProducto.innerHTML = "Cancelar";
+    btnEditarProducto.style.display = 'none';
+    btnGuardarProducto.style.display = 'block';
+    btnCerrarModalProducto.innerHTML = 'Cancelar';
   } else if (nuevoModoModal === MODOS_MODAL.ver) {
-    tituloModalProductos.innerHTML = "Ver Producto";
+    tituloModalProductos.innerHTML = 'Ver Producto';
 
     inputNombre.disabled = true;
     inputPrecioCompra.disabled = true;
@@ -230,11 +273,11 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     selectCategoria.disabled = true;
     selectMarca.disabled = true;
 
-    btnEditarProducto.style.display = "block";
-    btnGuardarProducto.style.display = "none";
-    btnCerrarModalProducto.innerHTML = "Cerrar";
+    btnEditarProducto.style.display = 'block';
+    btnGuardarProducto.style.display = 'none';
+    btnCerrarModalProducto.innerHTML = 'Cerrar';
   } else if (nuevoModoModal === MODOS_MODAL.edicion) {
-    tituloModalProductos.innerHTML = "Editar Producto";
+    tituloModalProductos.innerHTML = 'Editar Producto';
 
     inputNombre.disabled = false;
     inputPrecioCompra.disabled = false;
@@ -243,9 +286,9 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     selectCategoria.disabled = false;
     selectMarca.disabled = false;
 
-    btnEditarProducto.style.display = "none";
-    btnCerrarModalProducto.innerHTML = "Cancelar";
-    btnGuardarProducto.style.display = "block";
+    btnEditarProducto.style.display = 'none';
+    btnCerrarModalProducto.innerHTML = 'Cancelar';
+    btnGuardarProducto.style.display = 'block';
   }
 };
 
@@ -259,12 +302,11 @@ const handleCerrarModal = () => {
   }
 };
 
-btnNuevoProducto.addEventListener("click", mostrarModalProductos);
-btnGuardarProducto.addEventListener("click", guardarProducto);
-btnBuscarProducto.addEventListener("click", buscarProducto);
+btnNuevoProducto.addEventListener('click', mostrarModalProductos);
+btnGuardarProducto.addEventListener('click', guardarProducto);
 
-btnEditarProducto.addEventListener("click", editarProducto);
+btnEditarProducto.addEventListener('click', editarProducto);
 
-btnCerrarModalProducto.addEventListener("click", handleCerrarModal);
+btnCerrarModalProducto.addEventListener('click', handleCerrarModal);
 
 obtenerProductos();
