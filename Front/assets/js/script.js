@@ -70,16 +70,38 @@ function sellsbyCat() {
 }
 
 
-// Datos de ejemplo para los gráficos
+// grafico ultimas 7 ventas
 lastWeeksell().then(ultimasventas => {
   console.log(ultimasventas);
+
+  const dias = [];
+  const totales = [];
+  ultimasventas.forEach(venta => {
+    var fechaObj = new Date(venta.dia);
+    // Obtiener  día y el mes
+    var dia = fechaObj.getUTCDate();
+    var mes = fechaObj.getUTCMonth() + 1; // arranca de 0
+
+    // dos dígitos
+    dia = dia < 10 ? "0" + dia : dia;
+    mes = mes < 10 ? "0" + mes : mes;
+
+    // Formatear la fecha como dd/mm
+    var fechaFormateada = dia + "/" + mes;
+
+    dias.push(fechaFormateada);
+    console.log(fechaFormateada)
+    totales.push(venta.total);
+  });
+  
+
   var dataLine = {
-    labels: ['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5', 'Día 6', 'Día 7'],
+    labels: dias,
     datasets: [
       {
         label: 'Ingresos en los últimos 7 días',
         //   array de datos
-        data: ultimasventas,
+        data: totales,
         fill: false,
         borderColor: colorPrimario,
         pointRadius: 5,
@@ -97,13 +119,14 @@ lastWeeksell().then(ultimasventas => {
   });
 });
 
+//grafico torta ventas segmentadas
 sellsbyCat().then(ventasxcat => {
   console.log(ventasxcat);
   const categorias = [];
   const cantidades = [];
   ventasxcat.forEach(item => {
     categorias.push(item.categoria);
-    cantidades.push(item.cantidad);
+    cantidades.push(item.total);
   });
 
   var dataPie = {

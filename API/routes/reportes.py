@@ -36,16 +36,18 @@ def obtener_reporte_total_compras_por_cliente():
 def get_Report(idreport):
     cur = mysql.connection.cursor()
     if idreport == 1:
-        cur.execute('''SELECT total
+        cur.execute('''SELECT DATE(fecha), SUM(total) AS total
                         FROM venta
                         WHERE fecha > NOW() - INTERVAL 7 DAY
+                        GROUP BY DATE_FORMAT(fecha, '%Y-%m-%d')
                         ORDER BY fecha DESC
                         LIMIT 7;''')
         data = cur.fetchall()
 
         reporteList = []
         for row in data:
-            reporteList.append( row[0] ) 
+            #responde sin modelo de clase
+            reporteList.append( {"dia": row[0], "total": row[1] } ) 
         
         
         cur.close()
@@ -71,6 +73,7 @@ def get_Report(idreport):
 
         reporteList = []
         for row in data:
+             #responde sin modelo de clase
             reporteList.append( {"categoria": row[0], "cantidad": row[1]} ) 
         
         
