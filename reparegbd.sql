@@ -35,14 +35,7 @@ CREATE TABLE `categoria` (
   `detalle` varchar(150) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `categoria`
---
 
-INSERT INTO `categoria` (`id`, `nombre`, `detalle`) VALUES
-(1, 'Insumos', ''),
-(2, 'Inmuebles', ''),
-(3, 'Computación', '');
 
 -- --------------------------------------------------------
 
@@ -61,15 +54,7 @@ CREATE TABLE `cliente` (
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `cliente`
---
 
-INSERT INTO `cliente` (`id`, `nombre`, `apellido`, `cuit_cuil`, `direccion`, `email`, `telefono`, `id_usuario`) VALUES
-(1, 'Steve', 'Jobs', '12121212', 'Dirección de Steve', 'steve@jobs.com', '2223', 1),
-(6, 'CliUsr2', 'asdad', '23233333', 'asd', 'aleexiisalmagroo@gmail.com', '123123', 2),
-(7, 'CliNuevo', 'asdsad', '2313123', 'Dirección de CliNuevo', 'pepe@gmail.com', '1212', 2),
-(8, 'TEst', '23', '232323', 'aasdad', 'test2@gmail.com', '34324', 1);
 
 -- --------------------------------------------------------
 
@@ -86,17 +71,7 @@ CREATE TABLE `detalle_venta` (
   `precio_unit` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `detalle_venta`
---
 
-INSERT INTO `detalle_venta` (`id`, `id_venta`, `id_producto`, `id_servicio`, `cantidad`, `precio_unit`) VALUES
-(19, 27, 5, NULL, 3, '34.00'),
-(20, 27, NULL, 2, 3, '434.00'),
-(22, 29, 14, NULL, 30, '122.00'),
-(23, 30, 5, NULL, 1, '12.00'),
-(25, 32, 13, NULL, 23, '121212.00'),
-(28, 35, NULL, 13, 3, '4.00');
 
 --
 -- Disparadores `detalle_venta`
@@ -123,15 +98,6 @@ CREATE TABLE `marca` (
   `detalle` varchar(150) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `marca`
---
-
-INSERT INTO `marca` (`id`, `nombre`, `detalle`) VALUES
-(1, 'Asus', ''),
-(2, 'B&D', ''),
-(3, 'HP', ''),
-(4, 'Fiat', '');
 
 -- --------------------------------------------------------
 
@@ -154,12 +120,6 @@ CREATE TABLE `producto` (
 -- Volcado de datos para la tabla `producto`
 --
 
-INSERT INTO `producto` (`id`, `nombre`, `id_categoria`, `id_usuario`, `stock`, `precio_compra`, `precio_venta`, `id_marca`) VALUES
-(3, 'Test', 2, 1, 1220, '123', '144', 4),
-(5, 'Test API', 1, 2, 453, '100', '200', 4),
-(6, 'Test API', 2, 1, 100, '350', '400', 3),
-(13, 'rrr', 1, 1, 1000, '12', '13', 1),
-(14, 'tttt', 1, 2, 600, '34', '35', 2);
 
 -- --------------------------------------------------------
 
@@ -175,16 +135,7 @@ CREATE TABLE `servicio` (
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `servicio`
---
 
-INSERT INTO `servicio` (`id`, `nombre`, `precio`, `descripcion`, `id_usuario`) VALUES
-(1, 'Streaming video', '12000', 'Prueba de descripcion', 1),
-(2, 'Streaming audio', '30000', 'Prueba de descripcion en streaming de audio', 2),
-(11, 'Serv22222', '33', 'sds', 2),
-(12, 'Serv1', '23', '434', 1),
-(13, 'ssrrvv', '20', '', 1);
 
 -- --------------------------------------------------------
 
@@ -204,13 +155,6 @@ CREATE TABLE `usuario` (
   `email` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `usuario`
---
-
-INSERT INTO `usuario` (`id`, `cuit_cuil`, `nombre`, `apellido`, `password`, `imagen`, `direccion`, `telefono`, `email`) VALUES
-(1, '24373764406', 'persona', 'testeo', '1234', 'https://cdn-icons-png.flaticon.com/512/1503/1503151.png', 'colon 104', 123, 'test@gmail.com'),
-(2, '24373765406', 'persona', 'testeo', '1234', 'https://cdn-icons-png.flaticon.com/512/1503/1503151.png', 'colon 104', 123, 'test2@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -226,16 +170,7 @@ CREATE TABLE `venta` (
   `total` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `venta`
---
 
-INSERT INTO `venta` (`id`, `id_usuario`, `fecha`, `id_cliente`, `total`) VALUES
-(27, 2, '2023-11-27 23:10:08', 6, 1404),
-(29, 2, '2023-11-27 23:36:47', 6, 3660),
-(30, 2, '2023-11-28 00:02:58', 7, 12),
-(32, 1, '2023-11-28 07:19:21', 1, 2787876),
-(35, 1, '2023-11-28 09:25:00', 8, 12);
 
 --
 -- Índices para tablas volcadas
@@ -306,49 +241,49 @@ ALTER TABLE `venta`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_venta`
 --
 ALTER TABLE `detalle_venta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
 --
 ALTER TABLE `marca`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
 --
 -- AUTO_INCREMENT de la tabla `servicio`
 --
 ALTER TABLE `servicio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
 --
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
 --
 -- Restricciones para tablas volcadas
@@ -387,3 +322,112 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+/* Insert de pruebas */
+
+/* Marcas */
+INSERT INTO `marca` (`nombre`, `detalle`) VALUES
+('Logitech', 'Marca de periféricos'),
+('Samsung', 'Marca de monitores'),
+('Microsoft', 'Marca de software'),
+('Epson', 'Marca de impresoras'),
+('Seagate', 'Marca de almacenamiento'),
+('NVIDIA', 'Marca de tarjetas de video'),
+('Corsair', 'Marca de memoria RAM'),
+('Belkin', 'Marca de accesorios'),
+('HP', 'Marca de periféricos'),
+('Cisco', 'Marca de equipos de redes');
+
+/* Usuarios */
+INSERT INTO `usuario` (`cuit_cuil`, `nombre`, `apellido`, `password`, `imagen`, `direccion`, `telefono`, `email`) VALUES
+('20345678901', 'Han', 'Solo', '123', 'assets/img/user/imagen_admin.png', 'Calle Principal', 123456789, 'admin@taller.com'),
+('30456789012', 'Leia', 'Organa', '123', 'assets/img/user/imagen_user2.png', 'Avenida Central', 987654321, 'tecnico@taller.com'),
+('30456789012', 'Anakin', 'Skywalker', '123', 'assets/img/user/imagen_user3.png', 'Avenida Central', 987654321, 'tecnico2@taller.com');
+
+
+/* Clientes */
+INSERT INTO `cliente` (`nombre`, `apellido`, `cuit_cuil`, `direccion`, `email`, `telefono`, `id_usuario`) VALUES
+('Juan', 'Gómez', '20345678901', 'Calle 123', 'juan@gmail.com', '123456789', 1),
+('Ana', 'López', '30456789012', 'Avenida Principal', 'ana@gmail.com', '987654321', 2),
+('Eduardo', 'Martínez', '40567890123', 'Calle 456', 'eduardo@gmail.com', '456789012', 1),
+('Laura', 'Fernández', '50678901234', 'Avenida Central', 'laura@gmail.com', '789012345', 2),
+('Carlos', 'Rodríguez', '60789012345', 'Calle 789', 'carlos@gmail.com', '234567890', 1),
+('María', 'Díaz', '70890123456', 'Avenida Secundaria', 'maria@gmail.com', '345678901', 2),
+('Pedro', 'González', '80901234567', 'Calle 1011', 'pedro@gmail.com', '567890123', 1),
+('Sofía', 'Pérez', '90112345678', 'Avenida Nueva', 'sofia@gmail.com', '678901234', 2),
+('Miguel', 'Ramírez', '10234567890', 'Calle 1213', 'miguel@gmail.com', '789012345', 1),
+('Isabel', 'Sánchez', '21345678901', 'Avenida Antigua', 'isabel@gmail.com', '890123456', 2);
+
+--
+-- categoria
+--
+
+INSERT INTO `categoria` (`id`, `nombre`, `detalle`) VALUES
+(1, 'accesorios', ''),
+(2, 'componentes', ''),
+(3, 'impresoras', ''),
+(4, 'software', '');
+
+/* Productos */
+INSERT INTO `producto` (`nombre`, `id_categoria`, `id_usuario`, `stock`, `precio_compra`, `precio_venta`, `id_marca`) VALUES
+('Teclado mecánico', 1, 1, 20, '40.00', '60.00', 1),
+('Monitor LED 24"', 2, 2, 15, '120.00', '150.00', 2),
+('Microsoft Office 365', 4, 1, 50, '80.00', '100.00', 3),
+('Impresora láser', 3, 2, 10, '150.00', '200.00', 4),
+('Disco duro externo 1TB', 2, 1, 30, '50.00', '80.00', 5),
+('Tarjeta de video GTX 1660', 2, 2, 5, '200.00', '250.00', 6),
+('Memoria RAM 8GB DDR4', 2, 1, 25, '30.00', '50.00', 7),
+('Router inalámbrico', 1, 2, 15, '40.00', '60.00', 10),
+('Ratón gaming', 1, 1, 12, '25.00', '40.00', 8),
+('Switch Ethernet 8 puertos', 1, 2, 8, '60.00', '80.00', 10);
+
+/* Servicios */
+INSERT INTO `servicio` (`nombre`, `precio`, `descripcion`, `id_usuario`) VALUES
+('Reparación de software', '80.00', 'Reparación de sistemas operativos y programas', 1),
+('Actualización de hardware', '120.00', 'Mejora de componentes hardware de la computadora', 2),
+('Configuración de red', '60.00', 'Configuración de redes locales y Wi-Fi', 1),
+('Recuperación de datos', '150.00', 'Recuperación de datos perdidos o eliminados', 2),
+('Instalación de software', '40.00', 'Instalación y configuración de programas', 1),
+('Limpieza de virus', '100.00', 'Eliminación de virus y malware', 2),
+('Asesoramiento tecnológico', '30.00', 'Asesoramiento en la compra de equipos y tecnología', 1),
+('Optimización del sistema', '50.00', 'Mejora del rendimiento del sistema operativo', 2),
+('Reparación de hardware', '80.00', 'Reparación de componentes hardware', 1),
+('Mantenimiento preventivo', '60.00', 'Revisión y mantenimiento periódico de equipos', 2);
+
+
+/* Ventas */
+INSERT INTO `venta` (`id_usuario`, `fecha`, `id_cliente`, `total`) VALUES
+(1, '2023-11-28 10:15:00', 6, 250),
+(2, '2023-11-28 09:45:00', 7, 450),
+(1, '2023-11-28 08:30:00', 8, 700),
+(2, '2023-11-28 07:00:00', 9, 150),
+(1, '2023-11-27 23:30:00', 10, 350),
+(2, '2023-11-27 22:45:00', 1, 600),
+(1, '2023-11-27 21:15:00', 2, 200),
+(2, '2023-11-27 20:00:00', 3, 400),
+(1, '2023-11-27 19:30:00', 4, 550),
+(2, '2023-11-27 18:00:00', 5, 300);
+
+/* Detalle de ventas */
+INSERT INTO `detalle_venta` (`id_venta`, `id_producto`, `id_servicio`, `cantidad`, `precio_unit`) VALUES
+(1, 1, NULL, 2, '50.00'),
+(1, 2, NULL, 1, '30.00'),
+(2, 3, NULL, 3, '25.00'),
+(2, NULL, 1, 1, '100.00'),
+(3, 4, NULL, 5, '10.00'),
+(3, NULL, 2, 2, '150.00'),
+(4, 5, NULL, 1, '200.00'),
+(4, NULL, 3, 3, '50.00'),
+(5, 6, NULL, 4, '40.00'),
+(5, NULL, 4, 2, '120.00'),
+(6, 1, NULL, 2, '50.00'),
+(6, 2, NULL, 1, '30.00'),
+(7, 3, NULL, 3, '25.00'),
+(8, NULL, 1, 1, '100.00'),
+(8, 4, NULL, 5, '10.00'),
+(9, NULL, 2, 2, '150.00'),
+(9, 5, NULL, 1, '200.00'),
+(10, NULL, 3, 3, '50.00'),
+(10, 6, NULL, 4, '40.00'),
+(10, NULL, 4, 2, '120.00');

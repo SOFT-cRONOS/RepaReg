@@ -49,6 +49,12 @@ var colorPrimario = '#3c3a78'; // violeta obscuro
 var colorSecundario = '#948fc4'; // claro
 var colorTerciario = '#77669d'; // medio
 
+  // Configuración de los gráficos
+  var chartOptions = {
+    responsive: true,
+    maintainAspectRatio: true,
+  };
+
 function lastWeeksell() {
   const authToken = getAuthToken();
   const url = `${URL_BASE}/reportes/1?authToken=${authToken}`;
@@ -69,6 +75,16 @@ function sellsbyCat() {
     .catch(error => console.error('Error:', error));
 }
 
+function sellReport(graph) {
+  const authToken = getAuthToken();
+  const url = `${URL_BASE}/reportes/${graph}?authToken=${authToken}`;
+
+  return fetch(url)
+    .then(response => response.json())
+    .then(data => data)
+    .catch(error => console.error('Error:', error));
+}
+
 
 // grafico ultimas 7 ventas
 lastWeeksell().then(ultimasventas => {
@@ -77,20 +93,22 @@ lastWeeksell().then(ultimasventas => {
   const dias = [];
   const totales = [];
   ultimasventas.forEach(venta => {
-    var fechaObj = new Date(venta.dia);
+
+    
+    //var fechaObj = new Date(venta.dia);
     // Obtiener  día y el mes
-    var dia = fechaObj.getUTCDate();
-    var mes = fechaObj.getUTCMonth() + 1; // arranca de 0
+    //var dia = fechaObj.getUTCDate();
+    //var mes = fechaObj.getUTCMonth() + 1; // arranca de 0
 
     // dos dígitos
-    dia = dia < 10 ? "0" + dia : dia;
-    mes = mes < 10 ? "0" + mes : mes;
+    //dia = dia < 10 ? "0" + dia : dia;
+    //mes = mes < 10 ? "0" + mes : mes;
 
     // Formatear la fecha como dd/mm
-    var fechaFormateada = dia + "/" + mes;
+    //var fechaFormateada = dia + "/" + mes;
 
-    dias.push(fechaFormateada);
-    console.log(fechaFormateada)
+    dias.push(venta.dia);
+    console.log(venta.dia)
     totales.push(venta.total);
   });
   
@@ -126,7 +144,7 @@ sellsbyCat().then(ventasxcat => {
   const cantidades = [];
   ventasxcat.forEach(item => {
     categorias.push(item.categoria);
-    cantidades.push(item.total);
+    cantidades.push(item.cantidad);
   });
 
   var dataPie = {
@@ -149,34 +167,39 @@ sellsbyCat().then(ventasxcat => {
 })
 
 
-var dataBar = {
-  labels: ['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5', 'Día 6', 'Día 7'],
-  datasets: [
-    {
-      label: 'Ingresos de equipos al taller en los últimos 7 días',
-      //   array de datos
-      data: [10, 15, 12, 20, 18, 25, 21],
-      backgroundColor: colorTerciario,
-    },
-  ],
-};
+//grafico barras servicios ultima semana
+sellReport(3).then(
+  ventasxcat => {
+    console.log(ventasxcat);
+    const fechas = [];
+    const cantidades = [];
+    ventasxcat.forEach(venta => {
+      fechas.push(venta.fecha);
+      cantidades.push(venta.cantidad);
+    });
+    
+    var dataBar = {
+      labels: fechas,
+      datasets: [
+        {
+          label: 'Ingresos de equipos al taller en los últimos 7 días',
+          //   array de datos
+          data: cantidades,
+          backgroundColor: colorTerciario,
+        },
+      ],
+    };
+
+    var ctxBar = document.getElementById("barChart").getContext("2d");
+    var barChart = new Chart(ctxBar, {
+      type: "bar",
+      data: dataBar,
+      options: chartOptions,
+    });
+  })
 
 
 
-// Configuración de los gráficos
-var chartOptions = {
-  responsive: true,
-  maintainAspectRatio: true,
-};
-
-
-
-var ctxBar = document.getElementById("barChart").getContext("2d");
-var barChart = new Chart(ctxBar, {
-  type: "bar",
-  data: dataBar,
-  options: chartOptions,
-});
 
 
 // Fin graficacion

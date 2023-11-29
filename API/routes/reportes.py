@@ -36,12 +36,14 @@ def obtener_reporte_total_compras_por_cliente():
 def get_Report(idreport):
     cur = mysql.connection.cursor()
     if idreport == 1:
-        cur.execute('''SELECT DATE(fecha), SUM(total) AS total
+        cur.execute('''SELECT
+                        DATE_FORMAT(fecha, '%d/%m') AS fecha,
+                        SUM(total) AS monto_total
                         FROM venta
-                        WHERE fecha > NOW() - INTERVAL 7 DAY
-                        GROUP BY DATE_FORMAT(fecha, '%Y-%m-%d')
-                        ORDER BY fecha DESC
-                        LIMIT 7;''')
+                        GROUP BY DATE_FORMAT(fecha, '%d/%m')
+                        ORDER BY fecha
+                        LIMIT 7;
+                        ''')
         data = cur.fetchall()
 
         reporteList = []
@@ -76,6 +78,31 @@ def get_Report(idreport):
              #responde sin modelo de clase
             reporteList.append( {"categoria": row[0], "cantidad": row[1]} ) 
         
+        
+        cur.close()
+
+        return jsonify(reporteList)
+    elif idreport == 3:
+        #* comodin en mysql
+        cur.execute('''SELECT
+                            DATE_FORMAT(v.fecha, '%d/%m') AS fecha,
+                            COUNT(*) AS cantventas
+                        FROM
+                            venta v
+                            INNER JOIN detalle_venta dv ON v.id = dv.id_venta
+                            INNER JOIN servicio s ON dv.id_servicio = s.id
+                        WHERE
+                            v.fecha >= CURDATE() - INTERVAL 7 DAY
+                        GROUP BY
+                            DATE_FORMAT(fecha, '%d/%m')
+                        ORDER BY
+                            fecha;''')
+        data = cur.fetchall()
+
+        reporteList = []
+        for row in data:
+             #responde sin modelo de clase
+            reporteList.append( {"fecha": row[0], "cantidad": row[1]} ) 
         
         cur.close()
 
