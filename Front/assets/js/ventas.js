@@ -322,6 +322,7 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     selectCliente.value = '-1';
 
     selectCliente.disabled = false;
+    document.getElementById("select-client-row").style.display = 'block';
 
     btnAgregarProductoServicio.style.display = 'block';
     btnGuardarVenta.style.display = 'block';
@@ -330,11 +331,21 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     tituloModalVentas.innerHTML = 'Ver Venta';
 
     selectCliente.disabled = true;
-
+    document.getElementById("select-client-row").style.display = 'none';
+    //selectCliente.classList.replace("form-select", "form-control");
+    const table = document.querySelector("#detalle-tabla-container");
+    const tr = table.querySelector("tr");
+    const th = tr.querySelector("th:nth-child(5)");
+    if (th) {
+      // El elemento th existe, puedes realizar acciones en él, como eliminarlo.
+      th.remove();
+    }
     btnAgregarProductoServicio.style.display = 'none';
     btnGuardarVenta.style.display = 'none';
     btnCerrarModalVenta.innerHTML = 'Cerrar';
+
   }
+
 
   dibujarDetalleVenta();
 };
@@ -372,7 +383,7 @@ const eliminarItemDetalleVenta = (index) => {
 const dibujarDetalleVenta = () => {
   if (detalleVenta.length > 0) {
     let html = '';
-
+    let totalventa = 0;
     //Dibujar la tabla de detalle de ventas
     detalleVenta.forEach((item, i) => {
       html += `<tr>
@@ -390,7 +401,13 @@ const dibujarDetalleVenta = () => {
                           </td>`
               }
             </tr>`;
+            totalventa += parseInt(item.cantidad) * parseFloat(item.precio)
     });
+
+    html += `    <tr>
+                    <td colspan="3" class="text-end"><strong>TOTAL:</strong></td>
+                    <td>${totalventa}</td>
+                  </tr>`
 
     tablaDetalleVenta.innerHTML = html;
 
@@ -450,6 +467,8 @@ btnCerrarMmodalAgregarProductoServicio.addEventListener(
 );
 
 btnAgregarDetalleVenta.addEventListener('click', agregarDetalleVenta);
+
+
 
 obtenerVentas();
 

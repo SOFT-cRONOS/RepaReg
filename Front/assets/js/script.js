@@ -182,7 +182,7 @@ sellReport(3).then(
       labels: fechas,
       datasets: [
         {
-          label: 'Ingresos de equipos al taller en los últimos 7 días',
+          label: 'Servicios en los últimos 7 días',
           //   array de datos
           data: cantidades,
           backgroundColor: colorTerciario,

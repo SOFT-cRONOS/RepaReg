@@ -234,3 +234,8 @@ td {
 .modal-editor-ventas .modal-dialog {
   max-width: 900px !important;
 }
+
+/* Factura */
+#cabecera-factura p {
+  margin-bottom: 0.2rem;
+}
