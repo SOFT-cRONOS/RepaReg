@@ -324,6 +324,61 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 
+/* Procedimientos almacenados */
+
+/* Reportes de ventas */
+DELIMITER //
+
+CREATE PROCEDURE lastWeekSell(IN usuario_id INT)
+BEGIN
+    SELECT
+        DATE_FORMAT(fecha, '%d/%m') AS fecha,
+        SUM(total) AS monto_total
+    FROM venta
+    WHERE id_usuario = usuario_id
+    GROUP BY DATE_FORMAT(fecha, '%d/%m')
+    ORDER BY fecha
+    LIMIT 7;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE lastSellsCategory(IN usuario_id INT)
+BEGIN
+      SELECT
+          categoria.nombre AS categoria,
+          COUNT(*) AS cantidad_ventas
+      FROM
+          detalle_venta
+          INNER JOIN producto ON detalle_venta.id_producto = producto.id
+          INNER JOIN categoria ON producto.id_categoria = categoria.id
+      WHERE producto.id_usuario = usuario_id
+      GROUP BY categoria.nombre;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE lastSellServices(IN usuario_id INT)
+BEGIN
+    SELECT
+        DATE_FORMAT(v.fecha, '%d/%m') AS fecha,
+        COUNT(*) AS cantventas
+    FROM venta v
+    INNER JOIN detalle_venta dv ON v.id = dv.id_venta
+    INNER JOIN servicio s ON dv.id_servicio = s.id
+    WHERE v.fecha >= CURDATE() - INTERVAL 7 DAY
+    AND v.id_usuario = usuario_id
+    GROUP BY DATE_FORMAT(fecha, '%d/%m')
+    ORDER BY fecha;
+END //
+
+DELIMITER ;
+/* Fin Reportes de ventas */
+
 /* Insert de pruebas */
 
 /* Marcas */
@@ -397,17 +452,19 @@ INSERT INTO `servicio` (`nombre`, `precio`, `descripcion`, `id_usuario`) VALUES
 
 
 /* Ventas */
+/* Ventas */
 INSERT INTO `venta` (`id_usuario`, `fecha`, `id_cliente`, `total`) VALUES
-(1, '2023-11-28 10:15:00', 6, 250),
-(2, '2023-11-28 09:45:00', 7, 450),
-(1, '2023-11-28 08:30:00', 8, 700),
-(2, '2023-11-28 07:00:00', 9, 150),
-(1, '2023-11-27 23:30:00', 10, 350),
-(2, '2023-11-27 22:45:00', 1, 600),
-(1, '2023-11-27 21:15:00', 2, 200),
-(2, '2023-11-27 20:00:00', 3, 400),
-(1, '2023-11-27 19:30:00', 4, 550),
-(2, '2023-11-27 18:00:00', 5, 300);
+(1, '2023-11-28 10:15:00', 7, 250),
+(2, '2023-11-28 09:45:00', 6, 450),
+(1, '2023-11-28 08:30:00', 9, 700),
+(2, '2023-11-28 07:00:00', 8, 150),
+(1, '2023-11-27 23:30:00', 5, 350),
+(2, '2023-11-27 22:45:00', 2, 600),
+(1, '2023-11-27 21:15:00', 1, 200),
+(2, '2023-11-27 20:00:00', 4, 400),
+(1, '2023-11-27 19:30:00', 3, 550),
+(2, '2023-11-27 18:00:00', 4, 300);
+
 
 /* Detalle de ventas */
 INSERT INTO `detalle_venta` (`id_venta`, `id_producto`, `id_servicio`, `cantidad`, `precio_unit`) VALUES

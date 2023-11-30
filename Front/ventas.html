@@ -147,10 +147,12 @@
     </div>
 
     <!-- Modal editor ventas -->
-    <div
+      <!-- Modal editor ventas -->
+      <div
       class="modal fade modal-fullscreen-xxl-down modal-editor-ventas"
       id="modal-ventas"
       tabindex="-1"
+      data-bs-backdrop="static"
     >
       <div class="modal-dialog">
         <div class="modal-content">
@@ -158,49 +160,115 @@
             <h5 class="modal-title" id="titulo-modal-ventas">Nueva Venta</h5>
           </div>
 
-          <div class="modal-body">
+          <div class="modal-body mx-auto">
             <form>
-              <div class="mb-3">
-                <label for="cliente" class="form-label">Cliente</label>
-                <select class="form-select" id="cliente">
-                  <option value="-1" disabled>Seleccione...</option>
-                  <option value="1">Steve (User test)</option>
-                  <option value="6">CliUsr2 (User test2)</option>
-                </select>
+              <div id="cabecera-factura" class="row mb-3">
+                <div class="row">
+                  <div class="col pe-1">
+                    <h5>FACTURA A</h5>
+                  </div>
+                  <div class="col pe-1">
+                    <h6><strong>Factura n°: </strong><span id="numero-factura">dd/mm/yyyy</span></h5>
+                    <h6><strong>Fecha: </strong><span id="fecha-factura">dd/mm/yyyy</span></h5>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col pe-1">
+                    <div class="card">
+                      <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Datos de cliente</h6>
+                        <div class="row">
+                          <div id="select-client-row" class="col">
+                            <label for="cliente" class="form-label">Cliente</label>
+                            <select class="form-select" id="cliente">
+                              <option value="-1" disabled>Seleccione...</option>
+                              <option value="1">Steve (User test)</option>
+                              <option value="6">CliUsr2 (User test2)</option>
+                            </select>
+                          </div>
+                          <div class="col-md-5">
+                            <p>
+                              <strong>Nombre: </strong><span id="sell-client-name">Luck</span>
+                            </p>
+                            <p>
+                              <strong>Apellido: </strong><span id="sell-client-lastname">Skywalker</span>
+                            </p>
+                            <p>
+                              <strong>Direccion: </strong><span id="sell-client-Dir">tatooine</span>
+                            </p>
+                          </div>
+                          <div class="col">
+                            <p>
+                              <strong>cuit/cuil: </strong><span id="sell-client-cuitl">00-00000000-0</span>
+                            </p>
+                            <p>
+                              <strong>Email: </strong><span id="sell-client-lastname">Skywalker@gmail.com</span>
+                            </p>
+                            <p>
+                              <strong>Telefono: </strong><span id="sell-client-Dir">0000-000000</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col ps-1">
+                    <div class="card">
+                      <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Datos de Vendedor</h6>
+                        <div class="col">
+                          <p>
+                            <strong>Nombre: </strong><span id="sell-seller-name">Luck</span>
+                          </p>
+                          <p>
+                            <strong>Apellido: </strong><span id="sell-seller-lastname">Skywalker</span>
+                          </p>
+                          <p>
+                            <strong>Direccion: </strong><span id="sell-seller-Dir">tatooine</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-md-3">
+                  <h2>Detalle</h2>
+
+                </div>
+                <div class="col">
+                  <button
+                  class="btn btn-primary"
+                  id="btn-agregar-producto-servicio"
+                >
+                  Agregar Item
+                </button>
+                </div>
               </div>
 
-              <h2>Detalle</h2>
-              <button
-                class="btn btn-primary"
-                id="btn-agregar-producto-servicio"
-              >
-                Agregar
-              </button>
-              <table id="detalle-tabla-container">
-                <thead>
-                  <tr>
-                    <th>Producto/Servicio</th>
-                    <th>Cantidad</th>
-                    <th>Precio Unit.</th>
-                    <th>Total</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-
-                <tbody id="detalle-venta"></tbody>
-              </table>
+              <div class="row justify-content-center">
+                <div class="col-md-auto">
+                  <table id="detalle-tabla-container" class="table table-striped table-sm" width="auto">
+                    <thead>
+                      <tr>
+                        <th>Producto/Servicio</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unit.</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody id="detalle-venta"></tbody>
+                  </table>
+                </div>
+              </div>
             </form>
           </div>
 
           <div class="modal-footer">
             <div class="modal-actions-container">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                id="btn-cerrar-modal-venta"
-              >
-                Cancelar
-              </button>
+
               <button
                 id="btn-guardar-venta"
                 type="button"
@@ -208,6 +276,14 @@
               >
                 Guardar
               </button>
+              <button
+              type="button"
+              class="btn btn-cancel"
+              id="btn-cerrar-modal-venta"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
             </div>
           </div>
         </div>
