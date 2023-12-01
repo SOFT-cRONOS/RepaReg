@@ -63,3 +63,4 @@ def eliminar_cliente(id_cliente):
         return jsonify( response ), 200
     except Exception as e:
         return jsonify( {"message": e.args[1]} ), 400 
+    

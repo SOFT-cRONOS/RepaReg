@@ -1,4 +1,8 @@
-<h3 align="center">Proyecto Informatico - grupo n°</h3>
+<h3 align="center">Proyecto Informatico - grupo n° 24</h3>
+integrantes:
+Matías José Rivadeneira
+Ríos Patricia Roxana
+Donato Nicolas Miguel
 
 # RepaReg
 Software para gestion de taller de reparaciones.

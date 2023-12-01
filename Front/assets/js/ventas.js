@@ -162,6 +162,27 @@ const cargarSelectItems = async (tipoItem) => {
   document.getElementById('producto-servicio').innerHTML = html;
 };
 
+
+//sacar precio de producto y establecer cantidad maxima
+const SelectorItem = document.getElementById('producto-servicio')
+document.getElementById('producto-servicio').addEventListener('change', cargarPrecio);
+function cargarPrecio() {
+  let id_producto = SelectorItem.value;
+  const authToken = getAuthToken();
+  const url = `${URL_BASE}/productos/${id_producto}?authToken=${authToken}`;
+
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      precio.value = data.precio_venta;
+      cantidad.value = 0;
+      cantidad.max = data.stock
+    })
+    .catch(error => console.error('Error:', error));
+  
+  
+}
+
 const obtenerVentas = async () => {
   const authToken = getAuthToken();
 
@@ -322,6 +343,7 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     selectCliente.value = '-1';
 
     selectCliente.disabled = false;
+    document.getElementById("select-client-row").style.display = 'block';
 
     btnAgregarProductoServicio.style.display = 'block';
     btnGuardarVenta.style.display = 'block';
@@ -330,11 +352,21 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     tituloModalVentas.innerHTML = 'Ver Venta';
 
     selectCliente.disabled = true;
-
+    document.getElementById("select-client-row").style.display = 'none';
+    //selectCliente.classList.replace("form-select", "form-control");
+    const table = document.querySelector("#detalle-tabla-container");
+    const tr = table.querySelector("tr");
+    const th = tr.querySelector("th:nth-child(5)");
+    if (th) {
+      // El elemento th existe, puedes realizar acciones en él, como eliminarlo.
+      th.remove();
+    }
     btnAgregarProductoServicio.style.display = 'none';
     btnGuardarVenta.style.display = 'none';
     btnCerrarModalVenta.innerHTML = 'Cerrar';
+
   }
+
 
   dibujarDetalleVenta();
 };
@@ -372,7 +404,7 @@ const eliminarItemDetalleVenta = (index) => {
 const dibujarDetalleVenta = () => {
   if (detalleVenta.length > 0) {
     let html = '';
-
+    let totalventa = 0;
     //Dibujar la tabla de detalle de ventas
     detalleVenta.forEach((item, i) => {
       html += `<tr>
@@ -390,7 +422,13 @@ const dibujarDetalleVenta = () => {
                           </td>`
               }
             </tr>`;
+            totalventa += parseInt(item.cantidad) * parseFloat(item.precio)
     });
+
+    html += `    <tr>
+                    <td colspan="3" class="text-end"><strong>TOTAL:</strong></td>
+                    <td>${totalventa}</td>
+                  </tr>`
 
     tablaDetalleVenta.innerHTML = html;
 
@@ -450,6 +488,8 @@ btnCerrarMmodalAgregarProductoServicio.addEventListener(
 );
 
 btnAgregarDetalleVenta.addEventListener('click', agregarDetalleVenta);
+
+
 
 obtenerVentas();
 

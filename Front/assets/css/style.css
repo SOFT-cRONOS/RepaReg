@@ -11,6 +11,17 @@
   --color-danger: #f05e6b;
 }
 
+/* drop de usuarios */
+.drop-user {
+  display: none;
+}
+
+@media (min-width: 770px) {
+  #user-drop {
+    display: block;
+  }
+}
+
 /* btn primario */
 .btn-primary {
   color: var(--color-texto-light);
@@ -222,4 +233,9 @@ td {
 
 .modal-editor-ventas .modal-dialog {
   max-width: 900px !important;
+}
+
+/* Factura */
+#cabecera-factura p {
+  margin-bottom: 0.2rem;
 }

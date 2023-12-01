@@ -8,6 +8,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '132as4d56a4sd5as4d'
 
 CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'# habilita las consultas externas ej navegador
 
 # Función para obtener el usuario autenticado desde el token JWT
 def get_logged_in_user():

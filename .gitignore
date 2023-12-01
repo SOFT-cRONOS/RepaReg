@@ -2,3 +2,8 @@
 .venv
 .dq.sql
 repareg
+env
+API/__pycache__
+API/db/__pycache__
+API/models/__pycache__
+API/routes/__pycache__

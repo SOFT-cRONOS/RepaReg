@@ -42,78 +42,174 @@ const cargarClientes = () => {
 // ##################################################################################
 //                                 GRAFICOS DASHBOARD
 // ##################################################################################
+
 // graficacion
 // Paleta de colores
 var colorPrimario = '#3c3a78'; // violeta obscuro
 var colorSecundario = '#948fc4'; // claro
 var colorTerciario = '#77669d'; // medio
 
-// Datos de ejemplo para los gráficos
-var dataLine = {
-  labels: ['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5', 'Día 6', 'Día 7'],
-  datasets: [
-    {
-      label: 'Ingresos en los últimos 7 días',
-      //   array de datos
-      data: [100, 150, 120, 200, 180, 250, 210],
-      fill: false,
-      borderColor: colorPrimario,
-      pointRadius: 5,
-      backgroundColor: 'transparent',
-      borderWidth: 4,
-      pointBackgroundColor: colorPrimario,
-    },
-  ],
-};
+  // Configuración de los gráficos
+  var chartOptions = {
+    responsive: true,
+    maintainAspectRatio: true,
+  };
 
-var dataBar = {
-  labels: ['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5', 'Día 6', 'Día 7'],
-  datasets: [
-    {
-      label: 'Ingresos de equipos al taller en los últimos 7 días',
-      //   array de datos
-      data: [10, 15, 12, 20, 18, 25, 21],
-      backgroundColor: colorTerciario,
-    },
-  ],
-};
+function lastWeeksell() {
+  const authToken = getAuthToken();
+  const url = `${URL_BASE}/reportes/1?authToken=${authToken}`;
 
-var dataPie = {
-  labels: ['Ventas', 'Reparaciones'],
-  datasets: [
-    {
-      //   array de datos
-      data: [70, 30],
-      backgroundColor: [colorPrimario, colorSecundario],
-    },
-  ],
-};
+  return fetch(url)
+    .then(response => response.json())
+    .then(data => data)
+    .catch(error => console.error('Error:', error));
+}
 
-// Configuración de los gráficos
-var chartOptions = {
-  responsive: true,
-  maintainAspectRatio: true,
-};
+function sellsbyCat() {
+  const authToken = getAuthToken();
+  const url = `${URL_BASE}/reportes/2?authToken=${authToken}`;
 
-/* var ctxLine = document.getElementById("lineChart").getContext("2d");
-var lineChart = new Chart(ctxLine, {
-  type: "line",
-  data: dataLine,
+  return fetch(url)
+    .then(response => response.json())
+    .then(data => data)
+    .catch(error => console.error('Error:', error));
+}
+
+function sellReport(graph) {
+  const authToken = getAuthToken();
+  const url = `${URL_BASE}/reportes/${graph}?authToken=${authToken}`;
+
+  return fetch(url)
+    .then(response => response.json())
+    .then(data => data)
+    .catch(error => console.error('Error:', error));
+}
+
+
+// grafico ultimas 7 ventas
+lastWeeksell().then(ultimasventas => {
+  console.log(ultimasventas);
+
+  const dias = [];
+  const totales = [];
+  ultimasventas.forEach(venta => {
+
+    
+
+        // objeto Date
+        const fecha = new Date(venta.dia);
+      
+        // Formatea la fecha
+        const fechaFormateada = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'numeric' }).format(fecha);
+    
+        dias.push(fechaFormateada);
+        totales.push(venta.total);
+    
+
+    
+        
+  });
+  
+
+  var dataLine = {
+    labels: dias,
+    datasets: [
+      {
+        label: 'Ingresos en los últimos 7 días',
+        //   array de datos
+        data: totales,
+        fill: false,
+        borderColor: colorPrimario,
+        pointRadius: 5,
+        backgroundColor: 'transparent',
+        borderWidth: 4,
+        pointBackgroundColor: colorPrimario,
+      },
+    ],
+  };
+
+  var ctxLine = document.getElementById("lineChart").getContext("2d");
+  var lineChart = new Chart(ctxLine, {
+    type: "line",
+    data: dataLine,
+  });
 });
 
-var ctxBar = document.getElementById("barChart").getContext("2d");
-var barChart = new Chart(ctxBar, {
-  type: "bar",
-  data: dataBar,
-  options: chartOptions,
-});
+//grafico torta ventas segmentadas
+sellsbyCat().then(ventasxcat => {
+  console.log(ventasxcat);
+  const categorias = [];
+  const cantidades = [];
+  ventasxcat.forEach(item => {
+    categorias.push(item.categoria);
+    cantidades.push(item.cantidad);
+  });
 
-var ctxPie = document.getElementById("pieChart").getContext("2d");
-var pieChart = new Chart(ctxPie, {
-  type: "pie",
-  data: dataPie,
-  options: chartOptions,
-}); */
+  var dataPie = {
+    labels: categorias,
+    datasets: [
+      {
+        //   array de datos
+        data: cantidades,
+        backgroundColor: [colorPrimario, colorSecundario],
+      },
+    ],
+  };
+
+  var ctxPie = document.getElementById("pieChart").getContext("2d");
+  var pieChart = new Chart(ctxPie, {
+    type: "pie",
+    data: dataPie,
+    options: chartOptions,
+  });
+})
+
+
+//grafico barras servicios ultima semana
+sellReport(3).then(
+  ventasxcat => {
+    console.log(ventasxcat);
+    const fechas = [];
+    const cantidades = [];
+    ventasxcat.forEach(venta => {
+
+          // objeto Date
+    const fecha = new Date(venta.fecha);
+      
+    // Formatea la fecha
+    const fechaFormateada = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'numeric' }).format(fecha);
+
+    
+
+      fechas.push(fechaFormateada);
+      cantidades.push(venta.cantidad);
+
+    });
+    
+    var dataBar = {
+      labels: fechas,
+      datasets: [
+        {
+          label: 'Servicios en los últimos 7 días',
+          //   array de datos
+          data: cantidades,
+          backgroundColor: colorTerciario,
+        },
+      ],
+    };
+
+    var ctxBar = document.getElementById("barChart").getContext("2d");
+    var barChart = new Chart(ctxBar, {
+      type: "bar",
+      data: dataBar,
+      options: chartOptions,
+    });
+  })
+
+
+
+
+
 // Fin graficacion
 
 //  funcion animacion de numeros
