@@ -6,7 +6,7 @@ from API.db.db import mysql
 # Rutas de ventas
 @app.route('/ventas', methods=['GET'])
 def obtener_ventas():
-
+    
     cur = mysql.connection.cursor()
     cur.execute('SELECT v.*, c.nombre cliente FROM venta v INNER JOIN cliente c	ON v.id_cliente = c.id WHERE v.id_usuario = %s;', (session['id'], ) )
     data = cur.fetchall()

@@ -33,7 +33,6 @@ def obtener_cliente_by_id(id_cliente):
     return jsonify(objCliente.to_json())
 
 @app.route('/clientes', methods = ['POST'])
-#@token_required
 def crear_cliente():
     data = request.get_json()
 
@@ -45,7 +44,6 @@ def crear_cliente():
         return jsonify( {"message": e.args[0]} ), 400
 
 @app.route('/clientes/<int:id_cliente>', methods = ['PUT'])
-#@token_required
 def modificar_cliente(id_cliente):
     data = request.get_json()
 
@@ -57,7 +55,6 @@ def modificar_cliente(id_cliente):
         return jsonify( {"message": e.args[1]} ), 400
 
 @app.route('/clientes/<int:id_cliente>', methods = ['DELETE'])
-#@token_required
 def eliminar_cliente(id_cliente):
    
     try:

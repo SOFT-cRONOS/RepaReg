@@ -1,4 +1,3 @@
-
 from flask import Flask,  request, session
 from flask_cors import CORS
 import jwt
@@ -9,8 +8,6 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '132as4d56a4sd5as4d'
 
 CORS(app)
-
-from API.db.db import mysql, DBError
 
 # Función para obtener el usuario autenticado desde el token JWT
 def get_logged_in_user():
@@ -27,6 +24,7 @@ def get_logged_in_user():
     except jwt.InvalidTokenError:
         return None  # Token no válido
     
+
 # Middleware para verificar el inicio de sesión en ciertas rutas
 @app.before_request
 def before_request():
@@ -47,9 +45,6 @@ import API.routes.cliente
 import API.routes.usuario
 import API.routes.venta
 import API.routes.reportes
-
-app.static_folder = 'app/static'
-app.template_folder = 'app/templates'
 
 if __name__ == "__main__":
     app.run(debug=True)
