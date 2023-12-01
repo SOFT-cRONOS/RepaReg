@@ -162,6 +162,27 @@ const cargarSelectItems = async (tipoItem) => {
   document.getElementById('producto-servicio').innerHTML = html;
 };
 
+
+//sacar precio de producto y establecer cantidad maxima
+const SelectorItem = document.getElementById('producto-servicio')
+document.getElementById('producto-servicio').addEventListener('change', cargarPrecio);
+function cargarPrecio() {
+  let id_producto = SelectorItem.value;
+  const authToken = getAuthToken();
+  const url = `${URL_BASE}/productos/${id_producto}?authToken=${authToken}`;
+
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      precio.value = data.precio_venta;
+      cantidad.value = 0;
+      cantidad.max = data.stock
+    })
+    .catch(error => console.error('Error:', error));
+  
+  
+}
+
 const obtenerVentas = async () => {
   const authToken = getAuthToken();
 
