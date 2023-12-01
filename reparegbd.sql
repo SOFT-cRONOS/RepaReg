@@ -326,58 +326,7 @@ COMMIT;
 
 /* Procedimientos almacenados */
 
-/* Reportes de ventas */
-DELIMITER //
 
-CREATE PROCEDURE lastWeekSell(IN usuario_id INT)
-BEGIN
-    SELECT
-        DATE_FORMAT(fecha, '%d/%m') AS fecha,
-        SUM(total) AS monto_total
-    FROM venta
-    WHERE id_usuario = usuario_id
-    GROUP BY DATE_FORMAT(fecha, '%d/%m')
-    ORDER BY fecha
-    LIMIT 7;
-END //
-
-DELIMITER ;
-
-DELIMITER //
-
-CREATE PROCEDURE lastSellsCategory(IN usuario_id INT)
-BEGIN
-      SELECT
-          categoria.nombre AS categoria,
-          COUNT(*) AS cantidad_ventas
-      FROM
-          detalle_venta
-          INNER JOIN producto ON detalle_venta.id_producto = producto.id
-          INNER JOIN categoria ON producto.id_categoria = categoria.id
-      WHERE producto.id_usuario = usuario_id
-      GROUP BY categoria.nombre;
-END //
-
-DELIMITER ;
-
-DELIMITER //
-
-CREATE PROCEDURE lastSellServices(IN usuario_id INT)
-BEGIN
-    SELECT
-        DATE_FORMAT(v.fecha, '%d/%m') AS fecha,
-        COUNT(*) AS cantventas
-    FROM venta v
-    INNER JOIN detalle_venta dv ON v.id = dv.id_venta
-    INNER JOIN servicio s ON dv.id_servicio = s.id
-    WHERE v.fecha >= CURDATE() - INTERVAL 7 DAY
-    AND v.id_usuario = usuario_id
-    GROUP BY DATE_FORMAT(fecha, '%d/%m')
-    ORDER BY fecha;
-END //
-
-DELIMITER ;
-/* Fin Reportes de ventas */
 
 /* Insert de pruebas */
 
