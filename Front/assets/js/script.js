@@ -95,21 +95,19 @@ lastWeeksell().then(ultimasventas => {
   ultimasventas.forEach(venta => {
 
     
-    //var fechaObj = new Date(venta.dia);
-    // Obtiener  día y el mes
-    //var dia = fechaObj.getUTCDate();
-    //var mes = fechaObj.getUTCMonth() + 1; // arranca de 0
 
-    // dos dígitos
-    //dia = dia < 10 ? "0" + dia : dia;
-    //mes = mes < 10 ? "0" + mes : mes;
+        // objeto Date
+        const fecha = new Date(venta.dia);
+      
+        // Formatea la fecha
+        const fechaFormateada = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'numeric' }).format(fecha);
+    
+        dias.push(fechaFormateada);
+        totales.push(venta.total);
+    
 
-    // Formatear la fecha como dd/mm
-    //var fechaFormateada = dia + "/" + mes;
-
-    dias.push(venta.dia);
-    console.log(venta.dia)
-    totales.push(venta.total);
+    
+        
   });
   
 
@@ -174,8 +172,18 @@ sellReport(3).then(
     const fechas = [];
     const cantidades = [];
     ventasxcat.forEach(venta => {
-      fechas.push(venta.fecha);
+
+          // objeto Date
+    const fecha = new Date(venta.fecha);
+      
+    // Formatea la fecha
+    const fechaFormateada = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'numeric' }).format(fecha);
+
+    
+
+      fechas.push(fechaFormateada);
       cantidades.push(venta.cantidad);
+
     });
     
     var dataBar = {
