@@ -25,12 +25,16 @@ def obtener_cliente_by_id(id_cliente):
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM cliente WHERE id = %s', (id_cliente,))
     data = cur.fetchall() 
-    
-    objCliente = Cliente(data[0])
-    
-    cur.close()
 
-    return jsonify(objCliente.to_json())
+    if ( int(data[0][7]) == session['id'] ):
+        objCliente = Cliente(data[0])
+        cur.close()
+    
+        return jsonify(objCliente.to_json())
+    else:
+        cur.close()
+        return jsonify({"message": "Cliente no encontrado"}), 404
+
 
 @app.route('/clientes', methods = ['POST'])
 def crear_cliente():
@@ -48,9 +52,23 @@ def modificar_cliente(id_cliente):
     data = request.get_json()
 
     try:
-        response = Cliente.modificar_cliente(id_cliente, data)
 
-        return jsonify( response ), 200
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT id_usuario FROM cliente WHERE id = %s', (id_cliente,))
+        user = cur.fetchone()         
+
+        cur.close()
+
+        if ( user[0] == session['id'] ):
+            response = Cliente.modificar_cliente(id_cliente, data)
+            status_code = 200
+        else:
+            response = { "message": "No tiene permiso para modificar el cliente" }
+            status_code = 403
+        
+        return jsonify( response ), status_code
+
+        
     except Exception as e:
         return jsonify( {"message": e.args[1]} ), 400
 

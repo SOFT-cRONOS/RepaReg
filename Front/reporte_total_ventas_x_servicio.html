@@ -50,7 +50,7 @@
       </button>
 
       <!-- drop usuario -->
-      <div id="user-drop" class="flex-shrink-0 dropdown drop-user">
+      <div class="flex-shrink-0 dropdown drop-user">
         <a
           href="#"
           class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
@@ -58,8 +58,7 @@
           aria-expanded="false"
         >
           <img
-            id="user-image"
-            src=""
+            src="assets/img/iconos/person-circle.svg"
             alt="mdo"
             width="32"
             height="32"
@@ -67,11 +66,9 @@
           />
         </a>
         <ul class="dropdown-menu text-small shadow">
-          <li><a id="user-name" class="dropdown-item" href="#">user-name</a></li>
           <li><a id="logout-link" class="dropdown-item" href="#">Salir</a></li>
         </ul>
       </div>
-      <!-- fin drop usuario -->
     </header>
 
     <div class="container-fluid">
@@ -91,7 +88,7 @@
           <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
           >
-            <h1 class="h2">Ranking de total de compras x cliente</h1>
+            <h1 class="h2">Ranking de total de Servicios contratados</h1>
           </div>
           <!-- Fin Barra superior -->
 
@@ -117,8 +114,9 @@
             <table class="table table-striped table-sm">
               <thead>
                 <tr>
-                  <th scope="col">Cliente</th>
-                  <th scope="col">Total de compra</th>
+                  <th scope="col">Servicio</th>
+                  <th scope="col">Cant. de Servicios Contratados</th>
+                  <th scope="col">Monto total Servicios Contratados</th>
                 </tr>
               </thead>
               <tbody id="datos-tabla">
@@ -144,6 +142,6 @@
 
     <script src="assets/js/common.js"></script>
     <script src="assets/js/ui.js"></script>
-    <script src="assets/js/reporte_total_compras_por_cliente.js"></script>
+    <script src="assets/js/reporte_total_ventas_x_servicio.js"></script>
   </body>
 </html>

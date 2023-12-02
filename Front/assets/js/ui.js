@@ -51,21 +51,21 @@ const showSidebar = () => {
                                     </li>
                                       
                                     <li class="nav-item">
-                                      <a class="nav-link" href="reporte_total_compras_x_clientes.html">
+                                      <a class="nav-link" href="reporte_total_ventas_x_clientes.html">
                                           <span data-feather="bar-chart-2"></span>
-                                          Ranking de total compras x cliente
+                                          Ranking de total ventas x cliente
                                       </a>
                                     </li>
 
                                     <li class="nav-item">
-                                      <a class="nav-link" href="reporte_total_compras_x_servicio.html">
+                                      <a class="nav-link" href="reporte_total_ventas_x_servicio.html">
                                           <span data-feather="bar-chart-2"></span>
                                           Ranking de ventas por servicio
                                       </a>
                                     </li>
 
                                     <li class="nav-item">
-                                      <a class="nav-link" href="reporte_total_compras_x_producto.html">
+                                      <a class="nav-link" href="reporte_total_ventas_x_producto.html">
                                           <span data-feather="bar-chart-2"></span>
                                           Ranking de ventas por producto
                                       </a>

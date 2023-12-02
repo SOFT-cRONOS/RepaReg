@@ -33,19 +33,34 @@ def obtener_reporte_total_compras_por_cliente():
 
 
 
-@app.route('/reportes/reporte_total_compras_x_producto', methods=['GET'])
-def obtener_reporte_total_compras_x_producto():
+@app.route('/reportes/reporte_total_ventas_x_producto', methods=['GET'])
+def obtener_reporte_total_ventas_x_producto():
     cur = mysql.connection.cursor()
-    cur.execute('SELECT CONCAT(c.nombre, " ", c.apellido) nombre, SUM(v.total) total FROM venta v INNER JOIN cliente c ON c.id = v.id_cliente WHERE v.id_usuario = %s GROUP BY c.id ORDER BY total DESC;', (session['id'], ))
+    cur.execute('SELECT p.nombre, SUM(dv.precio_unit * dv.cantidad) total, SUM(dv.cantidad) cantidad FROM venta v LEFT JOIN detalle_venta dv ON v.id = dv.id_venta INNER JOIN producto p ON dv.id_producto = p.id WHERE v.id_usuario = %s AND dv.id_producto IS NOT NULL GROUP BY dv.id_producto ORDER BY total DESC;', (session['id'], ))
     data = cur.fetchall()
 
     reporteList = []
     for row in data:
-        reporteList.append( { "nombre": row[0], "total": row[1] } )
+        reporteList.append( { "nombre": row[0], "total": row[1], "cantidad": row[2] } )
     
     cur.close()
 
     return jsonify(reporteList)
+
+@app.route('/reportes/reporte_total_ventas_x_servicio', methods=['GET'])
+def obtener_reporte_total_ventas_x_servicio():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT s.nombre, SUM(dv.precio_unit * dv.cantidad) total, SUM(dv.cantidad) cantidad FROM venta v LEFT JOIN detalle_venta dv ON v.id = dv.id_venta INNER JOIN servicio s ON dv.id_servicio = s.id WHERE v.id_usuario = %s AND dv.id_servicio IS NOT NULL GROUP BY dv.id_servicio ORDER BY total DESC;', (session['id'], ))
+    data = cur.fetchall()
+
+    reporteList = []
+    for row in data:
+        reporteList.append( { "nombre": row[0], "total": row[1], "cantidad": row[2] } )
+    
+    cur.close()
+
+    return jsonify(reporteList)
+
 @app.route('/reportes/<int:idreport>', methods=['GET'])
 def get_Report(idreport):
     try:

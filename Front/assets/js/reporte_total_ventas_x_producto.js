@@ -3,7 +3,7 @@ const URL_BASE = "http://localhost:5200";
 const obtenerReporte = async () => {
   const authToken = getAuthToken();
 
-  const url = `${URL_BASE}/reportes/reporte_total_compras_x_producto?authToken=${authToken}`;
+  const url = `${URL_BASE}/reportes/reporte_total_ventas_x_producto?authToken=${authToken}`;
 
   const response = await fetch(url);
   const data = await response.json();
@@ -16,10 +16,11 @@ const mostrarReporteEnTabla = (reporte) => {
 
   let html = "";
 
-  //Dibujar la tabla de servicios
+  //Dibujar la tabla de productos
   reporte.forEach((producto) => {
     html += `<tr>
               <td>${producto.nombre}</td>
+              <td>${producto.cantidad}</td>
               <td>$ ${producto.total}</td>             
             </tr>`;
   });
