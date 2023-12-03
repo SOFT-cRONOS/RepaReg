@@ -1,7 +1,7 @@
 from API import app
 from flask import jsonify, request, session
 from API.db.db import mysql
-
+from datetime import datetime
 # Rutas de reportes
 @app.route('/reportes/stock', methods=['GET'])
 def obtener_reporte_stock():
@@ -79,8 +79,10 @@ def get_Report(idreport):
 
             reporteList = []
             for row in data:
+                fecha = row[0]
+                fecha_f = fecha.strftime("%d/%m/%Y")
                 #responde sin modelo de clase
-                reporteList.append( {"dia": row[0], "total": row[1] } ) 
+                reporteList.append( {"dia": fecha_f, "total": row[1] } ) 
             
             
             cur.close()
@@ -123,8 +125,10 @@ def get_Report(idreport):
 
             reporteList = []
             for row in data:
+                fecha = row[0]
+                fecha_f = fecha.strftime("%d/%m/%Y")
                 #responde sin modelo de clase
-                reporteList.append( {"fecha": row[0], "cantidad": row[1]} ) 
+                reporteList.append( {"fecha": fecha_f, "cantidad": row[1]} ) 
             
             cur.close()
         return jsonify(reporteList)

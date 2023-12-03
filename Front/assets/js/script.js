@@ -94,15 +94,7 @@ lastWeeksell().then(ultimasventas => {
   const totales = [];
   ultimasventas.forEach(venta => {
 
-    
-
-        // objeto Date
-        const fecha = new Date(venta.dia);
-      
-        // Formatea la fecha
-        const fechaFormateada = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'numeric' }).format(fecha);
-    
-        dias.push(fechaFormateada);
+        dias.push(venta.dia);
         totales.push(venta.total);
     
 
@@ -171,17 +163,9 @@ sellReport(3).then(
     console.log(ventasxcat);
     const fechas = [];
     const cantidades = [];
-    ventasxcat.forEach(venta => {
+    ventasxcat.forEach(venta => { 
 
-          // objeto Date
-    const fecha = new Date(venta.fecha);
-      
-    // Formatea la fecha
-    const fechaFormateada = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'numeric' }).format(fecha);
-
-    
-
-      fechas.push(fechaFormateada);
+      fechas.push(venta.fecha);
       cantidades.push(venta.cantidad);
 
     });

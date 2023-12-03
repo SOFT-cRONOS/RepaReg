@@ -7,3 +7,5 @@ API/__pycache__
 API/db/__pycache__
 API/models/__pycache__
 API/routes/__pycache__
+API/db/
+API/db/db.py
