@@ -344,6 +344,7 @@ const cambiarEstadoModal = (nuevoModoModal) => {
 
     selectCliente.disabled = false;
     document.getElementById("select-client-row").style.display = 'block';
+    document.getElementById("col-datos-vendedor").style.display = 'none';
 
     btnAgregarProductoServicio.style.display = 'block';
     btnGuardarVenta.style.display = 'block';
@@ -353,6 +354,7 @@ const cambiarEstadoModal = (nuevoModoModal) => {
 
     selectCliente.disabled = true;
     document.getElementById("select-client-row").style.display = 'none';
+    document.getElementById("col-datos-vendedor").style.display = 'block';
     //selectCliente.classList.replace("form-select", "form-control");
     const table = document.querySelector("#detalle-tabla-container");
     const tr = table.querySelector("tr");
