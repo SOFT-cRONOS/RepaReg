@@ -70,7 +70,8 @@ const showSidebar = () => {
                                           Ranking de ventas por producto
                                       </a>
                                     </li>
-
+                                    <hr class="navbar-divider">
+                                    <li><a id="logout-link" class="nav-link" href="#" onclick="logout()"><span data-feather="log-out"></span>Salir</a></li>
 
 
 
