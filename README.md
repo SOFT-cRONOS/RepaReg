@@ -8,58 +8,61 @@ Donato Nicolas Miguel
 Software para gestion de taller de reparaciones.
 
 Estructura de directorios
-API/
-|     |___config/
-|     |          |__conect.py 
-|     |___db/
-|     |          |__BDconfig.py
-|     |          |__db.py
-|     |          |__ init.py
-|     |___models/
-|     |     |__cliente.py
-|     |     |__producto.py
-|     |     |__servicio.p
-|     |      |__user.py
-|     |     |__venta.py
-|     |___routes
-|     |     |__ init.py
-|     |     |__ cliente.py
-|     |     |__ producto.py
-|     |     |__ reportes.py
-|     |     |__ servicio.py 
-|     |     |__ tablero.py
-|     |     |__ usuario.py
-|     |     |__ venta.py
-|     |____init__.py
-|     |___app.py
-|    |___utils.py
-| 
-Front/
-|       |__categorias.html
-|       |__clientes.html
-|       |__index.html
-|       |__login.html
-|       |__productos.html
-|       |__reporte_stock.html
-|       |__reporte_total_compras_x_clientes.html
-|       |__servicios.html
-|       |__ventas.html
-|
-Proyecto-bk/
-|
-repareg/
-|       |__lib/site-packages/
-|       |__scripts/
-|       |__pyvenv.cfg
-.gitignore
-|
-README.md
-|
-main.py
-|
-reparegbd.sql
-|
-requeriments.txt
+
+    
+    API/
+    |     |___config/
+    |     |          |__conect.py 
+    |     |___db/
+    |     |          |__BDconfig.py
+    |     |          |__db.py
+    |     |          |__ init.py
+    |     |___models/
+    |     |     |__cliente.py
+    |     |     |__producto.py
+    |     |     |__servicio.p
+    |     |      |__user.py
+    |     |     |__venta.py
+    |     |___routes
+    |     |     |__ init.py
+    |     |     |__ cliente.py
+    |     |     |__ producto.py
+    |     |     |__ reportes.py
+    |     |     |__ servicio.py 
+    |     |     |__ tablero.py
+    |     |     |__ usuario.py
+    |     |     |__ venta.py
+    |     |____init__.py
+    |     |___app.py
+    |    |___utils.py
+    | 
+    Front/
+    |       |__categorias.html
+    |       |__clientes.html
+    |       |__index.html
+    |       |__login.html
+    |       |__productos.html
+    |       |__reporte_stock.html
+    |       |__reporte_total_compras_x_clientes.html
+    |       |__servicios.html
+    |       |__ventas.html
+    |
+    Proyecto-bk/
+    |
+    repareg/
+    |       |__lib/site-packages/
+    |       |__scripts/
+    |       |__pyvenv.cfg
+    .gitignore
+    |
+    README.md
+    |
+    main.py
+    |
+    reparegbd.sql
+    |
+    requeriments.txt
+
 
 
 1. Crar directorio de proyecto
