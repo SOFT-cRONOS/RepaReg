@@ -25,6 +25,10 @@ const btnCerrarModalVenta = document.getElementById('btn-cerrar-modal-venta');
 const tipoDetalle = document.getElementById('tipo');
 const tipoSelectProductoServicio = document.getElementById('producto-servicio');
 const cantidad = document.getElementById('cantidad');
+cantidad.addEventListener('keydown', function (e) {
+  // Evita que se ingresen caracteres del teclado
+  e.preventDefault();
+});
 const precio = document.getElementById('precio');
 
 function formatearFecha(fechaGMT) {
@@ -58,6 +62,7 @@ function validarForm() {
   if (!isValid) {
     alert('Error en los datos ingresados.');
   }
+
 
   return isValid;
 }
@@ -211,7 +216,7 @@ const mostrarVentasEnTabla = (ventas) => {
                 <button data-id-venta="${venta.id}" class="btn btn-ver" >
                   <span data-feather="eye"></span>Ver
                 </button>
-
+                url
                 <button data-id-venta="${venta.id}" class="btn btn-eliminar">
                   <span data-feather="trash"></span>Eliminar
                 </button>
@@ -339,7 +344,8 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     tituloModalVentas.innerHTML = 'Nueva Venta';
 
     detalleVenta = [];
-
+    resetClientHead();
+    resetDataSellHead();
     selectCliente.value = '-1';
 
     selectCliente.disabled = false;
@@ -351,7 +357,9 @@ const cambiarEstadoModal = (nuevoModoModal) => {
     btnCerrarModalVenta.innerHTML = 'Cancelar';
   } else if (nuevoModoModal === MODOS_MODAL.ver) {
     tituloModalVentas.innerHTML = 'Ver Venta';
-
+    loadDataSellHead(idVentaSeleccionado);
+    loadSellerHead();
+    loadClientHead();
     selectCliente.disabled = true;
     document.getElementById("select-client-row").style.display = 'none';
     document.getElementById("col-datos-vendedor").style.display = 'block';
@@ -497,3 +505,94 @@ btnAgregarDetalleVenta.addEventListener('click', agregarDetalleVenta);
 obtenerVentas();
 
 cargarSelectClientes();
+
+
+const numfactura = document.getElementById('numero-factura');
+numfactura.innerText = "23123";
+const fechafactura = document.getElementById('fecha-factura');
+// Obtén la fecha actual
+const fechaActual = new Date();
+
+// Formatea la fecha como una cadena con el formato "YYYY-MM-DD"
+const fechaFormateada = fechaActual.toISOString().split('T')[0];
+fechafactura.innerText = fechaFormateada
+
+//datos cliente en factura
+const SelectCliente = document.getElementById('cliente');
+document.getElementById('cliente').addEventListener("change", loadClientHead);
+
+const clientname = document.getElementById('sell-client-name');
+const clientapellido = document.getElementById('sell-client-lastname');
+const clientdireccion = document.getElementById('sell-client-Dir');
+const clientcuitcuil = document.getElementById('sell-client-cuitl');
+const clientemail = document.getElementById('sell-client-email');
+const clienttelefono = document.getElementById('sell-client-telefono');
+
+function loadClientHead() {
+  const id_cliente = SelectCliente.value;
+  console.log(id_cliente);
+  const authToken = getAuthToken();
+  const url = `${URL_BASE}/clientes/${id_cliente}?authToken=${authToken}`;
+  fetch(url)
+  .then(response => response.json())
+  .then(data => {
+    
+    clientname.innerText = data.nombre;
+    clientapellido.innerText = data.apellido;
+    clientdireccion.innerText = data.direccion;
+    clientcuitcuil.innerText = data.cuit_cuil;
+    clientemail.innerText = data.email;
+    clienttelefono.innerText = data.telefono;
+  })
+  .catch(error => console.error('Error:', error));
+}
+
+function resetClientHead(){
+  clientname.innerText = '-';
+  clientapellido.innerText = '-';
+  clientdireccion.innerText = '-';
+  clientcuitcuil.innerText = '-';
+  clientemail.innerText = '-';
+  clienttelefono.innerText = '-';
+}
+//datos usuario vendedor en factura
+const sellertname = document.getElementById('sell-seller-name');
+const sellerapellido = document.getElementById('sell-seller-lastname');
+const sellerdireccion = document.getElementById('sell-seller-Dir');
+const sellercuitcuil = document.getElementById('sell-seller-cuitl');
+const selleremail = document.getElementById('sell-seller-email');
+const sellertelefono = document.getElementById('sell-seller-telefono');
+function loadSellerHead (){
+  const authToken = getAuthToken();
+  const url = `${URL_BASE}/usuarios?authToken=${authToken}`;
+  fetch(url)
+  .then(response => response.json())
+  .then(data => {
+    
+    sellertname.innerText = data.nombre;
+    sellerapellido.innerText = data.apellido;
+    sellerdireccion.innerText = data.direccion;
+    sellercuitcuil.innerText = data.cuit_cuil;
+    selleremail.innerText = data.email;
+    sellertelefono.innerText = data.telefono;
+  })
+  .catch(error => console.error('Error:', error));
+}
+
+function loadDataSellHead(n_factura) {
+  const authToken = getAuthToken();
+  const url = `${URL_BASE}/ventas/${n_factura}?authToken=${authToken}`;
+  fetch(url)
+  .then(response => response.json())
+  .then(data => {
+    const fechafactura = n_factura;
+    document.getElementById('numero-factura').innerText = fechafactura;
+    document.getElementById('fecha-factura').innerText = data.fecha;
+  })
+  .catch(error => console.error('Error:', error));
+}
+
+function resetDataSellHead() {
+  document.getElementById('numero-factura').innerText = '';
+    document.getElementById('fecha-factura').innerText = fechaFormateada;
+}
