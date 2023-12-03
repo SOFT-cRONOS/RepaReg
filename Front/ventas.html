@@ -173,19 +173,22 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col pe-1">
+                  <div class="col pe-1" id="col-datos-comprador">
                     <div class="card">
                       <div class="card-body">
                         <h6 class="card-subtitle mb-2 text-muted">Datos de cliente</h6>
+                        <div id="select-client-row" class="col">
+                          <label for="cliente" class="form-label">Cliente</label>
+                          <select class="form-select" id="cliente">
+                            <option value="-1" disabled>Seleccione...</option>
+                            <option value="1">Steve (User test)</option>
+                            <option value="6">CliUsr2 (User test2)</option>
+                          </select>
+                          <br>
+                        </div>
+
                         <div class="row">
-                          <div id="select-client-row" class="col">
-                            <label for="cliente" class="form-label">Cliente</label>
-                            <select class="form-select" id="cliente">
-                              <option value="-1" disabled>Seleccione...</option>
-                              <option value="1">Steve (User test)</option>
-                              <option value="6">CliUsr2 (User test2)</option>
-                            </select>
-                          </div>
+
                           <div class="col-md-5">
                             <p>
                               <strong>Nombre: </strong><span id="sell-client-name">Luck</span>
@@ -212,7 +215,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col ps-1">
+                  <div class="col ps-1" id="col-datos-vendedor">
                     <div class="card">
                       <div class="card-body">
                         <h6 class="card-subtitle mb-2 text-muted">Datos de Vendedor</h6>
