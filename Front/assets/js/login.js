@@ -1,12 +1,10 @@
 const URL_BASE = 'http://localhost:5200';
 
-
-
 const login = async (event) => {
   event.preventDefault();
 
   localStorage.removeItem('authToken');
-  
+
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
 
@@ -27,8 +25,10 @@ const login = async (event) => {
     const result = await response.json();
 
     const authToken = result.token;
+    const exp = result.exp;
 
     localStorage.setItem('authToken', authToken);
+    localStorage.setItem('exp', exp);
 
     window.location.href = 'index.html';
   } else {

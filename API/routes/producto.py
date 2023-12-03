@@ -34,7 +34,6 @@ def obtener_producto_by_id(id_producto):
     return jsonify(objProducto.to_json())
 
 @app.route('/productos', methods = ['POST'])
-#@token_required
 def crear_producto():
 
     data = request.get_json()
@@ -47,24 +46,44 @@ def crear_producto():
         return jsonify( {"message": e.args[0]} ), 400
 
 @app.route('/productos/<int:id_producto>', methods = ['PUT'])
-#@token_required
 def modificar_producto(id_producto):
+
     data = request.get_json()
 
     try:
-        response = Producto.modificar_producto(id_producto, data)
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT id_usuario FROM producto WHERE id = %s', (id_producto,))
+        user = cur.fetchone()         
 
-        return jsonify( response ), 200
+        if ( user[0] == session['id'] ):
+            response = Producto.modificar_producto(id_producto, data)        
+            status_code = 201
+        else:
+            response = { "message": "No tiene permiso para modificar el producto" }
+            status_code = 403
+        
+        return jsonify( response ), status_code
+    
     except Exception as e:
-        return jsonify( {"message": e.args[1]} ), 400
+        return jsonify( {"message": e.args[0]} ), 400
+
 
 @app.route('/productos/<int:id_producto>', methods = ['DELETE'])
-#@token_required
 def eliminar_producto(id_producto):
    
     try:
-        response = Producto.eliminar_producto(id_producto)
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT id_usuario FROM producto WHERE id = %s', (id_producto,))
+        user = cur.fetchone()         
 
-        return jsonify( response ), 200
+        if ( user[0] == session['id'] ):
+            response = Producto.eliminar_producto(id_producto)   
+            status_code = 200
+        else:
+            response = { "message": "No tiene permiso para eliminar el producto" }
+            status_code = 403
+        
+        return jsonify( response ), status_code
+    
     except Exception as e:
-        return jsonify( {"message": e.args[1]} ), 400
+        return jsonify( {"message": e.args[0]} ), 400

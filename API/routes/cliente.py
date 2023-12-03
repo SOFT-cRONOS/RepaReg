@@ -76,9 +76,19 @@ def modificar_cliente(id_cliente):
 def eliminar_cliente(id_cliente):
    
     try:
-        response = Cliente.eliminar_cliente(id_cliente)
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT id_usuario FROM cliente WHERE id = %s', (id_cliente,))
+        user = cur.fetchone()         
 
-        return jsonify( response ), 200
+        if ( user[0] == session['id'] ):
+            response = Cliente.eliminar_cliente(id_cliente)
+            status_code = 200
+        else:
+            response = { "message": "No tiene permiso para eliminar el cliente" }
+            status_code = 403
+        
+        return jsonify( response ), status_code
+    
     except Exception as e:
         return jsonify( {"message": e.args[1]} ), 400 
     

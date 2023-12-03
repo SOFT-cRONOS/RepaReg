@@ -414,12 +414,13 @@ const dibujarDetalleVenta = () => {
               <td>$ ${parseInt(item.cantidad) * parseFloat(item.precio)}</td>
       
               ${
-                modoModal === MODOS_MODAL.nuevo &&
-                `<td>
+                modoModal === MODOS_MODAL.nuevo ?
+                        `<td>
                             <button data-index="${i}" class="btn btn-eliminar-item-detalle">
                               <span data-feather="trash"></span>
                             </button>
                           </td>`
+                        :  `<td></td>` 
               }
             </tr>`;
             totalventa += parseInt(item.cantidad) * parseFloat(item.precio)

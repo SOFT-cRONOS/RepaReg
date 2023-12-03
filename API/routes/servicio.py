@@ -48,22 +48,45 @@ def crear_servicio():
 @app.route('/servicios/<int:id_servicio>', methods = ['PUT'])
 #@token_required
 def modificar_servicio(id_servicio):
+
+
     data = request.get_json()
 
     try:
-        response = Servicio.modificar_servicio(id_servicio, data)
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT id_usuario FROM servicio WHERE id = %s', (id_servicio,))
+        user = cur.fetchone()         
 
-        return jsonify( response ), 200
+        if ( user[0] == session['id'] ):
+            response = Servicio.modificar_servicio(id_servicio, data)
+            status_code = 200
+        else:
+            response = { "message": "No tiene permiso para modificar el servicio" }
+            status_code = 403
+        
+        return jsonify( response ), status_code
+    
     except Exception as e:
-        return jsonify( {"message": e.args[1]} ), 400
+        return jsonify( {"message": e.args[0]} ), 400
+
 
 @app.route('/servicios/<int:id_servicio>', methods = ['DELETE'])
 #@token_required
 def eliminar_servicio(id_servicio):
    
     try:
-        response = Servicio.eliminar_servicio(id_servicio)
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT id_usuario FROM servicio WHERE id = %s', (id_servicio,))
+        user = cur.fetchone()         
 
-        return jsonify( response ), 200
+        if ( user[0] == session['id'] ):
+            response = Servicio.eliminar_servicio(id_servicio)
+            status_code = 200
+        else:
+            response = { "message": "No tiene permiso para eliminar el servicio" }
+            status_code = 403
+        
+        return jsonify( response ), status_code
+    
     except Exception as e:
         return jsonify( {"message": e.args[1]} ), 400

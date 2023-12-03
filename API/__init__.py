@@ -36,7 +36,7 @@ def before_request():
     else:
         print ( logged_in_user )
         
-    if ( request.endpoint != 'login'):
+    if ( request.endpoint != 'login' and logged_in_user):
         session['id'] = logged_in_user['id']
 
 import API.routes.tablero

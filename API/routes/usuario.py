@@ -24,14 +24,17 @@ def login():
    
     if user:
 
+        exp = datetime.utcnow() + timedelta(minutes=60) 
+
         token = jwt.encode({
                 'username': email,
                 'id': user[0],
-                'exp': datetime.utcnow() + timedelta(minutes=3)  
+                'exp':  exp
             }, app.config['SECRET_KEY'], algorithm='HS256')
 
+        print("Exp", exp)
 
-        response = jsonify({'token': token, "message": "Usuario logueado"})
+        response = jsonify({'token': token, "exp": exp, "message": "Usuario logueado"})
         response.headers['Authorization'] = f'Bearer {token}'
         
         return response
