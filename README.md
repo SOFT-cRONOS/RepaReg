@@ -102,3 +102,4 @@ Estructura de directorios
     - MySQL
     - HTML
     - CSS
+* Enlace al notion del api: https://www.notion.so/invite/af11327f1b070c2cb7fe62a8b892b90eb905a4ae
