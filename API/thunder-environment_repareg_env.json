@@ -1,0 +1,12 @@
+{
+    "client": "Thunder Client",
+    "environmentName": "repareg_env",
+    "dateExported": "2023-12-03T14:52:05.428Z",
+    "version": "1.0",
+    "variables": [
+        {
+            "name": "token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluQHRhbGxlci5jb20iLCJpZCI6MSwiZXhwIjoxNzAxNjE4NDE1fQ.jlRRldz5uiKPRK_2ugHlFonyri90jgvpqjqk4DBnW40"
+        }
+    ]
+}
