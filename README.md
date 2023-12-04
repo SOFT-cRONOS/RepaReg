@@ -34,19 +34,23 @@ Estructura de directorios
     |     |     |__ venta.py
     |     |____init__.py
     |     |___app.py
-    |    |___utils.py
+    |     |___utils.py
     | 
     Front/
-    |       |__categorias.html
-    |       |__clientes.html
-    |       |__index.html
-    |       |__login.html
-    |       |__productos.html
-    |       |__reporte_stock.html
-    |       |__reporte_total_compras_x_clientes.html
-    |       |__servicios.html
-    |       |__ventas.html
+    |     |__categorias.html
+    |     |__clientes.html
+    |     |__index.html
+    |     |__login.html
+    |     |__productos.html
+    |     |__reporte_stock.html
+    |     |__reporte_total_compras_x_clientes.html
+    |     |__servicios.html
+    |     |__ventas.html
     |
+    Doc/
+    |     |__API RepaReg.pdf
+    |     |__diagrama_bd.drawio
+    |     |__rutas_frontend.drawio
     .gitignore
     |
     README.md
