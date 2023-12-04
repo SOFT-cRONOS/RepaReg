@@ -47,12 +47,6 @@ Estructura de directorios
     |       |__servicios.html
     |       |__ventas.html
     |
-    Proyecto-bk/
-    |
-    repareg/
-    |       |__lib/site-packages/
-    |       |__scripts/
-    |       |__pyvenv.cfg
     .gitignore
     |
     README.md
